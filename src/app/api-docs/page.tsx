@@ -1,0 +1,386 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
+interface ApiResponse {
+  data?: any;
+  error?: string;
+  status: number;
+}
+
+type Theme = "light" | "dark" | "system";
+
+export default function ApiDocs() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEndpoint, setSelectedEndpoint] = useState<any>(null);
+  const [requestBody, setRequestBody] = useState("");
+  const [response, setResponse] = useState<ApiResponse | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [theme, setTheme] = useState<Theme>("system");
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as Theme || "system";
+    setTheme(savedTheme);
+    applyTheme(savedTheme);
+  }, []);
+
+  const applyTheme = (newTheme: Theme) => {
+    const root = document.documentElement;
+    
+    if (newTheme === "system") {
+      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setIsDark(systemPrefersDark);
+      if (systemPrefersDark) {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
+    } else if (newTheme === "dark") {
+      setIsDark(true);
+      root.classList.add("dark");
+    } else {
+      setIsDark(false);
+      root.classList.remove("dark");
+    }
+  };
+
+  const handleThemeChange = (newTheme: Theme) => {
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    applyTheme(newTheme);
+  };
+
+  const endpoints = [
+    {
+      title: "Shorten URL",
+      method: "POST",
+      endpoint: "/api/shorten",
+      description: "Create a short URL from a long URL",
+      parameters: [
+        {
+          name: "url",
+          type: "string",
+          required: true,
+          description: "The URL to be shortened",
+          example: "https://example.com/very-long-url"
+        }
+      ],
+      response: {
+        success: {
+          originalUrl: "string",
+          shortCode: "string", 
+          shortUrl: "string"
+        },
+        error: {
+          error: "string"
+        }
+      }
+    },
+   
+  ];
+
+  const handleTryInBrowser = (endpoint: any) => {
+    setSelectedEndpoint(endpoint);
+    setRequestBody(JSON.stringify({ url: "https://google.com" }, null, 2));
+    setResponse(null);
+    setIsModalOpen(true);
+  };
+
+  const handleTestRequest = async () => {
+    setLoading(true);
+    setResponse(null);
+
+    try {
+      const url = selectedEndpoint.endpoint;
+      const options: RequestInit = {
+        method: selectedEndpoint.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      if (selectedEndpoint.method === "POST" && requestBody) {
+        options.body = requestBody;
+      }
+
+      const res = await fetch(url, options);
+      const data = await res.json();
+
+      setResponse({
+        data,
+        status: res.status,
+        error: res.ok ? undefined : data.error || "Request failed"
+      });
+    } catch (error) {
+      setResponse({
+        data: null,
+        status: 0,
+        error: error instanceof Error ? error.message : "Network error"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">API Documentation</h1>
+              <p className="text-gray-600 dark:text-gray-300 mt-2">Complete guide to the URL Shortener API</p>
+            </div>
+            <div className="flex items-center gap-4">
+              {/* Theme Switcher */}
+              <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                <button
+                  onClick={() => handleThemeChange("light")}
+                  className={`px-3 py-1 rounded-md text-sm transition-colors ${
+                    theme === "light" 
+                      ? "bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm" 
+                      : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  Light
+                </button>
+                <button
+                  onClick={() => handleThemeChange("dark")}
+                  className={`px-3 py-1 rounded-md text-sm transition-colors ${
+                    theme === "dark" 
+                      ? "bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm" 
+                      : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  Dark
+                </button>
+                <button
+                  onClick={() => handleThemeChange("system")}
+                  className={`px-3 py-1 rounded-md text-sm transition-colors ${
+                    theme === "system" 
+                      ? "bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm" 
+                      : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  System
+                </button>
+              </div>
+              <a
+                href="/"
+                className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                Back to Home
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="space-y-8">
+          {endpoints.map((endpoint, index) => (
+            <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 transition-colors">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">{endpoint.title}</h2>
+                    <p className="text-gray-600 dark:text-gray-300 mt-1">{endpoint.description}</p>
+                  </div>
+                  <button
+                    onClick={() => handleTryInBrowser(endpoint)}
+                    className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors text-sm"
+                  >
+                    Try in Browser
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">Request</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Method:</span>
+                        <span className={`ml-2 px-2 py-1 rounded text-xs font-medium ${
+                          endpoint.method === 'POST' 
+                            ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200' 
+                            : 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
+                        }`}>
+                          {endpoint.method}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Endpoint:</span>
+                        <code className="ml-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-2 py-1 rounded text-sm">{endpoint.endpoint}</code>
+                      </div>
+                    </div>
+
+                    {endpoint.parameters.length > 0 && (
+                      <div className="mt-4">
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">Parameters</h4>
+                        <div className="space-y-2">
+                          {endpoint.parameters.map((param: any, paramIndex: number) => (
+                            <div key={paramIndex} className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium text-sm text-gray-900 dark:text-white">{param.name}</span>
+                                <span className="text-xs bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 px-2 py-1 rounded">{param.type}</span>
+                                {param.required && (
+                                  <span className="text-xs bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-2 py-1 rounded">Required</span>
+                                )}
+                              </div>
+                              <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{param.description}</p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Example: {param.example}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {endpoint.method === "POST" && (
+                      <div className="mt-4">
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">Request Body</h4>
+                        <div className="bg-gray-900 text-gray-100 p-4 rounded-lg relative">
+                          <button
+                            onClick={() => copyToClipboard(JSON.stringify({ url: "https://example.com/very-long-url" }, null, 2))}
+                            className="absolute top-2 right-2 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600"
+                          >
+                            Copy
+                          </button>
+                          <pre className="text-sm overflow-x-auto">
+                            <code>{JSON.stringify({ url: "https://example.com/very-long-url" }, null, 2)}</code>
+                          </pre>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">Response</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">Success Response</h4>
+                        <div className="bg-gray-900 text-gray-100 p-4 rounded-lg relative">
+                          <button
+                            onClick={() => copyToClipboard(JSON.stringify(endpoint.response.success, null, 2))}
+                            className="absolute top-2 right-2 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600"
+                          >
+                            Copy
+                          </button>
+                          <pre className="text-sm overflow-x-auto">
+                            <code>{JSON.stringify(endpoint.response.success, null, 2)}</code>
+                          </pre>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">Error Response</h4>
+                        <div className="bg-gray-900 text-gray-100 p-4 rounded-lg relative">
+                          <button
+                            onClick={() => copyToClipboard(JSON.stringify(endpoint.response.error, null, 2))}
+                            className="absolute top-2 right-2 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600"
+                          >
+                            Copy
+                          </button>
+                          <pre className="text-sm overflow-x-auto">
+                            <code>{JSON.stringify(endpoint.response.error, null, 2)}</code>
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/20 bg-opacity-20 flex items-center justify-end z-50">
+          <div className="bg-white dark:bg-gray-800 w-full max-w-2xl h-full overflow-y-auto transition-colors shadow-2xl">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">Test API Endpoint</h2>
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Endpoint
+                  </label>
+                  <input
+                    type="text"
+                    value={selectedEndpoint?.endpoint || ""}
+                    
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
+                  />
+                </div>
+
+                {selectedEndpoint?.method === "POST" && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Request Body (JSON)
+                    </label>
+                    <textarea
+                      value={requestBody}
+                      onChange={(e) => setRequestBody(e.target.value)}
+                      rows={8}
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      placeholder="Enter JSON request body..."
+                    />
+                  </div>
+                )}
+
+                <button
+                  onClick={handleTestRequest}
+                  disabled={loading}
+                  className="w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  {loading ? "Testing..." : "Test Request"}
+                </button>
+
+                {response && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Response
+                    </label>
+                    <div className="bg-gray-900 text-gray-100 p-4 rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium">
+                          Status: <span className={response.status >= 200 && response.status < 300 ? "text-green-400" : "text-red-400"}>
+                            {response.status}
+                          </span>
+                        </span>
+                        <button
+                          onClick={() => copyToClipboard(JSON.stringify(response, null, 2))}
+                          className="bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600"
+                        >
+                          Copy
+                        </button>
+                      </div>
+                      <pre className="text-sm overflow-x-auto">
+                        <code>{JSON.stringify(response, null, 2)}</code>
+                      </pre>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
