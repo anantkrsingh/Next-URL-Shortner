@@ -1,35 +1,37 @@
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { shortCode: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ shortCode: string }> }
 ) {
   try {
-    const { shortCode } = params;
+    const { shortCode } = await params
 
     const url = await prisma.url.findUnique({
-      where: { shortCode },
-    });
+      where: { shortCode }
+    })
 
     if (!url) {
       return NextResponse.json(
-        { error: "Short URL not found" },
+        { error: 'Short URL not found' },
         { status: 404 }
-      );
+      )
     }
 
+    // Increment click count
     await prisma.url.update({
       where: { id: url.id },
-      data: { clicks: url.clicks + 1 },
-    });
+      data: { clicks: url.clicks + 1 }
+    })
 
-    return NextResponse.json({ redirectUrl: url.originalUrl });
+    return NextResponse.redirect(url.originalUrl)
+
   } catch (error) {
-    console.error("Error fetching short URL:", error);
+    console.error('Error redirecting:', error)
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: 'Internal server error' },
       { status: 500 }
-    );
+    )
   }
 }
