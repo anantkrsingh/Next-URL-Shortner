@@ -104,21 +104,21 @@ export default function ApiDocs() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex-1">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                 API Documentation
               </h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-2">
+              <p className="text-gray-600 dark:text-gray-300 mt-1 sm:mt-2 text-sm sm:text-base">
                 Complete guide to the Tinyur URL Shortener API
               </p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <ThemeSwitcher />
               <Link
                 href="/"
-                className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+                className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors text-center text-sm sm:text-base"
               >
                 Back to Home
               </Link>
@@ -127,7 +127,7 @@ export default function ApiDocs() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <ApiDocsClient endpoints={endpoints} />
       </div>
     </div>
