@@ -1,5 +1,6 @@
 import Short from "@/components/short";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Tinyur URL Shortener, Free & No Ads",
@@ -67,12 +68,12 @@ export default function Home() {
       className="min-h-screen bg-cover bg-center bg-no-repeat gap-2 flex flex-col items-center p-4 relative overflow-hidden"
       style={{ backgroundImage: "url(/bg.webp)" }}
     >
-      <a
+      <Link
         href="/api-docs"
         className="text-white hover:cursor-pointer text-shadow-md text-end w-full underline underline-offset-2  font-bold text-lg"
       >
         API Docs
-      </a>
+      </Link>
       <Short />
     </div>
   );
