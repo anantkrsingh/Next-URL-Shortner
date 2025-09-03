@@ -20,7 +20,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check if URL already exists
     const existingUrl = await prisma.url.findFirst({
       where: { originalUrl: url }
     })
@@ -33,7 +32,6 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Generate unique short code
     let shortCode: string
     let isUnique = false
     
@@ -47,7 +45,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Create new URL record
     const newUrl = await prisma.url.create({
       data: {
         originalUrl: url,

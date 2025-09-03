@@ -207,7 +207,7 @@ export default function Short() {
                   Short URL:
                 </label>
                 <div className="flex flex-col gap-2 items-center space-x-3">
-                  <div className="flex-1 flex-col relative">
+                  <div className="flex-1 w-full flex-col relative">
                     <input
                       type="text"
                       value={shortUrl.shortUrl}
