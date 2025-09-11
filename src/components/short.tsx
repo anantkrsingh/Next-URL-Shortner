@@ -92,7 +92,15 @@ export default function Short() {
 
   return (
     <div className="max-w-4xl flex flex-1 justify-center items-center w-full relative z-10">
-      <div className="bg-black/20 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8 lg:p-12">
+      <div className="bg-black/20 border border-dashed backdrop-blur-xl shadow-2xl border-white/60 p-8 lg:p-12 relative">
+        {/* Top-left corner */}
+        <svg width="12" height="12" viewBox="0 0 5 5" className="absolute top-[-6px] left-[-6px] fill-white"><path d="M2 0h1v2h2v1h-2v2h-1v-2h-2v-1h2z"></path></svg>
+        {/* Top-right corner */}
+        <svg width="12" height="12" viewBox="0 0 5 5" className="absolute top-[-6px] right-[-6px] fill-white"><path d="M2 0h1v2h2v1h-2v2h-1v-2h-2v-1h2z"></path></svg>
+        {/* Bottom-left corner */}
+        <svg width="12" height="12" viewBox="0 0 5 5" className="absolute bottom-[-6px] left-[-6px] fill-white"><path d="M2 0h1v2h2v1h-2v2h-1v-2h-2v-1h2z"></path></svg>
+        {/* Bottom-right corner */}
+        <svg width="12" height="12" viewBox="0 0 5 5" className="absolute bottom-[-6px] right-[-6px] fill-white"><path d="M2 0h1v2h2v1h-2v2h-1v-2h-2v-1h2z"></path></svg>
         <form onSubmit={handleSubmit} className="space-y-8">
           <div>
             <label
@@ -108,7 +116,7 @@ export default function Short() {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://example.com/very-long-url-that-needs-shortening"
-                className="w-full px-6 py-4 text-lg bg-black border-2 border-white/30 rounded-2xl text-white placeholder-gray-300 outline-none transition-all duration-300 backdrop-blur-sm"
+                className="w-full px-6 py-4 text-md bg-black/40 border-1 border-white/30 rounded-4xl text-white placeholder-gray-300 outline-none transition-all duration-300 backdrop-blur-sm"
                 required
               />
               <button
