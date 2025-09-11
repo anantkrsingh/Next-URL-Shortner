@@ -10,6 +10,8 @@ interface ShortUrlResponse {
 
 export default function Short() {
   const [url, setUrl] = useState("");
+  const [customAlias, setCustomAlias] = useState("");
+  const [useCustomAlias, setUseCustomAlias] = useState(false);
   const [shortUrl, setShortUrl] = useState<ShortUrlResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -22,12 +24,17 @@ export default function Short() {
     setShortUrl(null);
 
     try {
+      const requestBody: { url: string; customAlias?: string } = { url };
+      if (useCustomAlias && customAlias.trim()) {
+        requestBody.customAlias = customAlias.trim();
+      }
+
       const response = await fetch("/api/shorten", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify(requestBody),
       });
 
       const data = await response.json();
@@ -140,6 +147,53 @@ export default function Short() {
               </button>
             </div>
           </div>
+
+          {/* Custom Alias Toggle */}
+          <div className="flex items-center space-x-3">
+            <input
+              type="checkbox"
+              id="useCustomAlias"
+              checked={useCustomAlias}
+              onChange={(e) => setUseCustomAlias(e.target.checked)}
+              className="w-5 h-5 text-blue-600 bg-black/40 border-white/30 rounded focus:ring-blue-500 focus:ring-2"
+            />
+            <label
+              htmlFor="useCustomAlias"
+              className="text-white text-shadow-lg text-lg font-semibold cursor-pointer"
+            >
+              Use custom alias
+            </label>
+          </div>
+
+          {/* Custom Alias Input */}
+          {useCustomAlias && (
+            <div>
+              <label
+                htmlFor="customAlias"
+                className="block text-shadow-lg text-lg font-semibold text-white mb-4"
+              >
+                Custom alias (optional)
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  id="customAlias"
+                  value={customAlias}
+                  onChange={(e) => setCustomAlias(e.target.value)}
+                  placeholder="my-custom-alias"
+                  className="w-full px-6 py-4 text-md bg-black/40 border-1 border-white/30 rounded-4xl text-white placeholder-gray-300 outline-none transition-all duration-300 backdrop-blur-sm"
+                  pattern="[a-zA-Z0-9_-]+"
+                  title="Only letters, numbers, hyphens, and underscores are allowed"
+                />
+                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm">
+                  {customAlias.length}/50
+                </div>
+              </div>
+              <p className="mt-2 text-sm text-gray-300">
+                Only letters, numbers, hyphens, and underscores. 3-50 characters.
+              </p>
+            </div>
+          )}
 
           <button
             type="submit"

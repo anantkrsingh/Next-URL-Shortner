@@ -117,7 +117,10 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
 
   const handleTryInBrowser = (endpoint: Endpoint) => {
     setSelectedEndpoint(endpoint);
-    setRequestBody(JSON.stringify({ url: "https://google.com" }, null, 2));
+    setRequestBody(JSON.stringify({ 
+      url: "https://google.com",
+      customAlias: "my-custom-alias"
+    }, null, 2));
     setResponse(null);
     setIsModalOpen(true);
   };
@@ -255,13 +258,19 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
                       <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">Request Body</h4>
                       <div className="bg-gray-900 text-gray-100 p-3 sm:p-4 rounded-lg relative">
                         <button
-                          onClick={() => copyToClipboard(JSON.stringify({ url: "https://example.com/very-long-url" }, null, 2))}
+                          onClick={() => copyToClipboard(JSON.stringify({ 
+                            url: "https://example.com/very-long-url",
+                            customAlias: "my-custom-alias"
+                          }, null, 2))}
                           className="absolute top-2 right-2 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600"
                         >
                           Copy
                         </button>
                         <pre className="text-xs sm:text-sm overflow-x-auto">
-                          <code>{JSON.stringify({ url: "https://example.com/very-long-url" }, null, 2)}</code>
+                          <code>{JSON.stringify({ 
+                            url: "https://example.com/very-long-url",
+                            customAlias: "my-custom-alias"
+                          }, null, 2)}</code>
                         </pre>
                       </div>
                     </div>

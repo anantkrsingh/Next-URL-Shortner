@@ -18,6 +18,7 @@ model Url {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   originalUrl String
   shortCode   String   @unique
+  customAlias String?  @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   clicks      Int      @default(0)

@@ -77,7 +77,7 @@ const endpoints = [
     title: "Shorten URL",
     method: "POST",
     endpoint: "/api/shorten",
-    description: "Create a short URL from a long URL",
+    description: "Create a short URL from a long URL with optional custom alias",
     parameters: [
       {
         name: "url",
@@ -85,6 +85,13 @@ const endpoints = [
         required: true,
         description: "The URL to be shortened",
         example: "https://example.com/very-long-url",
+      },
+      {
+        name: "customAlias",
+        type: "string",
+        required: false,
+        description: "Custom alias for the short URL (3-50 characters, letters, numbers, hyphens, and underscores only)",
+        example: "my-custom-alias",
       },
     ],
     response: {
