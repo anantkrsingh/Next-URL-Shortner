@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
           {
             originalUrl: existingAlias.originalUrl,
             shortCode: existingAlias.shortCode,
-            shortUrl: `${request.nextUrl.origin}/${existingAlias.shortCode}`
+            shortUrl: `${process.env.NEXT_PUBLIC_APP_URL}/${existingAlias.shortCode}`
           }
         )
       }else if (existingAlias && existingAlias.customAlias === customAlias && existingAlias.originalUrl !== url) {
@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
           originalUrl: existingUrl.originalUrl,
           shortCode: existingUrl.shortCode,
-          shortUrl: `${request.nextUrl.origin}/${existingUrl.shortCode}`
+          shortUrl: `${process.env.NEXT_PUBLIC_APP_URL}/${existingUrl.shortCode}`
         })
       }
 
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       originalUrl: newUrl.originalUrl,
       shortCode: newUrl.shortCode,
-      shortUrl: `${request.nextUrl.origin}/${newUrl.shortCode}`
+      shortUrl: `${process.env.NEXT_PUBLIC_APP_URL}/${newUrl.shortCode}`
     })
 
   } catch (error) {
