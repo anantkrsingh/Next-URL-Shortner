@@ -1,3 +1,4 @@
+
 module.exports = {
-  ignorePatterns: ["src/generated/prisma/**", "node_modules/"],
+  ignorePatterns: ["generated/prisma/**", "node_modules/"],
 };

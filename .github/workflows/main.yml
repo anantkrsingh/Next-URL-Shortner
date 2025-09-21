@@ -17,8 +17,6 @@ jobs:
           echo "MONGO_URL=mongodb://mongo:27017/mydb" >> .env
           echo "REDIS_URL=redis://redis:6379" >> .env
           echo "NODE_ENV=production" >> .env
-          
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
           echo "NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}" >> .env
           echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}" >> .env
           echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}" >> .env
