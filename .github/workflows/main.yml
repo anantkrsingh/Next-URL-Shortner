@@ -12,15 +12,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-<<<<<<< HEAD
-        
-      - name: Build and run with Docker Compose
-        run: |
-            docker compose down
-            docker compose up -d --build
-=======
-
->>>>>>> 81523353b24158978935f17d5c9c8c0e86fec22b
       - name: Create .env file for Next.js
         run: |
           echo "DATABASE_URL=mongodb://mongo:27017/url-shortner?replicaSet=rs0" >> .env
@@ -34,18 +25,15 @@ jobs:
           echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}" >> .env
           echo "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}" >> .env
       
-<<<<<<< HEAD
-=======
-
+      - name: Init MongoDB replica set
+        run: |
+              docker exec mongo mongosh --eval 'rs.initiate({
+                  _id: "rs0",
+                  members: [{ _id: 0, host: "mongo:27017" }]
+              })'
       - name: Build and run with Docker Compose
         run: |
           docker compose down
           docker compose up -d --build
-      - name: Init MongoDB replica set
-        run: |
-            docker exec mongo mongosh --eval 'rs.initiate({
-                _id: "rs0",
-                members: [{ _id: 0, host: "mongo:27017" }]
-            })'
+     
   
->>>>>>> 81523353b24158978935f17d5c9c8c0e86fec22b
