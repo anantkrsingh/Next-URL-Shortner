@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
 
       // Check if custom alias is already taken
       const existingAlias = await prisma.url.findFirst({
-        where: { 
+        where: {
           OR: [
             { customAlias: customAlias },
             { shortCode: customAlias }
@@ -56,7 +56,15 @@ export async function POST(request: NextRequest) {
         }
       })
 
-      if (existingAlias) {
+      if (existingAlias && existingAlias.customAlias === customAlias && existingAlias.originalUrl === url) {
+        return NextResponse.json(
+          {
+            originalUrl: existingAlias.originalUrl,
+            shortCode: existingAlias.shortCode,
+            shortUrl: `${request.nextUrl.origin}/${existingAlias.shortCode}`
+          }
+        )
+      }else if (existingAlias && existingAlias.customAlias === customAlias && existingAlias.originalUrl !== url) {
         return NextResponse.json(
           { error: 'Custom alias is already taken' },
           { status: 400 }
@@ -71,7 +79,7 @@ export async function POST(request: NextRequest) {
     } else {
       // Check if URL already exists (only for non-custom aliases)
       const existingUrl = await prisma.url.findFirst({
-        where: { 
+        where: {
           originalUrl: url,
           customAlias: null // Only check existing URLs without custom aliases
         }

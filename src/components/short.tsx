@@ -129,7 +129,7 @@ export default function Short() {
               <button
                 type="button"
                 onClick={pasteFromClipboard}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-xl transition-all duration-200 backdrop-blur-sm border border-white/30 hover:border-white/50"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-gray-800 hover:bg-white/30 text-white rounded-xl transition-all duration-200 backdrop-blur-sm border border-white/30 hover:border-white/50"
               >
                 <svg
                   className="w-5 h-5"
