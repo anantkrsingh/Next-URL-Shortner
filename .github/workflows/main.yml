@@ -26,14 +26,15 @@ jobs:
           echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}" >> .env
           echo "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}" >> .env
       
-      - name: Init MongoDB replica set
-        run: |
-            docker exec mongo mongosh --eval 'rs.initiate({
-                _id: "rs0",
-                members: [{ _id: 0, host: "localhost:27017" }]
-            })'
-  
+
       - name: Build and run with Docker Compose
         run: |
           docker compose down
           docker compose up -d --build
+      - name: Init MongoDB replica set
+        run: |
+            docker exec mongo mongosh --eval 'rs.initiate({
+                _id: "rs0",
+                members: [{ _id: 0, host: "mongo:27017" }]
+            })'
+  
