@@ -12,6 +12,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+        
+      - name: Build and run with Docker Compose
+        run: |
+            docker compose down
+            docker compose up -d --build
       - name: Create .env file for Next.js
         run: |
           echo "MONGO_URL=mongodb://mongo:27017/mydb" >> .env
@@ -27,8 +32,3 @@ jobs:
           echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}" >> .env
           echo "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}" >> .env
       
-
-      - name: Build and run with Docker Compose
-        run: |
-          docker compose down
-          docker compose up -d --build
