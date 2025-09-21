@@ -14,7 +14,7 @@ jobs:
 
       - name: Create .env file for Next.js
         run: |
-          echo "MONGO_URL=mongodb://mongo:27017/mydb" >> .env
+          echo "DATABASE_URL=mongodb://mongo:27017/mydb" >> .env
           echo "REDIS_URL=redis://redis:6379" >> .env
           echo "NODE_ENV=production" >> .env
           echo "NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}" >> .env
