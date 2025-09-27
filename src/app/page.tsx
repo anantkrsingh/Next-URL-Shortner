@@ -1,7 +1,8 @@
+
+import HomeComponent from "@/components/home/page";
 import Short from "@/components/short";
 import { Metadata } from "next";
 import Link from "next/link";
-
 export const metadata: Metadata = {
   title: "Tinyur | Free URL Shortener Without Ads or Tracking",
   description:
@@ -94,6 +95,7 @@ export default function Home() {
       >
         API Docs
       </Link>
+      <HomeComponent />
       <Short />
     </div>
   );

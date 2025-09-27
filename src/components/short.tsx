@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import CoolCheckbox from "./cool-checkbox";
 
 interface ShortUrlResponse {
   originalUrl: string;
@@ -148,21 +149,12 @@ export default function Short() {
             </div>
           </div>
 
-          {/* Custom Alias Toggle */}
           <div className="flex items-center space-x-3">
-            <input
-              type="checkbox"
-              id="useCustomAlias"
+            <CoolCheckbox
+              label="Use custom alias"
               checked={useCustomAlias}
-              onChange={(e) => setUseCustomAlias(e.target.checked)}
-              className="w-5 h-5 text-blue-600 bg-black/40 border-white/30 rounded focus:ring-blue-500 focus:ring-2"
+              onToggle={(checked) => setUseCustomAlias(checked)}
             />
-            <label
-              htmlFor="useCustomAlias"
-              className="text-white text-shadow-lg text-lg font-semibold cursor-pointer"
-            >
-              Use custom alias
-            </label>
           </div>
 
           {/* Custom Alias Input */}
@@ -279,11 +271,10 @@ export default function Short() {
                   </div>
                   <button
                     onClick={copyToClipboard}
-                    className={`px-6 py-3 rounded-xl h-[40px] w-full justify-center font-semibold transition-all duration-200 flex items-center space-x-2 ${
-                      copied
-                        ? "bg-green-800 text-white"
-                        : "bg-green-600 hover:bg-green-700 text-white hover:shadow-lg hover:shadow-green-500/25"
-                    }`}
+                    className={`px-6 py-3 rounded-xl h-[40px] w-full justify-center font-semibold transition-all duration-200 flex items-center space-x-2 ${copied
+                      ? "bg-green-800 text-white"
+                      : "bg-green-600 hover:bg-green-700 text-white hover:shadow-lg hover:shadow-green-500/25"
+                      }`}
                   >
                     {copied ? (
                       <>
