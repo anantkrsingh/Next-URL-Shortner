@@ -24,7 +24,7 @@ interface Props {
   value?: TOC_INTERFACE;
   setValue?: (v: TOC_INTERFACE) => void;
   data: TOC_INTERFACE[];
-  ref?: any;
+  ref?: React.RefObject<HTMLElement> | { current: HTMLElement | Window | null };
   transition?: Transition;
   className?: string;
   lPrefix?: string;
@@ -50,10 +50,10 @@ const DynamicScrollIslandTOC = ({
     const c = ref?.current || window;
 
     const updateScrollProgress = () => {
-      const scrollTop = c === window ? window.scrollY : c.scrollTop;
+      const scrollTop = c === window ? window.scrollY : (c as HTMLElement).scrollTop;
       const scrollHeight =
-        c === window ? document.body.scrollHeight : c.scrollHeight;
-      const clientHeight = c === window ? window.innerHeight : c.clientHeight;
+        c === window ? document.body.scrollHeight : (c as HTMLElement).scrollHeight;
+      const clientHeight = c === window ? window.innerHeight : (c as HTMLElement).clientHeight;
 
       const progress = scrollTop / (scrollHeight - clientHeight) || 0;
 
@@ -64,7 +64,7 @@ const DynamicScrollIslandTOC = ({
     c.addEventListener("scroll", updateScrollProgress);
 
     const resizeObserver = new ResizeObserver(updateScrollProgress);
-    resizeObserver.observe(c === window ? document.body : c.firstChild);
+    resizeObserver.observe(c === window ? document.body : (c as HTMLElement).firstElementChild!);
 
     return () => {
       c.removeEventListener("scroll", updateScrollProgress);
@@ -112,7 +112,7 @@ const DynamicScrollIslandTOC = ({
           "relative z-51 cursor-pointer select-none",
           "[--height-opened:150px] [--width-opened:350px] [--width:220px]",
           "text-white/80",
-          className,
+          className
         )}
       >
         <motion.div
@@ -124,7 +124,7 @@ const DynamicScrollIslandTOC = ({
           style={{ borderRadius: 24 }}
           className={cn(
             "relative flex h-10 cursor-pointer items-center overflow-hidden px-1 outline-hidden!",
-            "min-w-[var(--width)] bg-black",
+            "min-w-[var(--width)] bg-black"
           )}
         >
           <div className="absolute top-0 left-1/2 h-full w-[calc(var(--width-opened)-50px)] -translate-x-1/2">
@@ -150,7 +150,7 @@ const DynamicScrollIslandTOC = ({
                 layoutId={`${lPrefix}-${cKey}`}
                 className={cn(
                   "cursor-pointer justify-center overflow-hidden p-5 pt-14",
-                  "min-h-[var(--height-opened)] w-[var(--width-opened)] bg-black",
+                  "min-h-[var(--height-opened)] w-[var(--width-opened)] bg-black"
                 )}
                 style={{ borderRadius: 24 }}
               >
@@ -178,7 +178,10 @@ function Progress({
   lPrefix,
 }: Props & { sp: MotionValue }) {
   const [p, setP] = useState(0);
-  const { scrollYProgress } = useScroll({ container: ref });
+  const isWindowRef = ref?.current === window;
+  const { scrollYProgress } = useScroll({ 
+    container: isWindowRef ? undefined : (ref as React.RefObject<HTMLElement> | undefined)
+  });
 
   useEffect(() => {
     setP(Math.round(sp.get() * 100));
@@ -197,7 +200,7 @@ function Progress({
       }}
       className={cn(
         "relative flex h-8 w-14 items-center justify-center overflow-hidden rounded-full text-sm font-bold",
-        "bg-white/[0.1] transition-colors hover:bg-white/[0.15]",
+        "bg-white/[0.1] transition-colors hover:bg-white/[0.15]"
       )}
     >
       {value?.value ? <TbX /> : `${p}%`}

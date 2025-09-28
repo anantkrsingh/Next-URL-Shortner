@@ -41,8 +41,8 @@ const SubSelectToggle = ({
             y: second ? -10 : 0,
           }}
         >
-          <div>Premium</div>
-          <motion.div className="mt-0.5 text-xs font-semibold opacity-60">
+          <div className="text-white">About</div>
+          <motion.div className="mt-0.5 text-xs text-white font-semibold opacity-90">
             {subTabs[0].label} • {subTabs[1].label}
           </motion.div>
         </motion.div>
@@ -60,9 +60,9 @@ const SubSelectToggle = ({
   }
 
   return (
-    <div>
+    <div className="text-white">
       <MotionConfig transition={transition}>
-        <div className="flex h-16 rounded-full bg-white p-0.5 text-sm shadow-2xl shadow-black/20">
+        <div className="flex h-16 rounded-full bg-black/40 bg-backdrop backdrop-blur-sm p-0.5 text-sm shadow-2xl shadow-black/20">
           {tabs.map((t, idx) => (
             <motion.button
               onClick={() => setTab(t)}
@@ -71,13 +71,13 @@ const SubSelectToggle = ({
               animate={{ color: t.value === tab.value ? "#FFFFFF" : "#000000" }}
               className="relative w-[160px] cursor-pointer font-bold sm:w-[260px]"
             >
-              <div className="relative z-10 flex h-full w-full items-center justify-center text-sm sm:text-base">
+              <div className="relative z-10 flex h-full w-full text-white items-center justify-center text-sm sm:text-base">
                 {renderItem(idx)}
               </div>
-              {t === tab && (
+              {t.value === tab.value && (
                 <motion.div
                   layoutId="active-black"
-                  className={"absolute inset-0 rounded-full bg-black"}
+                  className={`absolute inset-0 rounded-full bg-black ${t.value}`}
                 />
               )}
             </motion.button>
