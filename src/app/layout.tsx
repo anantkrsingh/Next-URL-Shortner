@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     "Tinyur",
     "Tinyur url shortener platform",
     "Tinyur url shortning platform",
+    "Free and Unlimited URL Shortener",
+    "Unlimited Hits url shortner",
+    "Zero pricing url shortner",
   ],
   icons: "/icon.png",
   robots: {

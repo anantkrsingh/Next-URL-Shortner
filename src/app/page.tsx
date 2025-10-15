@@ -96,6 +96,12 @@ export default function Home() {
       >
         API Docs
       </Link>
+      <Link
+        href="/blogs"
+        className="text-white hover:cursor-pointer text-shadow-md text-end w-full underline underline-offset-2 font-bold text-lg"
+      >
+        Blogs
+      </Link>
       <HomeComponent />
       <Short />
     </div>
