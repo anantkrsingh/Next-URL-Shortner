@@ -1,14 +1,15 @@
-
 import HomeComponent from "@/components/home/page";
 import Short from "@/components/short";
 import { Metadata } from "next";
 import Link from "next/link";
 export const metadata: Metadata = {
-  title: "Tinyur | Free URL Shortener Without Ads or Tracking",
+  title: "Tinyur url shortener | Free URL Shortener Without Ads or Tracking",
   description:
     "Shorten your long links with Tinyur. 100% free, privacy-focused URL shortener. No ads, no tracking, no hidden costs. Simple, fast, and reliable link shortener for personal & business use.",
   keywords: [
     "URL Shortener",
+    "Tinyur url shortning platform",
+    "Tinyur url shortener",
     "Free URL Shortener",
     "Tinyur",
     "Link Shortener",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     "Branded short links",
   ],
   authors: [{ name: "Tinyur Team", url: "https://tinyur.in" }],
-  generator: "Next.js",
+  
   applicationName: "Tinyur",
   referrer: "origin-when-cross-origin",
   publisher: "Tinyur",

@@ -3,9 +3,9 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "API Documentation - Tinyur URL Shortener",
+  title: "Tinyur url shortener platform | API Documentation",
   description:
-    "Complete guide to the Tinyur URL Shortener API, Free URL Sortner API, Unlimited API Calls",
+    "Complete guide to the Tinyur url shortener platform API, Free URL Sortner API, Unlimited API Calls",
 
   keywords: [
     "Free URL Shortener API",
