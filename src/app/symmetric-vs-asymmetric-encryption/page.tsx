@@ -163,7 +163,7 @@ export default function SymmetricVsAsymmetricEncryptionPage() {
         <ul className="list-disc list-inside mt-3 space-y-1">
           <li><strong>Key distribution problem</strong>: Securely sharing the key is challenging.</li>
           <li><strong>Scalability</strong>: With <em>n</em> users, you need <em>n(n-1)/2</em> keys for pairwise communication.</li>
-          <li><strong>No non-repudiation</strong>: Both parties have the same key; can't prove who created a message.</li>
+          <li><strong>No non-repudiation</strong>: Both parties have the same key; can&apos;t prove who created a message.</li>
         </ul>
       </section>
 
@@ -179,7 +179,7 @@ export default function SymmetricVsAsymmetricEncryptionPage() {
         <ol className="list-decimal list-inside mt-3 space-y-2">
           <li>Receiver generates a key pair (public key + private key).</li>
           <li>Receiver distributes public key openly; keeps private key secret.</li>
-          <li>Sender encrypts plaintext using receiver's public key.</li>
+            <li>Sender encrypts plaintext using receiver&apos;s public key.</li>
           <li>Only the receiver can decrypt using their private key.</li>
         </ol>
 
@@ -335,7 +335,7 @@ export default function SymmetricVsAsymmetricEncryptionPage() {
         
         <h3 className="text-xl font-semibold mt-6">TLS/HTTPS example</h3>
         <ol className="list-decimal list-inside mt-3 space-y-2">
-          <li>Client verifies server's certificate (asymmetric: RSA/ECDSA).</li>
+          <li>Client verifies server&apos;s certificate (asymmetric: RSA/ECDSA).</li>
           <li>Client and server perform key exchange (asymmetric: ECDH or RSA).</li>
           <li>They derive a shared symmetric session key.</li>
           <li>All subsequent data is encrypted with AES using the session key (symmetric).</li>
@@ -350,7 +350,7 @@ export default function SymmetricVsAsymmetricEncryptionPage() {
         <ol className="list-decimal list-inside mt-3 space-y-2">
           <li>Sender generates random symmetric session key.</li>
           <li>Message is encrypted with session key (AES).</li>
-          <li>Session key is encrypted with recipient's public key (RSA).</li>
+          <li>Session key is encrypted with recipient&apos;s public key (RSA).</li>
           <li>Both encrypted message and encrypted session key are sent.</li>
           <li>Recipient decrypts session key with their private key, then decrypts message.</li>
         </ol>

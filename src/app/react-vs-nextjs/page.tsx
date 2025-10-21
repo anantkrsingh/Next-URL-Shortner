@@ -187,7 +187,7 @@ function Counter() {
 }`}</pre>
         </div>
 
-        <h3 className="text-xl font-semibold mt-6">What React doesn't include</h3>
+        <h3 className="text-xl font-semibold mt-6">What React doesn&apos;t include</h3>
         <ul className="list-disc list-inside mt-3 space-y-1">
           <li>Routing (need React Router or similar)</li>
           <li>Server-side rendering (client-side by default)</li>
@@ -475,7 +475,7 @@ function App() {
             Client-side rendering means search bots receive empty HTML shell.
           </li>
           <li>
-            Google can execute JavaScript but it's slower and not guaranteed for all content.
+            Google can execute JavaScript but it&apos;s slower and not guaranteed for all content.
           </li>
           <li>
             Meta tags must be manipulated with react-helmet or similar libraries.
@@ -588,7 +588,7 @@ export default function Page() {
           <li>Building single-page applications (SPAs) or dashboards.</li>
           <li>You need maximum flexibility in architecture.</li>
           <li>SEO is not a priority (internal tools, authenticated apps).</li>
-          <li>You're adding React to existing non-React project incrementally.</li>
+          <li>You&apos;re adding React to existing non-React project incrementally.</li>
           <li>Your team prefers choosing their own tools and libraries.</li>
           <li>You want minimal framework overhead.</li>
         </ul>
@@ -607,7 +607,7 @@ export default function Page() {
           <li>Your content is mostly static or semi-static (blogs, marketing sites).</li>
           <li>You need server-side rendering for personalized content.</li>
           <li>You want batteries-included developer experience.</li>
-          <li>You're building full-stack with API routes.</li>
+          <li>You&apos;re building full-stack with API routes.</li>
         </ul>
         <p className="mt-3 font-semibold">Examples:</p>
         <ul className="list-disc list-inside space-y-1 text-sm">

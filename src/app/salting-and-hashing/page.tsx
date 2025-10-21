@@ -163,10 +163,10 @@ export default function SaltingAndHashingPage() {
 
         <h3 className="text-xl font-semibold mt-6">Example</h3>
         <div className="mt-3 p-4 bg-gray-900 rounded-md font-mono text-sm">
-          <p>Input: "password123"</p>
-          <p>SHA-256: ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f</p>
-          <p className="mt-2">Input: "password124"</p>
-          <p>SHA-256: 8bb6118f8fd6935ad0876a3be34a717d32708ffd27258c28e26e0a03f7e55c12</p>
+          <p>Input: &quot;password123&quot;</p>
+          <p>SHA-256: &quot;ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f&quot;</p>
+          <p className="mt-2">Input: &quot;password124&quot;</p>
+          <p>SHA-256: &quot;8bb6118f8fd6935ad0876a3be34a717d32708ffd27258c28e26e0a03f7e55c12&quot;</p>
         </div>
         <p className="mt-3 text-sm opacity-80">
           Note how a single character change produces a completely different hash.
@@ -177,7 +177,7 @@ export default function SaltingAndHashingPage() {
         <h2 className="text-2xl font-semibold">Rainbow table attacks</h2>
         <p className="mt-3">
           A rainbow table is a precomputed database mapping common passwords to their hashes.
-          Attackers can instantly "crack" hashed passwords by looking them up in the table.
+          Attackers can instantly &quot;crack&quot; hashed passwords by looking them up in the table.
         </p>
 
         <h3 className="text-xl font-semibold mt-6">How the attack works</h3>
@@ -190,9 +190,9 @@ export default function SaltingAndHashingPage() {
 
         <h3 className="text-xl font-semibold mt-6">Example scenario</h3>
         <div className="mt-3 p-4 bg-gray-900 rounded-md font-mono text-sm">
-          <p>Database stores: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"</p>
+          <p>Database stores: &quot;ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f&quot;</p>
           <p className="mt-2">Rainbow table lookup:</p>
-          <p>ef92b778... → "password123" ✓</p>
+          <p>ef92b778... → &quot;password123&quot; ✓</p>
         </div>
         <p className="mt-3">
           Without additional defenses, unsalted hashes provide minimal protection against
@@ -219,13 +219,13 @@ export default function SaltingAndHashingPage() {
         <h3 className="text-xl font-semibold mt-6">Example with salt</h3>
         <div className="mt-3 p-4 bg-gray-900 rounded-md font-mono text-sm overflow-x-auto">
           <p>User 1:</p>
-          <p>Password: "password123"</p>
-          <p>Salt: "a4f8d2e1c9b7"</p>
-          <p>Hash(salt + password): 3d5e7a1b...</p>
+          <p>Password: &quot;password123&quot;</p>
+          <p>Salt: &quot;a4f8d2e1c9b7&quot;</p>
+          <p>Hash(salt + password): &quot;3d5e7a1b...&quot;</p>
           <p className="mt-3">User 2 (same password!):</p>
-          <p>Password: "password123"</p>
-          <p>Salt: "x7k2m9n4p1q8"</p>
-          <p>Hash(salt + password): 9f2c4e6a...</p>
+          <p>Password: &quot;password123&quot;</p>
+          <p>Salt: &quot;x7k2m9n4p1q8&quot;</p>
+          <p>Hash(salt + password): &quot;9f2c4e6a...&quot;</p>
         </div>
         <p className="mt-3">
           Same password → different salts → completely different hashes. Rainbow tables
@@ -237,7 +237,7 @@ export default function SaltingAndHashingPage() {
           <li>Each password has unique hash, preventing batch lookups.</li>
           <li>Attackers must crack each password individually.</li>
           <li>Rainbow tables would need to be regenerated for each salt (infeasible).</li>
-          <li>Salts can be stored in plaintext alongside hashes (they're not secret).</li>
+          <li>Salts can be stored in plaintext alongside hashes (they&apos;re not secret).</li>
         </ul>
       </section>
 
@@ -259,7 +259,7 @@ export default function SaltingAndHashingPage() {
         </ul>
         <p className="mt-3">
           These algorithms are excellent for file integrity verification but terrible for
-          password storage because they're optimized for speed.
+          password storage because they&apos;re optimized for speed.
         </p>
 
         <h3 className="text-xl font-semibold mt-6">Slow hash functions (Password-specific)</h3>
@@ -393,8 +393,8 @@ async function verifyPassword(password, storedHash) {
             <strong>Not using constant-time comparison</strong>: Vulnerable to timing attacks.
           </li>
           <li>
-            <strong>Pepper instead of proper algorithms</strong>: Adding a secret "pepper" to SHA-256
-            doesn't make it suitable for passwords.
+            <strong>Pepper instead of proper algorithms</strong>: Adding a secret &quot;pepper&quot; to SHA-256
+            doesn&apos;t make it suitable for passwords.
           </li>
           <li>
             <strong>Client-side hashing only</strong>: Server must hash; client hashing alone is insecure.

@@ -207,7 +207,7 @@ CREATE TABLE orders (
         <h2 className="text-2xl font-semibold">NoSQL databases</h2>
         <p className="mt-3">
           NoSQL databases abandon the relational model for flexible, schema-less storage.
-          They're optimized for specific use cases: massive scale, high throughput, flexible
+          They&apos;re optimized for specific use cases: massive scale, high throughput, flexible
           data models, or distributed architectures.
         </p>
 
@@ -267,7 +267,7 @@ CREATE TABLE orders (
           <li>Limited or no JOIN support; data duplication required.</li>
           <li>Less mature tooling and standardization.</li>
           <li>Complex queries can be difficult or impossible.</li>
-          <li>Learning curve for each NoSQL type's specific patterns.</li>
+          <li>Learning curve for each NoSQL type&apos;s specific patterns.</li>
         </ul>
       </section>
 
@@ -340,7 +340,7 @@ CREATE TABLE orders (
             <strong>Consistency</strong>: Database remains in valid state; constraints always enforced.
           </li>
           <li>
-            <strong>Isolation</strong>: Concurrent transactions don't interfere with each other.
+            <strong>Isolation</strong>: Concurrent transactions don&apos;t interfere with each other.
           </li>
           <li>
             <strong>Durability</strong>: Committed data persists even after crashes.
@@ -398,7 +398,7 @@ CREATE TABLE orders (
           </li>
         </ul>
         <p className="mt-3">
-          SQL databases can be sharded, but it's complex and loses many relational benefits
+          SQL databases can be sharded, but it&apos;s complex and loses many relational benefits
           (JOINs across shards are expensive). NoSQL databases handle sharding natively.
         </p>
       </section>
@@ -536,7 +536,7 @@ CREATE TABLE orders (
           <li>MongoDB for flexible content (blogs, CMS)</li>
         </ul>
         <p className="mt-3">
-          Don't feel locked into one choice—use the right tool for each job.
+          Don&apos;t feel locked into one choice—use the right tool for each job.
         </p>
       </section>
 
