@@ -4,14 +4,14 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Blogs | Tinyur",
   description:
-    "Explore articles from Tinyur. Start with: How URL Shorteners work.",
+    "Explore technical articles from Tinyur covering web development, security, databases, and more.",
   alternates: {
     canonical: "https://tinyur.in/blogs",
   },
   openGraph: {
     title: "Blogs | Tinyur",
     description:
-      "Explore articles from Tinyur. Start with: How URL Shorteners work.",
+      "Explore technical articles from Tinyur covering web development, security, databases, and more.",
     url: "https://tinyur.in/blogs",
     type: "article",
   },
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Blogs | Tinyur",
     description:
-      "Explore articles from Tinyur. Start with: How URL Shorteners work.",
+      "Explore technical articles from Tinyur covering web development, security, databases, and more.",
   },
 };
 
@@ -65,6 +65,42 @@ export default function BlogsPage() {
               A practical comparison to evaluate trade-offs and choose wisely.
             </p>
             <p className="text-xs mt-2 opacity-60">~9 min read</p>
+          </Link>
+        </li>
+        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
+          <Link href="/symmetric-vs-asymmetric-encryption" className="block">
+            <h2 className="text-xl font-semibold">Symmetric vs Asymmetric Key Encryption</h2>
+            <p className="text-sm opacity-80 mt-1">
+              Complete guide to encryption: algorithms, performance, security, and when to use symmetric vs asymmetric encryption.
+            </p>
+            <p className="text-xs mt-2 opacity-60">~12 min read</p>
+          </Link>
+        </li>
+        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
+          <Link href="/salting-and-hashing" className="block">
+            <h2 className="text-xl font-semibold">Salting and Hashing</h2>
+            <p className="text-sm opacity-80 mt-1">
+              Password security best practices: cryptographic hashing, salt generation, rainbow tables, bcrypt, and Argon2.
+            </p>
+            <p className="text-xs mt-2 opacity-60">~11 min read</p>
+          </Link>
+        </li>
+        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
+          <Link href="/sql-vs-nosql" className="block">
+            <h2 className="text-xl font-semibold">SQL vs NoSQL Databases</h2>
+            <p className="text-sm opacity-80 mt-1">
+              Comprehensive database comparison: structure, ACID vs BASE, scalability, and choosing the right database for your project.
+            </p>
+            <p className="text-xs mt-2 opacity-60">~13 min read</p>
+          </Link>
+        </li>
+        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
+          <Link href="/react-vs-nextjs" className="block">
+            <h2 className="text-xl font-semibold">React.js vs Next.js</h2>
+            <p className="text-sm opacity-80 mt-1">
+              Complete framework comparison: SSR vs CSR, performance, routing, SEO, and when to choose each framework.
+            </p>
+            <p className="text-xs mt-2 opacity-60">~14 min read</p>
           </Link>
         </li>
       </ul>
