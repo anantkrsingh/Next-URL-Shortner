@@ -4,6 +4,8 @@ import { useState } from "react";
 import CoolCheckbox from "./cool-checkbox";
 import { FaCheck, FaLongArrowAltRight, FaSpinner } from "react-icons/fa";
 import { FaCopy } from "react-icons/fa";
+import { analytics } from "../lib/firebase";
+import { logEvent } from "firebase/analytics";
 interface ShortUrlResponse {
   originalUrl: string;
   shortCode: string;
@@ -29,6 +31,15 @@ export default function Short() {
       const requestBody: { url: string; customAlias?: string } = { url };
       if (useCustomAlias && customAlias.trim()) {
         requestBody.customAlias = customAlias.trim();
+      }
+
+      // Add analytics
+      if (analytics) {
+        logEvent(analytics, "short_url_created", {
+          url,
+          customAlias,
+          useCustomAlias,
+        });
       }
 
       const response = await fetch("/api/shorten", {
@@ -180,7 +191,7 @@ export default function Short() {
                 disabled={loading}
                 className="px-6 bg-gray-800/20 hover:bg-white/30 text-white rounded-xl transition-all duration-200 backdrop-blur-sm border border-white/30 hover:border-white/50"
               >
-                { loading ? <FaSpinner /> : <FaLongArrowAltRight />}
+                {loading ? <FaSpinner /> : <FaLongArrowAltRight />}
               </button>
             </div>
           </div>
@@ -268,8 +279,6 @@ export default function Short() {
             </div>
           </div>
         )}
-
-        
       </div>
     </div>
   );
