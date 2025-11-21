@@ -1,4 +1,3 @@
-import HomeComponent from "@/components/home/page";
 import Short from "@/components/short";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -86,24 +85,49 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat gap-2 flex flex-col items-center p-4 relative overflow-hidden"
-      style={{ backgroundImage: "url(/bg.webp)" }}
-    >
-      <Link
-        href="/api-docs"
-        className="text-white hover:cursor-pointer text-shadow-md text-end w-full underline underline-offset-2 font-bold text-lg"
-      >
-        API Docs
-      </Link>
-      <Link
-        href="/blogs"
-        className="text-white hover:cursor-pointer text-shadow-md text-end w-full underline underline-offset-2 font-bold text-lg"
-      >
-        Blogs
-      </Link>
-      <HomeComponent />
-      <Short />
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-black">
+      {/* Gradient Background from top center - circular for mobile */}
+      <div 
+        className="absolute inset-0 overflow-hidden"
+        style={{
+          background: `
+            radial-gradient(circle at top center, #1e3a8a 0%, #1e40af 40%, transparent 70%),
+            #000000
+          `
+        }}
+      />
+      
+      {/* Grain Overlay */}
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage: "url(/grain.png)",
+          backgroundSize: "200px 200px",
+          backgroundRepeat: "repeat",
+          mixBlendMode: "overlay",
+        }}
+      />
+      
+      {/* API Docs and Blogs Links */}
+      <div className="absolute top-4 right-4 flex gap-4 z-20">
+        <Link
+          href="/api-docs"
+          className="text-white hover:text-blue-300 text-shadow-md underline underline-offset-2 font-bold text-lg transition-colors"
+        >
+          API Docs
+        </Link>
+        <Link
+          href="/blogs"
+          className="text-white hover:text-blue-300 text-shadow-md underline underline-offset-2 font-bold text-lg transition-colors"
+        >
+          Blogs
+        </Link>
+      </div>
+      
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-4xl">
+        <Short />
+      </div>
     </div>
   );
 }
