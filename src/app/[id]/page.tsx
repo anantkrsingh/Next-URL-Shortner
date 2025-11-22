@@ -2,8 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import redis from "../../../redis";
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
 
   const cachedUrl = await redis.get(id);
 

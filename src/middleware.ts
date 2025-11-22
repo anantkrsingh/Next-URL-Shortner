@@ -1,8 +1,6 @@
-// middleware.ts
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
 
   return NextResponse.next();
 
