@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { generateShortCode, isValidUrl } from '@/lib/utils'
+import redis from '../../../../redis'
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,6 +14,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const cachedUrl = await redis.get(url);
+
+    if (cachedUrl && !customAlias) {
+      console.log("Sending from cache")
+      return NextResponse.json(
+        { originalUrl: cachedUrl, shortCode: cachedUrl, shortUrl: `${process.env.NEXT_PUBLIC_APP_URL}/${cachedUrl}` },
+        { status: 201 }
+      )
+    }
+
     if (!isValidUrl(url)) {
       return NextResponse.json(
         { error: 'Invalid URL format' },
@@ -20,9 +31,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate custom alias if provided
     if (customAlias) {
-      // Check if custom alias contains only valid characters (alphanumeric, hyphens, underscores)
       const aliasRegex = /^[a-zA-Z0-9_-]+$/
       if (!aliasRegex.test(customAlias)) {
         return NextResponse.json(
@@ -31,7 +40,6 @@ export async function POST(request: NextRequest) {
         )
       }
 
-      // Check if custom alias is too short or too long
       if (customAlias.length < 3) {
         return NextResponse.json(
           { error: 'Custom alias must be at least 3 characters long' },
@@ -46,7 +54,6 @@ export async function POST(request: NextRequest) {
         )
       }
 
-      // Check if custom alias is already taken
       const existingAlias = await prisma.url.findFirst({
         where: {
           OR: [
@@ -57,6 +64,8 @@ export async function POST(request: NextRequest) {
       })
 
       if (existingAlias && existingAlias.customAlias === customAlias && existingAlias.originalUrl === url) {
+        await redis.set(customAlias, url);
+        await redis.set(url, customAlias);
         return NextResponse.json(
           {
             originalUrl: existingAlias.originalUrl,
@@ -64,7 +73,7 @@ export async function POST(request: NextRequest) {
             shortUrl: `${process.env.NEXT_PUBLIC_APP_URL}/${existingAlias.shortCode}`
           }
         )
-      }else if (existingAlias && existingAlias.customAlias === customAlias && existingAlias.originalUrl !== url) {
+      } else if (existingAlias && existingAlias.customAlias === customAlias && existingAlias.originalUrl !== url) {
         return NextResponse.json(
           { error: 'Custom alias is already taken' },
           { status: 400 }
@@ -72,20 +81,20 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // If custom alias is provided, use it as the short code
     let shortCode: string
     if (customAlias) {
       shortCode = customAlias
     } else {
-      // Check if URL already exists (only for non-custom aliases)
       const existingUrl = await prisma.url.findFirst({
         where: {
           originalUrl: url,
-          customAlias: null // Only check existing URLs without custom aliases
+          customAlias: null
         }
       })
 
       if (existingUrl) {
+        await redis.set(existingUrl.shortCode, existingUrl.originalUrl);
+        await redis.set(existingUrl.originalUrl, existingUrl.shortCode);
         return NextResponse.json({
           originalUrl: existingUrl.originalUrl,
           shortCode: existingUrl.shortCode,
@@ -114,6 +123,8 @@ export async function POST(request: NextRequest) {
       }
     })
 
+    await redis.set(newUrl.shortCode, newUrl.originalUrl);
+    await redis.set(newUrl.originalUrl, newUrl.shortCode);
     return NextResponse.json({
       originalUrl: newUrl.originalUrl,
       shortCode: newUrl.shortCode,

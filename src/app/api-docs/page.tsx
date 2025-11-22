@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Tinyur url shortener platform | API Documentation",
+  title: "API Docs",
   description:
     "Complete guide to the Tinyur url shortener platform API, Free URL Sortner API, Unlimited API Calls",
 
@@ -48,8 +48,9 @@ export const metadata: Metadata = {
       alt: "API Documentation - Tinyur URL Shortener",
     },
     title: "API Documentation - Tinyur URL Shortener",
-    description: "Complete guide to the Tinyur URL Shortener API, Free URL Sortner API, Unlimited API Calls",
-    url: "https://tinyur.in",
+    description:
+      "Complete guide to the Tinyur URL Shortener API, Free URL Sortner API, Unlimited API Calls",
+    url: "https://tinyur.in/api-docs",
     type: "website",
     siteName: "Tinyur URL Shortener",
     locale: "en_US",
@@ -77,7 +78,8 @@ const endpoints = [
     title: "Shorten URL",
     method: "POST",
     endpoint: "/api/shorten",
-    description: "Create a short URL from a long URL with optional custom alias",
+    description:
+      "Create a short URL from a long URL with optional custom alias",
     parameters: [
       {
         name: "url",
@@ -90,7 +92,8 @@ const endpoints = [
         name: "customAlias",
         type: "string",
         required: false,
-        description: "Custom alias for the short URL (3-50 characters, letters, numbers, hyphens, and underscores only)",
+        description:
+          "Custom alias for the short URL (3-50 characters, letters, numbers, hyphens, and underscores only)",
         example: "my-custom-alias",
       },
     ],

@@ -4,9 +4,12 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Tinyur url shortener | Free URL Shortener Without Ads or Tracking",
   description:
-    "Shorten your long links with Tinyur. 100% free, privacy-focused URL shortener. No ads, no tracking, no hidden costs. Simple, fast, and reliable link shortener for personal & business use.",
+    "Tinyur is a free url shortener, short url and create short link using Tinyur. url shortener allows you to create a shortened link making it easy to share.",
   keywords: [
+    "cut link",
+    "generate link",
     "URL Shortener",
+    "url tool	",
     "Tinyur url shortning platform",
     "Tinyur url shortener",
     "Free URL Shortener",

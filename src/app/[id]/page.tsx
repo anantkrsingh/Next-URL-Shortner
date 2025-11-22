@@ -1,31 +1,39 @@
-
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import redis from "../../../redis";
 
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-    let url: string = "/";
-  try {
-    const { id } = await params;
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = params;
 
+  const cachedUrl = await redis.get(id);
 
-    const urlData = await prisma.url.findUnique({
+  if (cachedUrl) {
+    prisma.url.update({
       where: { shortCode: id },
+      data: {
+        clicks: { increment: 1 },
+      },
     });
 
-    if (!urlData) {
-      return <div>Short URL not found</div>;
-    }
-
-    await prisma.url.update({
-      where: { id: urlData.id },
-      data: { clicks: urlData.clicks + 1 },
-    });
-
-    url = urlData.originalUrl;
-  } catch (error) {
-    console.error("Error redirecting:", error);
-    return <div>Internal server error</div>;
-  }finally {
-    redirect(url);
+    redirect(cachedUrl as string);
   }
+
+  const urlData = await prisma.url.findUnique({
+    where: { shortCode: id },
+  });
+
+  if (!urlData) {
+    return <div>Short URL not found</div>;
+  }
+
+  prisma.url.update({
+    where: { id: urlData.id },
+    data: {
+      clicks: { increment: 1 },
+    },
+  });
+
+  await redis.set(id, urlData.originalUrl);
+
+  redirect(urlData.originalUrl);
 }
