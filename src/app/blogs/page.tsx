@@ -24,87 +24,106 @@ export const metadata: Metadata = {
 };
 
 export default function BlogsPage() {
+  const blogs = [
+    {
+      href: "/how-url-shortners-work",
+      title: "How URL Shorteners work",
+      description: "A deep dive into the mechanics of shortening, redirecting, tracking, and the infrastructure behind reliable short links.",
+      readTime: "~10 min read",
+    },
+    {
+      href: "/white-hat-seo",
+      title: "White Hat SEO",
+      description: "Ethical SEO strategies for sustainable rankings and long-term growth.",
+      readTime: "~8 min read",
+    },
+    {
+      href: "/black-hat-seo",
+      title: "Black Hat SEO",
+      description: "Risks, tactics, and penalties of manipulative SEO strategies.",
+      readTime: "~8 min read",
+    },
+    {
+      href: "/white-hat-seo-vs-black-hat-seo",
+      title: "White Hat SEO vs Black Hat SEO",
+      description: "A practical comparison to evaluate trade-offs and choose wisely.",
+      readTime: "~9 min read",
+    },
+    {
+      href: "/symmetric-vs-asymmetric-encryption",
+      title: "Symmetric vs Asymmetric Key Encryption",
+      description: "Complete guide to encryption: algorithms, performance, security, and when to use symmetric vs asymmetric encryption.",
+      readTime: "~12 min read",
+    },
+    {
+      href: "/salting-and-hashing",
+      title: "Salting and Hashing",
+      description: "Password security best practices: cryptographic hashing, salt generation, rainbow tables, bcrypt, and Argon2.",
+      readTime: "~11 min read",
+    },
+    {
+      href: "/sql-vs-nosql",
+      title: "SQL vs NoSQL Databases",
+      description: "Comprehensive database comparison: structure, ACID vs BASE, scalability, and choosing the right database for your project.",
+      readTime: "~13 min read",
+    },
+    {
+      href: "/react-vs-nextjs",
+      title: "React.js vs Next.js",
+      description: "Complete framework comparison: SSR vs CSR, performance, routing, SEO, and when to choose each framework.",
+      readTime: "~14 min read",
+    },
+  ];
+
   return (
-    <main className="max-w-3xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold mb-6">Blogs</h1>
-      <ul className="space-y-4">
-        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
-          <Link href="/how-url-shortners-work" className="block">
-            <h2 className="text-xl font-semibold">
-              How URL Shorteners work
-            </h2>
-            <p className="text-sm opacity-80 mt-1">
-              A deep dive into the mechanics of shortening, redirecting, tracking,
-              and the infrastructure behind reliable short links.
-            </p>
-            <p className="text-xs mt-2 opacity-60">~10 min read</p>
-          </Link>
-        </li>
-        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
-          <Link href="/white-hat-seo" className="block">
-            <h2 className="text-xl font-semibold">White Hat SEO</h2>
-            <p className="text-sm opacity-80 mt-1">
-              Ethical SEO strategies for sustainable rankings and long-term growth.
-            </p>
-            <p className="text-xs mt-2 opacity-60">~8 min read</p>
-          </Link>
-        </li>
-        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
-          <Link href="/black-hat-seo" className="block">
-            <h2 className="text-xl font-semibold">Black Hat SEO</h2>
-            <p className="text-sm opacity-80 mt-1">
-              Risks, tactics, and penalties of manipulative SEO strategies.
-            </p>
-            <p className="text-xs mt-2 opacity-60">~8 min read</p>
-          </Link>
-        </li>
-        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
-          <Link href="/white-hat-seo-vs-black-hat-seo" className="block">
-            <h2 className="text-xl font-semibold">White Hat SEO vs Black Hat SEO</h2>
-            <p className="text-sm opacity-80 mt-1">
-              A practical comparison to evaluate trade-offs and choose wisely.
-            </p>
-            <p className="text-xs mt-2 opacity-60">~9 min read</p>
-          </Link>
-        </li>
-        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
-          <Link href="/symmetric-vs-asymmetric-encryption" className="block">
-            <h2 className="text-xl font-semibold">Symmetric vs Asymmetric Key Encryption</h2>
-            <p className="text-sm opacity-80 mt-1">
-              Complete guide to encryption: algorithms, performance, security, and when to use symmetric vs asymmetric encryption.
-            </p>
-            <p className="text-xs mt-2 opacity-60">~12 min read</p>
-          </Link>
-        </li>
-        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
-          <Link href="/salting-and-hashing" className="block">
-            <h2 className="text-xl font-semibold">Salting and Hashing</h2>
-            <p className="text-sm opacity-80 mt-1">
-              Password security best practices: cryptographic hashing, salt generation, rainbow tables, bcrypt, and Argon2.
-            </p>
-            <p className="text-xs mt-2 opacity-60">~11 min read</p>
-          </Link>
-        </li>
-        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
-          <Link href="/sql-vs-nosql" className="block">
-            <h2 className="text-xl font-semibold">SQL vs NoSQL Databases</h2>
-            <p className="text-sm opacity-80 mt-1">
-              Comprehensive database comparison: structure, ACID vs BASE, scalability, and choosing the right database for your project.
-            </p>
-            <p className="text-xs mt-2 opacity-60">~13 min read</p>
-          </Link>
-        </li>
-        <li className="border rounded-md p-4 hover:bg-black/5 transition-colors">
-          <Link href="/react-vs-nextjs" className="block">
-            <h2 className="text-xl font-semibold">React.js vs Next.js</h2>
-            <p className="text-sm opacity-80 mt-1">
-              Complete framework comparison: SSR vs CSR, performance, routing, SEO, and when to choose each framework.
-            </p>
-            <p className="text-xs mt-2 opacity-60">~14 min read</p>
-          </Link>
-        </li>
-      </ul>
-    </main>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      {/* API Docs and Blogs Links */}
+      <div className="absolute top-4 right-4 flex gap-4 z-20 flex-wrap justify-end">
+        <Link
+          href="/"
+          className="text-white hover:text-blue-300 text-shadow-md underline underline-offset-2 font-bold text-base sm:text-lg transition-colors"
+        >
+          Home
+        </Link>
+        <Link
+          href="/api-docs"
+          className="text-white hover:text-blue-300 text-shadow-md underline underline-offset-2 font-bold text-base sm:text-lg transition-colors"
+        >
+          API Docs
+        </Link>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-4xl">
+        <div className="bg-white/10 backdrop-blur-md rounded-[2.5rem] border border-white/20 p-6 sm:p-8 shadow-lg">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-8 text-center">
+            Blogs
+          </h1>
+          <div className="space-y-4">
+            {blogs.map((blog, index) => (
+              <Link
+                key={index}
+                href={blog.href}
+                className="block bg-white/10 hover:bg-white/15 backdrop-blur-sm rounded-2xl border border-white/20 p-5 sm:p-6 transition-all hover:border-white/30 hover:shadow-lg"
+              >
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-2">
+                  {blog.title}
+                </h2>
+                <p className="text-sm sm:text-base text-white/80 mb-3">
+                  {blog.description}
+                </p>
+                <p className="text-xs sm:text-sm text-white/60">
+                  {blog.readTime}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+        <p className="mt-6 text-center text-white/70 text-sm max-w-xl mx-auto">
+          Explore technical articles covering web development, security, databases, and more.
+        </p>
+      </div>
+    </div>
   );
 }
 

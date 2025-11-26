@@ -1,4 +1,4 @@
-import ApiDocsClient, { ThemeSwitcher } from "@/components/api-docs-client";
+import ApiDocsClient from "@/components/api-docs-client";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -112,32 +112,33 @@ const endpoints = [
 
 export default function ApiDocs() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex-1">
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-                API Documentation
-              </h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-1 sm:mt-2 text-sm sm:text-base">
-                Complete guide to the Tinyur URL Shortener API
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-              <ThemeSwitcher />
-              <Link
-                href="/"
-                className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors text-center text-sm sm:text-base"
-              >
-                Back to Home
-              </Link>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      {/* Navigation Links */}
+      <div className="absolute top-4 right-4 flex gap-4 z-20 flex-wrap justify-end">
+        <Link
+          href="/"
+          className="text-white hover:text-blue-300 text-shadow-md underline underline-offset-2 font-bold text-base sm:text-lg transition-colors"
+        >
+          Home
+        </Link>
+        <Link
+          href="/blogs"
+          className="text-white hover:text-blue-300 text-shadow-md underline underline-offset-2 font-bold text-base sm:text-lg transition-colors"
+        >
+          Blogs
+        </Link>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-6xl">
+        <div className="bg-white/10 backdrop-blur-md rounded-[2.5rem] border border-white/20 p-6 sm:p-8 shadow-lg mb-6">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2 text-center">
+            API Documentation
+          </h1>
+          <p className="text-white/70 text-center text-sm sm:text-base">
+            Complete guide to the Tinyur URL Shortener API
+          </p>
+        </div>
         <ApiDocsClient endpoints={endpoints} />
       </div>
     </div>
