@@ -5,6 +5,7 @@ import "./globals.css";
 import Analytics from "@/components/Analytics";
 import Script from "next/script";
 import Footer from "@/components/Footer";
+import BrandSchema from "@/components/BrandSchema";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -15,7 +16,6 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   title: "Tinyur url shortener platform | Free & No Ads",
   description: "URL Shortener, No Ads, No Tracking, No BS",
-
   keywords: [
     "URL Shortener",
     "Tinyur url shortener",
@@ -39,7 +39,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
     nocache: true,
-
     googleBot: {
       index: true,
       follow: true,
@@ -52,9 +51,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://tinyur.in"),
   openGraph: {
     images: {
-      url: "https://tinyur.in/icon.png",
-      height: 64,
-      width: 64,
+      url: "https://tinyur.in/opengraph-image.png",
+      height: 1920,
+      width: 1008,
       alt: "Tinyur URL Shortener, Free & No Ads",
     },
     title: "Tinyur URL Shortener, Free & No Ads",
@@ -71,9 +70,9 @@ export const metadata: Metadata = {
     description: "Free URL Shortener, No Ads, No Tracking, No BS",
     images: [
       {
-        url: "https://tinyur.in/icon.png",
-        width: 64,
-        height: 64,
+        url: "https://tinyur.in/opengraph-image.png",
+        width: 1920,
+        height: 1008,
       },
     ],
     site: "@tinyur",
@@ -118,7 +117,9 @@ export default function RootLayout({
         {children}
         <Analytics />
         <Footer />
+        <BrandSchema />
       </body>
+      
     </html>
   );
 }
