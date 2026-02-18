@@ -94,32 +94,10 @@ export default function RootLayout({
         strategy="afterInteractive"
       />
       <body className={`${nunito.variable} font-sans antialiased`}>
-        <div
-          className="absolute inset-0 overflow-hidden"
-          style={{
-            background: `
-            radial-gradient(circle at top center, #1e3a8a 0%, #1e40af 40%, transparent 70%),
-            #000000
-          `,
-          }}
-        />
-
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage: "url(/grain.png)",
-            backgroundSize: "200px 200px",
-            backgroundRepeat: "repeat",
-            mixBlendMode: "overlay",
-          }}
-        />
-
         {children}
         <Analytics />
-        <Footer />
         <BrandSchema />
       </body>
-      
     </html>
   );
 }

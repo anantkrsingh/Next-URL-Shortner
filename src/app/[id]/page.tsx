@@ -1,11 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import redis from "../../../redis";
+import cache from "@/lib/cache";
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
-  const cachedUrl = await redis.get(id);
+  const cachedUrl = await cache.get(id);
 
   if (cachedUrl) {
     prisma.url.update({
@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     },
   });
 
-  await redis.set(id, urlData.originalUrl);
+  await cache.set(id, urlData.originalUrl);
 
   redirect(urlData.originalUrl);
 }

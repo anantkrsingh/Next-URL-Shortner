@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TextField, Button, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 interface ClickCountResponse {
   shortCode: string;
@@ -75,104 +75,78 @@ export default function ClickCounter() {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <div className="bg-white/10 backdrop-blur-md rounded-[2.5rem] border border-white/20 p-6 shadow-lg">
-        <h2 className="text-2xl font-bold text-white mb-6 text-center">
-          Check Click Count
-        </h2>
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 text-center drop-shadow-lg">
+        Check Click Count
+      </h1>
+      <p className="text-white/90 text-center mb-8 text-base sm:text-lg drop-shadow-md">
+        Track how many times your shortened link has been clicked
+      </p>
+      
+      <div className="rounded-3xl p-4 sm:p-8">
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex gap-2 flex-col sm:flex-row">
-            <TextField
+          <div className="flex flex-col sm:flex-row gap-2">
+            <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              label="Enter short code or URL"
-              variant="outlined"
+              placeholder="Enter short code or URL (e.g., abc123)"
               required
-              fullWidth
-              placeholder="e.g., abc123 or https://tinyur.in/abc123"
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  color: "white",
-                  "& fieldset": {
-                    borderColor: "rgba(255, 255, 255, 0.3)",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "rgba(255, 255, 255, 0.5)",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "rgba(255, 255, 255, 0.8)",
-                  },
-                },
-                "& .MuiInputLabel-root": {
-                  color: "rgba(255, 255, 255, 0.6)",
-                },
-                "& .MuiInputLabel-root.Mui-focused": {
-                  color: "rgba(255, 255, 255, 0.8)",
-                },
-              }}
+              className="flex-1 min-h-[56px] h-[56px] px-4 bg-white/90 backdrop-blur-md border border-white/30 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
             />
-            <Button
+            <button
               type="submit"
-              variant="outlined"
               disabled={loading}
-              sx={{
-                color: "white",
-                borderColor: "rgba(255, 255, 255, 0.3)",
-                "&:hover": {
-                  borderColor: "rgba(255, 255, 255, 0.5)",
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                },
-                "&.Mui-disabled": {
-                  borderColor: "rgba(255, 255, 255, 0.2)",
-                  color: "rgba(255, 255, 255, 0.5)",
-                },
-                minWidth: { xs: "100%", sm: "120px" },
-                height: "56px",
-              }}
+              className="relative overflow-hidden w-full sm:w-auto sm:min-w-[120px] min-h-[56px] h-[56px] bg-blue-500 text-white font-semibold rounded-lg transition-all duration-300 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? (
-                <CircularProgress size={20} sx={{ color: "white" }} />
-              ) : (
-                "Check"
-              )}
-            </Button>
+              <div 
+                className="absolute inset-0 opacity-20 pointer-events-none"
+                style={{
+                  backgroundImage: "url(/grain.png)",
+                  backgroundSize: "200px 200px",
+                  backgroundRepeat: "repeat"
+                }}
+              />
+              <span className="relative z-10">
+                {loading ? <CircularProgress size={20} sx={{ color: "white" }} /> : "Check"}
+              </span>
+            </button>
           </div>
         </form>
 
         {clickData && (
           <div className="mt-6 space-y-4">
-            <div className="p-4 bg-white/10 rounded-lg border border-white/20">
+            <div className="p-4 bg-white/90 backdrop-blur-md rounded-xl border border-white/30">
               <div className="text-center">
-                <div className="text-5xl font-bold text-white mb-2">
+                <div className="text-5xl font-bold text-gray-900 mb-2">
                   {clickData.clicks}
                 </div>
-                <div className="text-white/70 text-sm mb-4">
+                <div className="text-gray-600 text-sm mb-4">
                   Total Clicks
                 </div>
               </div>
             </div>
             
-            <div className="p-4 bg-white/10 rounded-lg border border-white/20 space-y-2">
+            <div className="p-4 bg-white/90 backdrop-blur-md rounded-xl border border-white/30 space-y-2">
               <div>
-                <span className="text-white/70 text-sm">Short Code:</span>
-                <div className="text-white font-mono break-all">
+                <span className="text-gray-600 text-sm">Short Code:</span>
+                <div className="text-gray-900 font-mono break-all">
                   {clickData.shortCode}
                 </div>
               </div>
               <div>
-                <span className="text-white/70 text-sm">Original URL:</span>
+                <span className="text-gray-600 text-sm">Original URL:</span>
                 <a
                   href={clickData.originalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-300 hover:text-blue-200 underline break-all block mt-1"
+                  className="text-blue-600 hover:text-blue-700 underline break-all block mt-1"
                 >
                   {clickData.originalUrl}
                 </a>
               </div>
               <div>
-                <span className="text-white/70 text-sm">Created:</span>
-                <div className="text-white">
+                <span className="text-gray-600 text-sm">Created:</span>
+                <div className="text-gray-900">
                   {new Date(clickData.createdAt).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
@@ -185,12 +159,12 @@ export default function ClickCounter() {
         )}
 
         {error && (
-          <div className="mt-4 p-3 bg-red-500/20 border border-red-400/30 rounded-lg text-red-200 text-sm">
+          <div className="mt-4 p-4 bg-red-500/90 backdrop-blur-md border border-red-400/50 rounded-xl text-white text-sm font-medium">
             {error}
           </div>
         )}
       </div>
-      <p className="mt-6 text-center text-white/70 text-sm max-w-xl mx-auto">
+      <p className="mt-6 text-center text-white/90 text-sm max-w-xl mx-auto drop-shadow-md">
         Enter a short code or full URL to check how many times the shortened link has been clicked.
       </p>
     </div>

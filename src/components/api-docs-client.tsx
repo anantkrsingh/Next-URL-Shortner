@@ -48,7 +48,7 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
 
   const handleTryInBrowser = (endpoint: Endpoint) => {
     setSelectedEndpoint(endpoint);
-    setRequestBody(JSON.stringify({ 
+    setRequestBody(JSON.stringify({
       url: "https://google.com",
       customAlias: "my-custom-alias"
     }, null, 2));
@@ -58,7 +58,7 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
 
   const handleTestRequest = async () => {
     if (!selectedEndpoint) return;
-    
+
     setLoading(true);
     setResponse(null);
 
@@ -117,67 +117,93 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
     }
   };
 
+  // ... imports
+
   return (
     <>
+      <style jsx global>{`
+        .grain-button {
+          background-image: url("/grain.png"), linear-gradient(135deg, #3b82f6, #8b5cf6);
+          background-size: 100px 100px, 100% 100%;
+          background-blend-mode: overlay, normal;
+        }
+        .grain-button:hover {
+          background-image: url("/grain.png"), linear-gradient(135deg, #2563eb, #7c3aed);
+        }
+      `}</style>
+
       {/* API Endpoints */}
       <div className="space-y-6 sm:space-y-8">
         {endpoints.map((endpoint, index) => (
-          <div key={index} className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg">
-            <div className="p-4 sm:p-6">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
+          <div key={index} className="bg-white rounded-2xl border border-gray-200 shadow-[0_1px_1px_rgba(0,0,0,0.05),0_4px_6px_rgba(34,42,53,0.04),0_24px_68px_rgba(47,48,55,0.05),0_2px_3px_rgba(0,0,0,0.04)] overflow-hidden transition-all hover:shadow-xl">
+            <div className="p-6 sm:p-8">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
                 <div className="flex-1">
-                  <h2 className="text-xl sm:text-2xl font-semibold text-white">{endpoint.title}</h2>
-                  <p className="text-white/70 mt-1 text-sm sm:text-base">{endpoint.description}</p>
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold tracking-wider ${endpoint.method === 'POST'
+                      ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                      : 'bg-green-100 text-green-700 border border-green-200'
+                      }`}>
+                      {endpoint.method}
+                    </span>
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">{endpoint.title}</h2>
+                  </div>
+                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{endpoint.description}</p>
                 </div>
                 <button
                   onClick={() => handleTryInBrowser(endpoint)}
-                  className="bg-white/20 hover:bg-white/30 border border-white/30 text-white px-4 py-2 rounded-lg transition-colors text-sm w-full sm:w-auto"
+                  className="relative overflow-hidden bg-blue-500 text-white px-6 py-2.5 rounded-xl font-medium shadow-lg hover:bg-blue-600 transition-all active:scale-95 w-full sm:w-auto text-sm sm:text-base"
                 >
-                  Try in Browser
+                  <div 
+                    className="absolute inset-0 opacity-20 pointer-events-none"
+                    style={{
+                      backgroundImage: "url(/grain.png)",
+                      backgroundSize: "200px 200px",
+                      backgroundRepeat: "repeat"
+                    }}
+                  />
+                  <span className="relative z-10">Try in Browser</span>
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-                <div>
-                  <h3 className="text-base sm:text-lg font-medium text-white mb-3">Request</h3>
-                  <div className="space-y-3 sm:space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                      <span className="text-sm font-medium text-white/70">Method:</span>
-                      <span className={`px-2 py-1 rounded text-xs font-medium w-fit ${
-                        endpoint.method === 'POST' 
-                          ? 'bg-blue-500/30 text-blue-200 border border-blue-400/30' 
-                          : 'bg-green-500/30 text-green-200 border border-green-400/30'
-                      }`}>
-                        {endpoint.method}
-                      </span>
-                    </div>
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                      <span className="text-sm font-medium text-white/70">Endpoint:</span>
-                      <code className="bg-white/10 text-white px-2 py-1 rounded text-xs sm:text-sm break-all border border-white/20">{endpoint.endpoint}</code>
-                    </div>
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                      <span className="text-sm font-medium text-white/70">Base URL:</span>
-                      <code className="bg-white/10 text-white px-2 py-1 rounded text-xs sm:text-sm break-all border border-white/20">https://tinyur.in</code>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Request Section */}
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                      Request Details
+                    </h3>
+
+                    <div className="space-y-3">
+                      <div className="bg-gray-50 rounded-xl p-4 border border-gray-200 hover:border-gray-300 transition-colors">
+                        <span className="text-xs font-medium text-gray-500 block mb-1">ENDPOINT URL</span>
+                        <code className="text-blue-600 font-mono text-sm break-all">
+                          https://tinyur.in{endpoint.endpoint}
+                        </code>
+                      </div>
                     </div>
                   </div>
 
                   {endpoint.parameters.length > 0 && (
-                    <div className="mt-4">
-                      <h4 className="text-sm font-medium text-white mb-2">Parameters</h4>
-                      <div className="space-y-2">
+                    <div>
+                      <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Parameters</h4>
+                      <div className="space-y-3">
                         {endpoint.parameters.map((param: Parameter, paramIndex: number) => (
-                          <div key={paramIndex} className="bg-white/10 p-3 rounded border border-white/20">
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                              <span className="font-medium text-sm text-white">{param.name}</span>
-                              <div className="flex flex-wrap gap-1">
-                                <span className="text-xs bg-white/20 text-white px-2 py-1 rounded border border-white/20">{param.type}</span>
-                                {param.required && (
-                                  <span className="text-xs bg-red-500/30 text-red-200 px-2 py-1 rounded border border-red-400/30">Required</span>
-                                )}
+                          <div key={paramIndex} className="bg-gray-50 p-4 rounded-xl border border-gray-200 hover:bg-gray-100 transition-colors">
+                            <div className="flex items-start justify-between mb-2">
+                              <div className="flex items-center gap-2">
+                                <span className="font-mono text-sm font-bold text-gray-900">{param.name}</span>
+                                <span className="text-[10px] bg-gray-200 text-gray-700 px-2 py-0.5 rounded border border-gray-300 uppercase tracking-wide">{param.type}</span>
                               </div>
+                              {param.required && (
+                                <span className="text-[10px] bg-red-100 text-red-700 px-2 py-0.5 rounded border border-red-200 font-medium uppercase tracking-wide">Required</span>
+                              )}
                             </div>
-                            <p className="text-sm text-white/70 mt-1">{param.description}</p>
-                            <p className="text-xs text-white/60 mt-1 break-all">Example: {param.example}</p>
+                            <p className="text-sm text-gray-600 leading-relaxed mb-2">{param.description}</p>
+                            <div className="text-xs text-gray-500 font-mono bg-white p-2 rounded border border-gray-200">
+                              Example: {param.example}
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -185,59 +211,83 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
                   )}
 
                   {endpoint.method === "POST" && (
-                    <div className="mt-4">
-                      <h4 className="text-sm font-medium text-white mb-2">Request Body</h4>
-                      <div className="bg-black/40 text-gray-100 p-3 sm:p-4 rounded-lg relative border border-white/20">
-                        <button
-                          onClick={() => copyToClipboard(JSON.stringify({ 
-                            url: "https://example.com/very-long-url",
-                            customAlias: "my-custom-alias"
-                          }, null, 2))}
-                          className="absolute top-2 right-2 bg-white/20 hover:bg-white/30 text-white px-2 py-1 rounded text-xs border border-white/20"
-                        >
-                          Copy
-                        </button>
-                        <pre className="text-xs sm:text-sm overflow-x-auto">
-                          <code>{JSON.stringify({ 
-                            url: "https://example.com/very-long-url",
-                            customAlias: "my-custom-alias"
-                          }, null, 2)}</code>
-                        </pre>
+                    <div>
+                      <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Request Body</h4>
+                      <div className="bg-gray-900 rounded-xl overflow-hidden border border-gray-300 shadow-inner group">
+                        <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700">
+                          <span className="text-xs text-gray-400 font-mono">JSON</span>
+                          <button
+                            onClick={() => copyToClipboard(JSON.stringify({
+                              url: "https://example.com/very-long-url",
+                              customAlias: "my-custom-alias"
+                            }, null, 2))}
+                            className="text-xs text-gray-400 hover:text-white transition-colors"
+                          >
+                            Copy
+                          </button>
+                        </div>
+                        <div className="p-4 overflow-x-auto">
+                          <pre className="text-xs sm:text-sm text-blue-300 font-mono">
+                            <code>{JSON.stringify({
+                              url: "https://example.com/very-long-url",
+                              customAlias: "my-custom-alias"
+                            }, null, 2)}</code>
+                          </pre>
+                        </div>
                       </div>
                     </div>
                   )}
                 </div>
 
+                {/* Response Section */}
                 <div>
-                  <h3 className="text-base sm:text-lg font-medium text-white mb-3">Response</h3>
-                  <div className="space-y-3 sm:space-y-4">
+                  <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                    Response Details
+                  </h3>
+
+                  <div className="space-y-6">
                     <div>
-                      <h4 className="text-sm font-medium text-white mb-2">Success Response</h4>
-                      <div className="bg-black/40 text-gray-100 p-3 sm:p-4 rounded-lg relative border border-white/20">
-                        <button
-                          onClick={() => copyToClipboard(JSON.stringify(endpoint.response.success, null, 2))}
-                          className="absolute top-2 right-2 bg-white/20 hover:bg-white/30 text-white px-2 py-1 rounded text-xs border border-white/20"
-                        >
-                          Copy
-                        </button>
-                        <pre className="text-xs sm:text-sm overflow-x-auto">
-                          <code>{JSON.stringify(endpoint.response.success, null, 2)}</code>
-                        </pre>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-semibold text-green-600 uppercase tracking-wide">Success (200)</span>
+                      </div>
+                      <div className="bg-gray-900 rounded-xl overflow-hidden border border-gray-300 shadow-inner group">
+                        <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700">
+                          <span className="text-xs text-gray-400 font-mono">JSON</span>
+                          <button
+                            onClick={() => copyToClipboard(JSON.stringify(endpoint.response.success, null, 2))}
+                            className="text-xs text-gray-400 hover:text-white transition-colors"
+                          >
+                            Copy
+                          </button>
+                        </div>
+                        <div className="p-4 overflow-x-auto">
+                          <pre className="text-xs sm:text-sm text-green-300 font-mono">
+                            <code>{JSON.stringify(endpoint.response.success, null, 2)}</code>
+                          </pre>
+                        </div>
                       </div>
                     </div>
 
                     <div>
-                      <h4 className="text-sm font-medium text-white mb-2">Error Response</h4>
-                      <div className="bg-black/40 text-gray-100 p-3 sm:p-4 rounded-lg relative border border-white/20">
-                        <button
-                          onClick={() => copyToClipboard(JSON.stringify(endpoint.response.error, null, 2))}
-                          className="absolute top-2 right-2 bg-white/20 hover:bg-white/30 text-white px-2 py-1 rounded text-xs border border-white/20"
-                        >
-                          Copy
-                        </button>
-                        <pre className="text-xs sm:text-sm overflow-x-auto">
-                          <code>{JSON.stringify(endpoint.response.error, null, 2)}</code>
-                        </pre>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-semibold text-red-600 uppercase tracking-wide">Error</span>
+                      </div>
+                      <div className="bg-gray-900 rounded-xl overflow-hidden border border-gray-300 shadow-inner group">
+                        <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700">
+                          <span className="text-xs text-gray-400 font-mono">JSON</span>
+                          <button
+                            onClick={() => copyToClipboard(JSON.stringify(endpoint.response.error, null, 2))}
+                            className="text-xs text-gray-400 hover:text-white transition-colors"
+                          >
+                            Copy
+                          </button>
+                        </div>
+                        <div className="p-4 overflow-x-auto">
+                          <pre className="text-xs sm:text-sm text-red-300 font-mono">
+                            <code>{JSON.stringify(endpoint.response.error, null, 2)}</code>
+                          </pre>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -250,83 +300,91 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center sm:justify-end z-50 p-4">
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 w-full max-w-2xl h-full sm:h-auto sm:max-h-[90vh] overflow-y-auto shadow-2xl rounded-lg sm:rounded-2xl">
-            <div className="p-4 sm:p-6">
-              <div className="flex items-center justify-between mb-4 sm:mb-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-white">Test API Endpoint</h2>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="text-white/70 hover:text-white p-1"
-                >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center sm:justify-end z-50">
+          <div className="bg-[#0f0f0f] border-l border-white/10 w-full max-w-2xl h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+            <div className="p-6 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
+              <h2 className="text-xl font-bold text-white">Test API Endpoint</h2>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-white/50 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6 space-y-8">
+              <div>
+                <label className="block text-xs font-bold text-white/50 uppercase tracking-wider mb-2">
+                  Target Endpoint
+                </label>
+                <div className="flex items-center gap-2 bg-black/40 p-3 rounded-lg border border-white/10 font-mono text-sm text-white">
+                  <span className={`text-[10px] px-2 py-0.5 rounded font-bold ${selectedEndpoint?.method === 'POST' ? 'bg-blue-500/20 text-blue-400' : 'bg-green-500/20 text-green-400'
+                    }`}>
+                    {selectedEndpoint?.method}
+                  </span>
+                  <span>https://tinyur.in{selectedEndpoint?.endpoint}</span>
+                </div>
               </div>
 
-              <div className="space-y-4 sm:space-y-6">
+              {selectedEndpoint?.method === "POST" && (
                 <div>
-                  <label className="block text-sm font-medium text-white/70 mb-2">
-                    Endpoint
+                  <label className="block text-xs font-bold text-white/50 uppercase tracking-wider mb-2">
+                    Request Body
                   </label>
-                  <input
-                    type="text"
-                    value={`https://tinyur.in${selectedEndpoint?.endpoint || ""}`}
-                    readOnly
-                    className="w-full px-3 py-2 border border-white/20 rounded-lg bg-white/10 text-white text-sm sm:text-base"
+                  <textarea
+                    value={requestBody}
+                    onChange={(e) => setRequestBody(e.target.value)}
+                    rows={8}
+                    className="w-full bg-black/40 border border-white/10 rounded-lg p-4 text-sm font-mono text-blue-100 focus:outline-none focus:border-blue-500/50 transition-colors"
+                    placeholder="{ ... }"
                   />
                 </div>
+              )}
 
-                {selectedEndpoint?.method === "POST" && (
-                  <div>
-                    <label className="block text-sm font-medium text-white/70 mb-2">
-                      Request Body (JSON)
-                    </label>
-                    <textarea
-                      value={requestBody}
-                      onChange={(e) => setRequestBody(e.target.value)}
-                      rows={6}
-                      className="w-full px-3 py-2 border border-white/20 rounded-lg font-mono text-xs sm:text-sm bg-white/10 text-white"
-                      placeholder="Enter JSON request body..."
-                    />
-                  </div>
-                )}
+              <button
+                onClick={handleTestRequest}
+                disabled={loading}
+                className="w-full grain-button text-white py-3 px-4 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-[0.98] border border-white/10"
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Sending Request...
+                  </span>
+                ) : "Send Request"}
+              </button>
 
-                <button
-                  onClick={handleTestRequest}
-                  disabled={loading}
-                  className="w-full bg-white/20 hover:bg-white/30 border border-white/30 text-white py-3 px-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm sm:text-base"
-                >
-                  {loading ? "Testing..." : "Test Request"}
-                </button>
-
-                {response && (
-                  <div>
-                    <label className="block text-sm font-medium text-white/70 mb-2">
-                      Response
-                    </label>
-                    <div className="bg-black/40 text-gray-100 p-3 sm:p-4 rounded-lg border border-white/20">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs sm:text-sm font-medium text-white">
-                          Status: <span className={response.status >= 200 && response.status < 300 ? "text-green-400" : "text-red-400"}>
-                            {response.status}
-                          </span>
-                        </span>
-                        <button
-                          onClick={() => copyToClipboard(JSON.stringify(response, null, 2))}
-                          className="bg-white/20 hover:bg-white/30 text-white px-2 py-1 rounded text-xs border border-white/20"
-                        >
-                          Copy
-                        </button>
-                      </div>
-                      <pre className="text-xs sm:text-sm overflow-x-auto">
-                        <code>{JSON.stringify(response, null, 2)}</code>
-                      </pre>
+              {response && (
+                <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
+                  <label className="text-xs font-bold text-white/50 uppercase tracking-wider mb-2 flex justify-between items-center">
+                    <span>Response</span>
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${response.status >= 200 && response.status < 300
+                      ? 'bg-green-500/10 text-green-400'
+                      : 'bg-red-500/10 text-red-400'
+                      }`}>
+                      STATUS: {response.status}
+                    </span>
+                  </label>
+                  <div className="bg-[#0a0a0a] rounded-xl border border-white/10 shadow-inner overflow-hidden">
+                    <div className="flex items-center justify-end px-3 py-1.5 bg-white/[0.03] border-b border-white/5">
+                      <button
+                        onClick={() => copyToClipboard(JSON.stringify(response, null, 2))}
+                        className="text-xs text-white/40 hover:text-white transition-colors"
+                      >
+                        Copy JSON
+                      </button>
                     </div>
+                    <pre className="p-4 overflow-x-auto text-xs sm:text-sm font-mono text-gray-300">
+                      <code>{JSON.stringify(response, null, 2)}</code>
+                    </pre>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

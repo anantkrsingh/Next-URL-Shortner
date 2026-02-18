@@ -1,11 +1,12 @@
 import ApiDocsClient from "@/components/api-docs-client";
 import { Metadata } from "next";
-import Link from "next/link";
+import Image from "next/image";
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "API Docs",
+  title: "API Docs | TinyUR",
   description:
-    "Complete guide to the Tinyur url shortener platform API, Free URL Sortner API, Unlimited API Calls",
+    "Complete guide to the TinyUR URL shortener platform API, Free URL Shortener API, Unlimited API Calls",
 
   keywords: [
     "Free URL Shortener API",
@@ -22,14 +23,12 @@ export const metadata: Metadata = {
     "Simple URL Shortener API",
     "Implement URL Shortener API",
     "Implement URL Shortener API in your project",
-    "Implement URL Shortener API in your project",
   ],
   icons: "/api.png",
   robots: {
     index: true,
     follow: true,
     nocache: true,
-
     googleBot: {
       index: true,
       follow: true,
@@ -45,20 +44,19 @@ export const metadata: Metadata = {
       url: "https://tinyur.in/api.png",
       height: 64,
       width: 64,
-      alt: "API Documentation - Tinyur URL Shortener",
+      alt: "API Documentation - TinyUR URL Shortener",
     },
-    title: "API Documentation - Tinyur URL Shortener",
+    title: "API Documentation - TinyUR URL Shortener",
     description:
-      "Complete guide to the Tinyur URL Shortener API, Free URL Sortner API, Unlimited API Calls",
+      "Complete guide to the TinyUR URL Shortener API, Free URL Sortner API, Unlimited API Calls",
     url: "https://tinyur.in/api-docs",
     type: "website",
-    siteName: "Tinyur URL Shortener",
+    siteName: "TinyUR URL Shortener",
     locale: "en_US",
-    alternateLocale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "API Documentation - Tinyur URL Shortener",
+    title: "API Documentation - TinyUR URL Shortener",
     description: "Free URL Shortener, No Ads, No Tracking, No BS",
     images: [
       {
@@ -69,7 +67,6 @@ export const metadata: Metadata = {
     ],
     site: "@tinyur",
     creator: "@tinyur",
-    creatorId: "1234567890",
   },
 };
 
@@ -112,35 +109,49 @@ const endpoints = [
 
 export default function ApiDocs() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
-      {/* Navigation Links */}
-      <div className="absolute top-4 right-4 flex gap-4 z-20 flex-wrap justify-end">
-        <Link
-          href="/"
-          className="text-white hover:text-blue-300 text-shadow-md underline underline-offset-2 font-bold text-base sm:text-lg transition-colors"
-        >
-          Home
-        </Link>
-        <Link
-          href="/blogs"
-          className="text-white hover:text-blue-300 text-shadow-md underline underline-offset-2 font-bold text-base sm:text-lg transition-colors"
-        >
-          Blogs
-        </Link>
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-6xl">
-        <div className="bg-white/10 backdrop-blur-md rounded-[2.5rem] border border-white/20 p-6 sm:p-8 shadow-lg mb-6">
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2 text-center">
+    <>
+      {/* Hero Section with Background Image */}
+      <div className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-32 pb-16">
+        {/* Background Image */}
+        <Image
+          src="/bg.jpg"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+        />
+        
+        {/* Grain Overlay */}
+        <div className="absolute inset-0 opacity-30 z-10">
+          <Image
+            src="/grain.png"
+            alt=""
+            fill
+            className="object-repeat"
+            style={{ mixBlendMode: "overlay" }}
+          />
+        </div>
+        
+        {/* Navbar */}
+        <Navbar />
+        
+        {/* Hero Content */}
+        <div className="relative z-10 w-full max-w-4xl px-4 text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 drop-shadow-lg">
             API Documentation
           </h1>
-          <p className="text-white/70 text-center text-sm sm:text-base">
-            Complete guide to the Tinyur URL Shortener API
+          <p className="text-white/90 text-base sm:text-lg drop-shadow-md max-w-2xl mx-auto">
+            Complete guide to integrating the TinyUR URL Shortener API into your applications
           </p>
         </div>
-        <ApiDocsClient endpoints={endpoints} />
       </div>
-    </div>
+
+      {/* API Content Section */}
+      <div className="bg-gray-50 py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <ApiDocsClient endpoints={endpoints} />
+        </div>
+      </div>
+    </>
   );
 }

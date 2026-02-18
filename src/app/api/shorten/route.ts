@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { generateShortCode, isValidUrl } from '@/lib/utils'
-import redis from '../../../../redis'
+import cache from '../../../lib/cache'
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const cachedUrl = await redis.get(url);
+    const cachedUrl = await cache.get(url);
 
     if (cachedUrl && !customAlias) {
       console.log("Sending from cache")
@@ -64,8 +64,8 @@ export async function POST(request: NextRequest) {
       })
 
       if (existingAlias && existingAlias.customAlias === customAlias && existingAlias.originalUrl === url) {
-        await redis.set(customAlias, url);
-        await redis.set(url, customAlias);
+        await cache.set(customAlias, url);
+        await cache.set(url, customAlias);
         return NextResponse.json(
           {
             originalUrl: existingAlias.originalUrl,
@@ -93,8 +93,8 @@ export async function POST(request: NextRequest) {
       })
 
       if (existingUrl) {
-        await redis.set(existingUrl.shortCode, existingUrl.originalUrl);
-        await redis.set(existingUrl.originalUrl, existingUrl.shortCode);
+        await cache.set(existingUrl.shortCode, existingUrl.originalUrl);
+        await cache.set(existingUrl.originalUrl, existingUrl.shortCode);
         return NextResponse.json({
           originalUrl: existingUrl.originalUrl,
           shortCode: existingUrl.shortCode,
@@ -123,8 +123,8 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    await redis.set(newUrl.shortCode, newUrl.originalUrl);
-    await redis.set(newUrl.originalUrl, newUrl.shortCode);
+    await cache.set(newUrl.shortCode, newUrl.originalUrl);
+    await cache.set(newUrl.originalUrl, newUrl.shortCode);
     return NextResponse.json({
       originalUrl: newUrl.originalUrl,
       shortCode: newUrl.shortCode,
