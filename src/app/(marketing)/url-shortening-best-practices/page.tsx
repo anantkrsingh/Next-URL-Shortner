@@ -92,14 +92,14 @@ export default function URLShorteningBestPracticesPage() {
               <div className="backdrop-blur-sm bg-white/5 rounded-xl p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-3">🔐 Use HTTPS Everywhere</h3>
                 <p className="text-white/70">
-                  Ensure all short links use HTTPS to protect user privacy and prevent man-in-the-middle attacks. Modern browsers flag HTTP sites as "Not Secure," which damages trust.
+                  Ensure all short links use HTTPS to protect user privacy and prevent man-in-the-middle attacks. Modern browsers flag HTTP sites as &quot;Not Secure,&quot; which damages trust.
                 </p>
               </div>
 
               <div className="backdrop-blur-sm bg-white/5 rounded-xl p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-3">⚠️ Provide Link Preview Options</h3>
                 <p className="text-white/70">
-                  Allow users to preview destinations before clicking. Add a "+" to the end of short links to show preview pages, helping users verify safety.
+                  Allow users to preview destinations before clicking. Add a &quot;+&quot; to the end of short links to show preview pages, helping users verify safety.
                 </p>
               </div>
             </div>
@@ -234,7 +234,7 @@ export default function URLShorteningBestPracticesPage() {
               <div className="backdrop-blur-sm bg-white/5 rounded-xl p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-3">🎨 Create Custom 404 Pages</h3>
                 <p className="text-white/70">
-                  When a short link doesn't exist, show a helpful 404 page with navigation options instead of a generic error.
+                  When a short link doesn&apos;t exist, show a helpful 404 page with navigation options instead of a generic error.
                 </p>
               </div>
 

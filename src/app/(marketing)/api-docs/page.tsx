@@ -145,6 +145,9 @@ export default function ApiDocs() {
           </p>
         </div>
       </div>
+      <div className="bg-black">
+<div id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
+      </div>
 
       {/* API Content Section */}
       <div className="bg-gray-50 py-16 px-4">
