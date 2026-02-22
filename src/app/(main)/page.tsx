@@ -116,10 +116,14 @@ export default function Home() {
         <Navbar />
         
         {/* Short URL Card */}
+        
         <div className="relative z-10 w-full max-w-4xl px-4">
           <Short />
         </div>
+
       </div>
+              <div className="bg-black" id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
+   
       
       {/* Features Section */}
       <div className="bg-gray-50 py-16 px-4">
