@@ -16,7 +16,7 @@ export default async function Page({
   const [_, cachedUrl] = await Promise.all([delay(5000), cache.get(id)]);
 
   if (cachedUrl) {
-    prisma.url.update({
+   await prisma.url.update({
       where: { shortCode: id },
       data: {
         clicks: {
