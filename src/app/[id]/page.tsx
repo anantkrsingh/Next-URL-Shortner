@@ -39,9 +39,7 @@ export default async function Page({
     return (
       <div>
         Short URL not found{" "}
-        <a className="color-blue-400 cursor-pointer underline" href="/">
-          Short New
-        </a>
+       
         <div id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
       </div>
     );
