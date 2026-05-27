@@ -1,13 +1,13 @@
 FROM node:alpine
 
 WORKDIR /app
-
+RUN npm install -g bun
 COPY package.json ./
 COPY prisma ./prisma
-RUN npm install 
+RUN bun install 
 
 COPY . .
-RUN npm run build
+RUN bun run build
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["bun", "start"]
