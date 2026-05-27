@@ -7,7 +7,15 @@ function Footer() {
     <div className="min-h-[28rem] w-full flex items-center justify-center bg-gray-50 py-12">
       <div className="flex p-10 rounded-[2rem] bg-white border border-gray-200 shadow-[0_1px_1px_rgba(0,0,0,0.05),0_4px_6px_rgba(34,42,53,0.04),0_24px_68px_rgba(47,48,55,0.05),0_2px_3px_rgba(0,0,0,0.04)] flex-col gap-6 w-[90%] mx-auto">
         <div className="flex items-center gap-2">
-          <Image src="/icon.png" alt="TinyUR" width={25} height={25} />
+          <Image
+            src="/icon.png"
+            alt="TinyUR"
+            width={25}
+            height={25}
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
           <span className="text-2xl font-bold text-gray-900">TinyUR</span>
         </div>
 

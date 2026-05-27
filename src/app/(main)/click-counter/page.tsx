@@ -28,7 +28,10 @@ export default function ClickCounterPage() {
           fill
           className="object-cover"
           priority
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
         
         {/* Grain Overlay */}
         <div className="absolute inset-0 opacity-30 z-10">
@@ -37,8 +40,11 @@ export default function ClickCounterPage() {
             alt=""
             fill
             className="object-repeat"
-            style={{ mixBlendMode: "overlay" }}
-          />
+            style={{
+              mixBlendMode: "overlay",
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         </div>
         
         {/* Navbar */}
@@ -49,7 +55,6 @@ export default function ClickCounterPage() {
           <ClickCounter />
         </div>
       </div>
-      
       {/* White Background Section */}
       <div className="bg-white min-h-[50vh]">
         {/* Additional content can go here */}

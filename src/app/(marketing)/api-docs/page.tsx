@@ -119,7 +119,10 @@ export default function ApiDocs() {
           fill
           className="object-cover"
           priority
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
         
         {/* Grain Overlay */}
         <div className="absolute inset-0 opacity-30 z-10">
@@ -128,8 +131,11 @@ export default function ApiDocs() {
             alt=""
             fill
             className="object-repeat"
-            style={{ mixBlendMode: "overlay" }}
-          />
+            style={{
+              mixBlendMode: "overlay",
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         </div>
         
         {/* Navbar */}
@@ -148,7 +154,6 @@ export default function ApiDocs() {
       <div className="bg-black">
 <div id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
       </div>
-
       {/* API Content Section */}
       <div className="bg-gray-50 py-16 px-4">
         <div className="max-w-6xl mx-auto">
