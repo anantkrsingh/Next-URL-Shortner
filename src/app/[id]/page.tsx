@@ -45,7 +45,7 @@ export default async function Page({
     );
   }
 
-  prisma.url.update({
+  await prisma.url.update({
     where: {
       id: urlData.id,
     },
