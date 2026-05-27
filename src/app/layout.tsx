@@ -95,7 +95,6 @@ export default function RootLayout({
       />
       <Script
       async
-      
       src="https://pl28767194.effectivegatecpm.com/9049c3c244f96a9f73fec77b523bbc33/invoke.js"
       />
       <body className={`${nunito.variable} font-sans antialiased`}>
