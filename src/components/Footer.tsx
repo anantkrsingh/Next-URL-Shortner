@@ -34,8 +34,8 @@ function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mt-6 pt-6 border-t border-gray-200">
           <div className="flex flex-col gap-2">
             <span className="text-sm font-semibold text-gray-900">Contact Us</span>
-            <a href="mailto:kavachinnovation@gmail.com" className="text-gray-600 hover:text-blue-600 transition-colors text-sm">
-              kavachinnovation@gmail.com
+            <a href="mailto:contact@tinyur.in" className="text-gray-600 hover:text-blue-600 transition-colors text-sm">
+              contact@tinyur.in
             </a>
           </div>
 

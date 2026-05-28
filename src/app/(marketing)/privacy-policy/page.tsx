@@ -119,8 +119,8 @@ export default function PrivacyPolicyPage() {
             </p>
             <p className="text-gray-700 mt-4">
               <strong>Email:</strong>{" "}
-              <a href="mailto:kavachinnovation@gmail.com" className="text-blue-600 hover:text-blue-700">
-                kavachinnovation@gmail.com
+              <a href="mailto:contact@tinyur.in" className="text-blue-600 hover:text-blue-700">
+                contact@tinyur.in
               </a>
             </p>
           </section>
