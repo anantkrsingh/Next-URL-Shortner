@@ -7,14 +7,14 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted  # since you said you have a self-hosted runner
+    runs-on: self-hosted  
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Create .env file for Next.js
         run: |
-          echo "DATABASE_URL=mongodb://mongo:27017/url-shortner?replicaSet=rs0" >> .env
+          echo "DATABASE_URL=$${{ secrets.DATABASE_URL }}" >> .env
           echo "REDIS_URL=redis://redis:6379" >> .env
           echo "NODE_ENV=production" >> .env
           echo "NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}" >> .env
