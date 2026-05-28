@@ -16,7 +16,7 @@ export default async function Page({
   const [_, cachedUrl] = await Promise.all([delay(5000), cache.get(id)]);
 
   if (cachedUrl) {
-   await prisma.url.update({
+    await prisma.url.update({
       where: { shortCode: id },
       data: {
         clicks: {
@@ -28,7 +28,6 @@ export default async function Page({
     redirect(cachedUrl as string);
   }
 
-  // Fetch DB data while loading.tsx is showing
   const urlData = await prisma.url.findUnique({
     where: {
       shortCode: id,
@@ -39,7 +38,6 @@ export default async function Page({
     return (
       <div>
         Short URL not found{" "}
-       
         <div id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
       </div>
     );
