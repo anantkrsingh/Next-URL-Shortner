@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import cache from "@/lib/cache";
 import { redirect } from "next/navigation";
-
+export const dynamic = "force-dynamic";
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
