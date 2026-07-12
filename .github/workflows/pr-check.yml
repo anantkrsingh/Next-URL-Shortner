@@ -6,36 +6,22 @@ on:
       - main
 
 jobs:
-  lint-and-build:
+  probe-outbound:
     runs-on: self-hosted
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Server egress IP
+        run: curl -s -m 10 https://api.ipify.org && echo || echo "ipify failed"
 
-      - name: Create sample .env file
+      - name: Fetch shaadi.com with browser headers
         run: |
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+          curl -sS -o /tmp/shaadi.html -w "status=%{http_code} time=%{time_total}s final=%{url_effective}\n" -L -m 15 -A "$UA" -H "Accept-Language: en-US,en;q=0.9" https://www.shaadi.com || echo "curl exit code: $?"
+          echo "--- first 400 bytes ---"
+          head -c 400 /tmp/shaadi.html || true
+          echo
+          echo "--- og tags ---"
+          grep -oE '<meta[^>]*og:(title|image)[^>]*>' /tmp/shaadi.html | head -3 || echo "no og tags found"
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm install
-      - name: Cache Node modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Run TypeScript type check
-        run: npm run type-check
-
-      - name: Run ESLint
-        run: npm run lint
-
-      - name: Try Next.js production build
-        run: npm run build
+      - name: Fetch anthropic.com as control
+        run: |
+          curl -sS -o /dev/null -w "anthropic status=%{http_code} time=%{time_total}s\n" -L -m 15 https://www.anthropic.com || echo "curl exit code: $?"
