@@ -48,11 +48,11 @@ export async function generateMetadata({
     // leave empty
   }
 
-  const title =
-    meta?.title ?? (targetHost ? `${targetHost} | via Tinyur` : "Tinyur");
+  const title = meta?.title ?? (targetHost || "Tinyur");
   const description = meta?.description ?? targetUrl;
 
-  // Fall back to Tinyur's own card image so shares always render a preview
+  // Fall back to the target's favicon via Google's icon service, which
+  // resolves even when the target site blocks our server's requests
   const image = meta?.image
     ? {
         url: meta.image,
@@ -60,12 +60,19 @@ export async function generateMetadata({
         height: meta.imageHeight,
         alt: meta.imageAlt,
       }
-    : {
-        url: "https://tinyur.in/opengraph-image.png",
-        width: 1920,
-        height: 1008,
-        alt: "Tinyur URL Shortener",
-      };
+    : targetHost
+      ? {
+          url: `https://www.google.com/s2/favicons?domain=${targetHost}&sz=256`,
+          width: 256,
+          height: 256,
+          alt: targetHost,
+        }
+      : {
+          url: "https://tinyur.in/opengraph-image.png",
+          width: 1920,
+          height: 1008,
+          alt: "Tinyur URL Shortener",
+        };
 
   return {
     title,
@@ -80,7 +87,8 @@ export async function generateMetadata({
       type: "website",
     },
     twitter: {
-      card: "summary_large_image",
+      // A favicon renders as a small square card; real images go large
+      card: meta?.image ? "summary_large_image" : "summary",
       title,
       description,
       images: [image],
