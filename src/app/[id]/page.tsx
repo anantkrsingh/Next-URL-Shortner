@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import cache from "@/lib/cache";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 export const dynamic = "force-dynamic";
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -35,12 +35,7 @@ export default async function Page({
   });
 
   if (!urlData) {
-    return (
-      <div>
-        Short URL not found{" "}
-        <div id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
-      </div>
-    );
+    notFound();
   }
 
   await prisma.url.update({
