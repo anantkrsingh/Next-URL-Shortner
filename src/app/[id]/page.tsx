@@ -62,7 +62,9 @@ export async function generateMetadata({
       }
     : targetHost
       ? {
-          url: `https://www.google.com/s2/favicons?domain=${targetHost}&sz=256`,
+          // Direct gstatic endpoint: google.com/s2/favicons 301s to it, and
+          // some preview crawlers refuse to follow image redirects
+          url: `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${encodeURIComponent(`https://${targetHost}`)}&size=256`,
           width: 256,
           height: 256,
           alt: targetHost,
