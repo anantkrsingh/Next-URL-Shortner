@@ -41,7 +41,15 @@ export async function generateMetadata({
     ? await getTargetMetadata(id, targetUrl)
     : null;
 
-  const title = meta?.title ?? "Redirecting... | Tinyur";
+  let targetHost = "";
+  try {
+    targetHost = new URL(targetUrl).hostname.replace(/^www\./, "");
+  } catch {
+    // leave empty
+  }
+
+  const title =
+    meta?.title ?? (targetHost ? `${targetHost} | via Tinyur` : "Tinyur");
   const description = meta?.description ?? targetUrl;
 
   // Fall back to Tinyur's own card image so shares always render a preview
