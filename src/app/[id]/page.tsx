@@ -44,6 +44,21 @@ export async function generateMetadata({
   const title = meta?.title ?? "Redirecting... | Tinyur";
   const description = meta?.description ?? targetUrl;
 
+  // Fall back to Tinyur's own card image so shares always render a preview
+  const image = meta?.image
+    ? {
+        url: meta.image,
+        width: meta.imageWidth,
+        height: meta.imageHeight,
+        alt: meta.imageAlt,
+      }
+    : {
+        url: "https://tinyur.in/opengraph-image.png",
+        width: 1920,
+        height: 1008,
+        alt: "Tinyur URL Shortener",
+      };
+
   return {
     title,
     description,
@@ -53,14 +68,14 @@ export async function generateMetadata({
       description,
       url: `https://tinyur.in/${id}`,
       siteName: meta?.siteName ?? "Tinyur",
-      images: meta?.image ? [meta.image] : undefined,
+      images: [image],
       type: "website",
     },
     twitter: {
-      card: meta?.image ? "summary_large_image" : "summary",
+      card: "summary_large_image",
       title,
       description,
-      images: meta?.image ? [meta.image] : undefined,
+      images: [image],
     },
   };
 }
