@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from '@/lib/prisma'
 import { generateShortCode, isValidUrl } from '@/lib/utils'
 import cache from '../../../lib/cache'
+import { getCurrentUser } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
@@ -115,11 +116,14 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const user = await getCurrentUser()
+
     const newUrl = await prisma.url.create({
       data: {
         originalUrl: url,
         shortCode: shortCode!,
-        customAlias: customAlias || null
+        customAlias: customAlias || null,
+        userId: user?.id ?? null,
       }
     })
 

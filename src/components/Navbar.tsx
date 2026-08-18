@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import AuthNav from "@/components/AuthNav";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -122,19 +123,7 @@ export default function Navbar() {
               <span className="relative z-10">Contact</span>
               <span className="absolute inset-0 bg-white/20 rounded-none transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
             </Link>
-            <Link
-              href="/login"
-              className="relative text-white font-semibold transition-colors overflow-hidden group px-3 py-2"
-            >
-              <span className="relative z-10">Login</span>
-              <span className="absolute inset-0 bg-white/20 rounded-none transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-            </Link>
-            <Link
-              href="/signup"
-              className="glass-btn px-4 py-2 font-semibold"
-            >
-              Sign up
-            </Link>
+            <AuthNav />
           </div>
 
           {/* Hamburger Menu Button */}
@@ -219,20 +208,7 @@ export default function Navbar() {
           >
             Contact
           </Link>
-          <Link
-            href="/login"
-            onClick={closeMenu}
-            className="text-white text-4xl font-semibold hover:text-blue-400 transition-colors"
-          >
-            Login
-          </Link>
-          <Link
-            href="/signup"
-            onClick={closeMenu}
-            className="glass-btn px-6 py-3 text-2xl font-semibold"
-          >
-            Sign up
-          </Link>
+          <AuthNav variant="mobile" onNavigate={closeMenu} />
         </div>
       </div>
     </>

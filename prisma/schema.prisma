@@ -15,14 +15,17 @@ datasource db {
 }
 
 model Url {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   originalUrl String
   shortCode   String   @unique
-  customAlias String?  @unique
+  customAlias String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   clicks      Int      @default(0)
+  userId      String?  @db.ObjectId
+  user        User?    @relation(fields: [userId], references: [id])
 
+  @@index([userId])
   @@map("urls")
 }
 
@@ -35,4 +38,18 @@ model Contact {
   createdAt DateTime @default(now())
 
   @@map("contacts")
+}
+
+model User {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String   @unique
+  passwordHash String?
+  googleId     String?  @unique
+  image        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  urls         Url[]
+
+  @@map("users")
 }
