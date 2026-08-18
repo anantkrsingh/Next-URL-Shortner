@@ -7,28 +7,67 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted  
+    runs-on: self-hosted
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Stop Docker Compose stack
+        run: |
+          docker compose down || true
+
       - name: Create .env file for Next.js
         run: |
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-          echo "REDIS_URL=redis://redis:6379" >> .env
-          echo "NODE_ENV=production" >> .env
-          echo "NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}" >> .env
-          echo "NEXT_PUBLIC_APP_URL=https://tinyur.in" >> .env
-          echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}" >> .env
-          echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}" >> .env
-          echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}" >> .env
-          echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}" >> .env
-          echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}" >> .env
-          echo "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}" >> .env
-      
-      - name: Build and run with Docker Compose
+          cat > .env << EOF
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          REDIS_URL=redis://127.0.0.1:6379
+          NODE_ENV=production
+          NEXT_PUBLIC_APP_URL=https://tinyur.in
+          NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
+          NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
+          NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
+          AUTH_SECRET=${{ secrets.AUTH_SECRET }}
+          GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REDIRECT_URI=https://tinyur.in/api/auth/google/callback
+          EOF
+
+      - name: Start Redis container
         run: |
-          docker compose down
-          docker compose up -d --build
-     
-  
+          docker rm -f redis || true
+          docker run -d \
+            --name redis \
+            --restart always \
+            -p 127.0.0.1:6379:6379 \
+            redis:7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Build Next.js
+        run: yarn build
+
+      - name: Stop existing app
+        run: |
+          if command -v lsof >/dev/null 2>&1 && lsof -ti :3000 >/dev/null 2>&1; then
+            kill $(lsof -ti :3000) || true
+            sleep 2
+          fi
+
+      - name: Start Next.js
+        run: |
+          nohup yarn start --port 3000 > next.log 2>&1 &
+          sleep 4
+          curl -fsS http://127.0.0.1:3000 >/dev/null
