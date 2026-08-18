@@ -5,7 +5,7 @@ import "./globals.css";
 import Analytics from "@/components/Analytics";
 import BrandSchema from "@/components/BrandSchema";
 import CookieConsent from "@/components/CookieConsent";
-
+import Script from "next/script";
 const nunito = Nunito({
   variable: "--font-nunito",
   subsets: ["latin"],
@@ -85,13 +85,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7464509288176224"
-          crossOrigin="anonymous"
-        />
-      </head>
+     <Script
+  id="adsense"
+  strategy="lazyOnload"
+  crossOrigin="anonymous"
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7464509288176224"
+/>
       <body className={`${nunito.variable} font-sans antialiased`}>
         <a
           href="#main-content"

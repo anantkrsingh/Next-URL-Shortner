@@ -5,8 +5,6 @@ import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
-// Runs before the response starts streaming, so notFound() here returns a
-// real 404 status; inside the page it would stream after a 200 header.
 export async function generateMetadata({
   params,
 }: {
@@ -40,7 +38,8 @@ export default async function Page({
 }) {
   const { id } = await params;
 
-  const [, cachedUrl] = await Promise.all([delay(5000), cache.get(id)]);
+  const cachedUrl = await cache.get(id);
+
 
   if (cachedUrl) {
     await prisma.url.update({
