@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { createPortal } from "react-dom";
 
 interface ApiResponse {
   data?: unknown;
@@ -299,9 +300,11 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
       </div>
 
       {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center sm:justify-end z-50">
-          <div className="bg-[#0f0f0f] border-l border-white/10 w-full max-w-2xl h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+      {isModalOpen &&
+        typeof document !== "undefined" &&
+        createPortal(
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 backdrop-blur-md sm:justify-end">
+          <div className="flex h-full w-full max-w-2xl flex-col border-l border-white/10 bg-[#0f0f0f] shadow-2xl animate-in slide-in-from-right duration-300">
             <div className="p-6 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
               <h2 className="text-xl font-bold text-white">Test API Endpoint</h2>
               <button
@@ -387,7 +390,8 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

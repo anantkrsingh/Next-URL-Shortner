@@ -51,12 +51,12 @@ export default function HomeSections() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <section className="bg-gray-50 py-16 px-4">
+      <section className="px-4 py-16">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-center text-3xl font-bold text-gray-900 md:text-4xl">
+          <h2 className="mb-4 text-center text-3xl font-bold text-white md:text-4xl">
             Why Choose TinyUR?
           </h2>
-          <p className="mx-auto mb-12 max-w-2xl text-center text-gray-600">
+          <p className="mx-auto mb-12 max-w-2xl text-center text-white/65">
             A free URL shortener with custom aliases, click counts, an unshorten
             preview, and a public API — built for sharing on the web and in apps.
           </p>
@@ -96,12 +96,12 @@ export default function HomeSections() {
         </div>
       </section>
 
-      <section className="bg-white py-16 px-4">
+      <section className="px-4 py-16">
         <div className="mx-auto max-w-5xl">
-          <h2 className="mb-4 text-center text-3xl font-bold text-gray-900 md:text-4xl">
+          <h2 className="mb-4 text-center text-3xl font-bold text-white md:text-4xl">
             Shorten a URL in 3 steps
           </h2>
-          <p className="mb-12 text-center text-gray-600">
+          <p className="mb-12 text-center text-white/65">
             No account required. Paste, optionally customize, then copy and share.
           </p>
           <div className="grid gap-8 md:grid-cols-3">
@@ -124,12 +124,12 @@ export default function HomeSections() {
         </div>
       </section>
 
-      <section className="bg-gray-50 py-16 px-4">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">
+      <section className="px-4 py-16">
+        <div className="glass-panel mx-auto max-w-4xl p-8 md:p-10">
+          <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
             What is a URL shortener?
           </h2>
-          <div className="space-y-4 text-gray-700 leading-relaxed">
+          <div className="space-y-4 leading-relaxed text-white/75">
             <p>
               A URL shortener turns a long web address into a compact link that is
               easier to share. Product pages, tracking parameters, and nested
@@ -154,9 +154,9 @@ export default function HomeSections() {
         </div>
       </section>
 
-      <section className="bg-white py-16 px-4">
+      <section className="px-4 py-16">
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-12 text-center text-3xl font-bold text-gray-900 md:text-4xl">
+          <h2 className="mb-12 text-center text-3xl font-bold text-white md:text-4xl">
             Popular ways people use TinyUR
           </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -188,24 +188,24 @@ export default function HomeSections() {
         </div>
       </section>
 
-      <section className="bg-gray-50 py-16 px-4">
+      <section className="px-4 py-16">
         <div className="mx-auto max-w-3xl">
-          <h2 className="mb-4 text-center text-3xl font-bold text-gray-900 md:text-4xl">
+          <h2 className="mb-4 text-center text-3xl font-bold text-white md:text-4xl">
             Frequently asked questions
           </h2>
-          <p className="mb-10 text-center text-gray-600">
+          <p className="mb-10 text-center text-white/65">
             Quick answers about TinyUR, short links, and how the service works.
           </p>
           <div className="space-y-3">
             {faqs.map((item) => (
               <details
                 key={item.q}
-                className="group rounded-xl border border-gray-200 bg-white px-5 py-4"
+                className="glass-panel group rounded-xl px-5 py-4"
               >
-                <summary className="cursor-pointer list-none font-semibold text-gray-900">
+                <summary className="list-none font-semibold text-white">
                   {item.q}
                 </summary>
-                <p className="mt-3 text-gray-600 leading-relaxed">{item.a}</p>
+                <p className="mt-3 leading-relaxed text-white/70">{item.a}</p>
               </details>
             ))}
           </div>
@@ -225,31 +225,31 @@ function Feature({
   body: string;
 }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_1px_1px_rgba(0,0,0,0.05),0_4px_6px_rgba(34,42,53,0.04),0_24px_68px_rgba(47,48,55,0.05),0_2px_3px_rgba(0,0,0,0.04)]">
+    <div className="glass-panel rounded-2xl p-6">
       <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-lg ${color}`}>
         <span className="text-lg font-bold text-white">{title.charAt(0)}</span>
       </div>
-      <h3 className="mb-2 text-xl font-bold text-gray-900">{title}</h3>
-      <p className="text-gray-600">{body}</p>
+      <h3 className="mb-2 text-xl font-bold text-white">{title}</h3>
+      <p className="text-white/70">{body}</p>
     </div>
   );
 }
 
 function Step({ n, title, body }: { n: string; title: string; body: string }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6">
-      <div className="mb-3 text-3xl font-black text-blue-600">{n}</div>
-      <h3 className="mb-2 text-xl font-bold text-gray-900">{title}</h3>
-      <p className="text-gray-600">{body}</p>
+    <div className="glass-panel rounded-2xl p-6">
+      <div className="mb-3 text-3xl font-black text-blue-300">{n}</div>
+      <h3 className="mb-2 text-xl font-bold text-white">{title}</h3>
+      <p className="text-white/70">{body}</p>
     </div>
   );
 }
 
 function UseCase({ title, body }: { title: string; body: string }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6">
-      <h3 className="mb-2 text-lg font-bold text-gray-900">{title}</h3>
-      <p className="text-gray-600">{body}</p>
+    <div className="glass-panel rounded-2xl p-6">
+      <h3 className="mb-2 text-lg font-bold text-white">{title}</h3>
+      <p className="text-white/70">{body}</p>
     </div>
   );
 }

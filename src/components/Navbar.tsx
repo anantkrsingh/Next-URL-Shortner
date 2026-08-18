@@ -36,7 +36,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 backdrop-blur-md bg-black/20">
+      <nav className="glass-nav fixed top-0 right-0 left-0 z-50 px-6 py-3 backdrop-blur-2xl">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo/Brand */}
           <Link href="/" className="text-white font-bold text-2xl hover:opacity-80 transition-opacity" onClick={closeMenu}>
@@ -81,7 +81,7 @@ export default function Navbar() {
                   isResourcesOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
                 }`}
               >
-                <div className="w-48 backdrop-blur-md bg-black/90 border border-white/20 rounded-lg shadow-xl overflow-hidden">
+                <div className="glass-panel relative z-10 w-48 overflow-hidden rounded-xl">
                   {/* Arrow pointing upwards */}
                   <div className="absolute -top-2 right-4 w-4 h-4 bg-black/90 border-l border-t border-white/20 transform rotate-45"></div>
                   
@@ -131,18 +131,9 @@ export default function Navbar() {
             </Link>
             <Link
               href="/signup"
-              className="relative flex items-center gap-2 px-4 py-2 bg-white text-gray-900 font-semibold rounded-lg overflow-hidden group shadow-sm"
+              className="glass-btn px-4 py-2 font-semibold"
             >
-              <span
-                className="absolute inset-0 bg-blue-600 rounded-lg transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"
-                style={{
-                  backgroundImage: "url(/grain.png)",
-                  backgroundSize: "200px 200px",
-                  backgroundRepeat: "repeat",
-                  backgroundBlendMode: "overlay"
-                }}
-              ></span>
-              <span className="relative z-10 group-hover:text-white transition-colors duration-300">Sign up</span>
+              Sign up
             </Link>
           </div>
 
@@ -162,7 +153,7 @@ export default function Navbar() {
       </nav>
 
       {/* Full-Screen Mobile Menu */}
-      <div className={`fixed inset-0 bg-black z-40 transition-all duration-500 ease-in-out ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+      <div className={`fixed inset-0 z-40 bg-[#060814]/70 backdrop-blur-2xl transition-all duration-500 ease-in-out ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
         <div className={`flex flex-col items-center justify-center h-full gap-8 transition-all duration-700 ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <Link
             href="/api-docs"
@@ -238,7 +229,7 @@ export default function Navbar() {
           <Link
             href="/signup"
             onClick={closeMenu}
-            className="px-6 py-3 bg-white text-gray-900 text-2xl font-semibold rounded-lg hover:bg-blue-600 hover:text-white transition-all"
+            className="glass-btn px-6 py-3 text-2xl font-semibold"
           >
             Sign up
           </Link>

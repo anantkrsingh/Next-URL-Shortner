@@ -1,41 +1,20 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import GlassBackdrop from "@/components/GlassBackdrop";
 
 export default function MarketingLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return (
-        <>
-            <div className="fixed inset-0 bg-black -z-10" />
-
-            {/* Glass effect gradient blob */}
-            <div
-                className="fixed inset-0 opacity-40 -z-10"
-                style={{
-                    background: `
-            radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 60%)
-          `
-                }}
-            />
-
-            {/* Grain texture */}
-            <div
-                className="fixed inset-0 opacity-20 -z-10"
-                style={{
-                    backgroundImage: "url(/grain.png)",
-                    backgroundSize: "150px 150px",
-                    backgroundRepeat: "repeat",
-                    mixBlendMode: "overlay",
-                }}
-            />
-
-            <Navbar />
-            <div className="relative min-h-screen flex flex-col">
-                <main id="main-content" className="flex-grow">{children}</main>
-                <Footer />
-            </div>
-        </>
-    );
+  return (
+    <div className="relative flex min-h-screen flex-col">
+      <GlassBackdrop />
+      <Navbar />
+      <main id="main-content" className="relative z-10 flex-grow">
+        {children}
+      </main>
+      <Footer />
+    </div>
+  );
 }

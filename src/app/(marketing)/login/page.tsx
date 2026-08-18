@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-12 pt-28">
-      <div className="mx-auto max-w-md rounded-2xl bg-white p-8 shadow-[0_1px_1px_rgba(0,0,0,0.05),0_4px_6px_rgba(34,42,53,0.04),0_24px_68px_rgba(47,48,55,0.05),0_2px_3px_rgba(0,0,0,0.04)] md:p-10">
+    <div className="min-h-screen px-4 py-12 pt-28">
+      <div className="glass-panel glass-doc mx-auto max-w-md rounded-2xl p-8 md:p-10">
         <h1 className="mb-2 text-3xl font-bold text-gray-900">Log in</h1>
         <p className="mb-8 text-gray-600">
           Welcome back. Sign in to manage your short links.

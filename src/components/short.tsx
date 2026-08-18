@@ -5,7 +5,6 @@ import { FaCheck, FaCopy } from "react-icons/fa";
 import { CircularProgress } from "@mui/material";
 import { analytics } from "../lib/firebase";
 import { logEvent } from "firebase/analytics";
-import Image from "next/image";
 interface ShortUrlResponse {
   originalUrl: string;
   shortCode: string;
@@ -112,12 +111,12 @@ export default function Short() {
               onChange={(e) => setUrl(e.target.value)}
               placeholder="Paste your URL here"
               required
-              className="flex-1 min-h-[56px] h-[56px] px-4 bg-white/90 backdrop-blur-md border border-white/30 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
+              className="glass-input flex-1 min-h-[56px] h-[56px] px-4"
             />
             <button
               type="submit"
               disabled={loading}
-              className="relative overflow-hidden w-full sm:w-auto sm:min-w-[120px] min-h-[56px] h-[56px] bg-blue-500 text-white font-semibold rounded-lg transition-all duration-300 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="glass-btn relative overflow-hidden w-full sm:w-auto sm:min-w-[120px] min-h-[56px] h-[56px] font-semibold disabled:opacity-50"
             >
               <div 
                 className="absolute inset-0 opacity-20 pointer-events-none"
@@ -140,7 +139,7 @@ export default function Short() {
               onChange={(e) => setCustomAlias(e.target.value)}
               placeholder="Custom alias (optional)"
               pattern="[a-zA-Z0-9_-]+"
-              className="w-full min-h-[56px] h-[56px] px-4 bg-white/90 backdrop-blur-md border border-white/30 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
+              className="glass-input w-full min-h-[56px] h-[56px] px-4"
             />
           )}
 
@@ -156,9 +155,9 @@ export default function Short() {
         </form>
 
         {shortUrl && (
-          <div className="mt-6 p-4 bg-white/90 backdrop-blur-md rounded-xl border border-white/30 flex items-center gap-3">
+          <div className="glass-panel mt-6 flex items-center gap-3 rounded-xl p-4">
             <a
-              className="flex-1 text-gray-900 font-medium hover:text-blue-600 truncate transition-colors"
+              className="flex-1 truncate font-medium text-white hover:text-blue-200 transition-colors"
               href={shortUrl.shortUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -167,10 +166,10 @@ export default function Short() {
             </a>
             <button
               onClick={copyToClipboard}
-              className="p-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+              className="glass-input p-2"
               title="Copy"
             >
-              {copied ? <FaCheck className="text-green-600" /> : <FaCopy className="text-gray-600" />}
+              {copied ? <FaCheck className="text-green-400" /> : <FaCopy className="text-white/80" />}
             </button>
           </div>
         )}

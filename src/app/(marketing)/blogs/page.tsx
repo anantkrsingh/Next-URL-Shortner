@@ -92,7 +92,7 @@ export default function BlogsPage() {
             <Link
               key={index}
               href={blog.href}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm p-6 transition-all duration-300 hover:bg-white/10 hover:border-white/30 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2"
+              className="glass-panel group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
             >
               {/* Animated gradient on hover */}
               <div

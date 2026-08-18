@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-[0_1px_1px_rgba(0,0,0,0.05),0_4px_6px_rgba(34,42,53,0.04),0_24px_68px_rgba(47,48,55,0.05),0_2px_3px_rgba(0,0,0,0.04)] p-8 md:p-12">
+    <div className="min-h-screen px-4 py-12 pt-28">
+      <div className="glass-panel glass-doc mx-auto max-w-4xl rounded-2xl p-8 md:p-12">
         <Link href="/" className="text-blue-600 hover:text-blue-700 font-medium mb-6 inline-block">
           ← Back to Home
         </Link>

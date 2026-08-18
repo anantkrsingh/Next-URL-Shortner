@@ -3,7 +3,6 @@ import { Nunito } from "next/font/google";
 import "./globals.css";
 // import { Analytics } from "@vercel/analytics/next"
 import Analytics from "@/components/Analytics";
-import Script from "next/script";
 import BrandSchema from "@/components/BrandSchema";
 import CookieConsent from "@/components/CookieConsent";
 
@@ -86,16 +85,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7464509288176224"
-        crossOrigin="anonymous"
-        strategy="afterInteractive"
-      />
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7464509288176224"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className={`${nunito.variable} font-sans antialiased`}>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-gray-900"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-white/20 focus:px-4 focus:py-2 focus:text-white"
         >
           Skip to main content
         </a>

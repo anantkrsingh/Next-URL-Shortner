@@ -40,7 +40,7 @@ export default async function Page({
 }) {
   const { id } = await params;
 
-  const [_, cachedUrl] = await Promise.all([delay(5000), cache.get(id)]);
+  const [, cachedUrl] = await Promise.all([delay(5000), cache.get(id)]);
 
   if (cachedUrl) {
     await prisma.url.update({

@@ -1,7 +1,5 @@
 import Unshorten from "@/components/Unshorten";
 import { Metadata } from "next";
-import Image from "next/image";
-import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Unshorten URL | Tinyur URL Shortener",
@@ -19,45 +17,10 @@ export const metadata: Metadata = {
 
 export default function UnshortenPage() {
   return (
-    <>
-      {/* Hero Section with Background Image */}
-      <div className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-16">
-        {/* Background Image */}
-        <Image
-          src="/bg.jpg"
-          alt="Background"
-          fill
-          className="object-cover"
-          priority
-        />
-
-        {/* Grain Overlay */}
-        <div className="absolute inset-0 opacity-30 z-10">
-          <Image
-            src="/grain.png"
-            alt=""
-            fill
-            className="object-repeat"
-            style={{ mixBlendMode: "overlay" }}
-          />
-        </div>
-        
-        {/* Navbar */}
-        <Navbar />
-        
-        {/* Unshorten Card */}
-        <div className="relative z-10 w-full max-w-4xl px-4">
-          <Unshorten />
-        </div>
+    <div className="relative flex min-h-[78vh] items-center justify-center px-4 pt-32 pb-16">
+      <div className="glass-panel relative z-10 w-full max-w-3xl p-6 sm:p-10">
+        <Unshorten />
       </div>
-      {/* White Background Section */}
-      <div className="bg-white min-h-[50vh]">
-        {/* Additional content can go here */}
-      </div>
-    </>
+    </div>
   );
 }
-
-
-
-

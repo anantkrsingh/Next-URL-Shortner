@@ -4,129 +4,125 @@ import Image from "next/image";
 
 function Footer() {
   return (
-    <div className="flex min-h-[28rem] w-full items-center justify-center bg-gray-50 py-12">
-      <div className="mx-auto flex w-[90%] flex-col gap-8 rounded-[2rem] border border-gray-200 bg-white p-10 shadow-[0_1px_1px_rgba(0,0,0,0.05),0_4px_6px_rgba(34,42,53,0.04),0_24px_68px_rgba(47,48,55,0.05),0_2px_3px_rgba(0,0,0,0.04)]">
+    <div className="relative z-10 flex w-full items-center justify-center px-4 py-12">
+      <div className="glass-panel mx-auto flex w-[90%] flex-col gap-8 rounded-[2rem] p-10">
         <div className="flex items-center gap-2">
           <Image
             src="/icon.png"
             alt="TinyUR"
             width={25}
             height={25}
-            style={{
-              maxWidth: "100%",
-              height: "auto",
-            }}
           />
-          <span className="text-2xl font-bold text-gray-900">TinyUR</span>
+          <span className="text-2xl font-bold text-white">TinyUR</span>
         </div>
-        <p className="max-w-xl text-sm text-gray-600">
+        <p className="max-w-xl text-sm text-white/65">
           Free URL shortener for clean, shareable links. Custom aliases, click
           analytics, unshorten preview, and a public API.
         </p>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3 className="mb-3 text-sm font-semibold text-gray-900">Pages</h3>
-            <ul className="space-y-2 text-sm text-gray-700">
+            <h3 className="mb-3 text-sm font-semibold text-white">Pages</h3>
+            <ul className="space-y-2 text-sm text-white/70">
               <li>
-                <Link href="/" className="hover:text-blue-600">
+                <Link href="/" className="hover:text-white">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/about-us" className="hover:text-blue-600">
+                <Link href="/about-us" className="hover:text-white">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-blue-600">
+                <Link href="/contact" className="hover:text-white">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/blogs" className="hover:text-blue-600">
+                <Link href="/blogs" className="hover:text-white">
                   Blog
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="mb-3 text-sm font-semibold text-gray-900">Tools</h3>
-            <ul className="space-y-2 text-sm text-gray-700">
+            <h3 className="mb-3 text-sm font-semibold text-white">Tools</h3>
+            <ul className="space-y-2 text-sm text-white/70">
               <li>
-                <Link href="/" className="hover:text-blue-600">
+                <Link href="/" className="hover:text-white">
                   Shorten URL
                 </Link>
               </li>
               <li>
-                <Link href="/click-counter" className="hover:text-blue-600">
+                <Link href="/click-counter" className="hover:text-white">
                   URL Click Counter
                 </Link>
               </li>
               <li>
-                <Link href="/unshorten" className="hover:text-blue-600">
+                <Link href="/unshorten" className="hover:text-white">
                   Unshorten URL
                 </Link>
               </li>
               <li>
-                <Link href="/api-docs" className="hover:text-blue-600">
+                <Link href="/api-docs" className="hover:text-white">
                   API Docs
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="mb-3 text-sm font-semibold text-gray-900">Legal</h3>
-            <ul className="space-y-2 text-sm text-gray-700">
+            <h3 className="mb-3 text-sm font-semibold text-white">Legal</h3>
+            <ul className="space-y-2 text-sm text-white/70">
               <li>
-                <Link href="/privacy-policy" className="hover:text-blue-600">
+                <Link href="/privacy-policy" className="hover:text-white">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/cookie-policy" className="hover:text-blue-600">
+                <Link href="/cookie-policy" className="hover:text-white">
                   Cookie Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms-of-service" className="hover:text-blue-600">
+                <Link href="/terms-of-service" className="hover:text-white">
                   Terms of Service
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="mb-3 text-sm font-semibold text-gray-900">Contact</h3>
+            <h3 className="mb-3 text-sm font-semibold text-white">Contact</h3>
             <a
               href="mailto:contact@tinyur.in"
-              className="text-sm text-gray-600 hover:text-blue-600"
+              className="text-sm text-white/70 hover:text-white"
             >
               contact@tinyur.in
             </a>
-            <p className="mt-3 text-sm text-gray-600">India · Mon–Fri, 9:00 AM – 6:00 PM IST</p>
+            <p className="mt-3 text-sm text-white/60">India · Mon–Fri, 9:00 AM – 6:00 PM IST</p>
           </div>
         </div>
 
-        <div className="flex flex-col items-start justify-between gap-6 border-t border-gray-200 pt-6 md:flex-row md:items-center">
-          <p className="text-sm text-gray-500">© {new Date().getFullYear()} TinyUR. All rights reserved.</p>
+        <div className="flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-6 md:flex-row md:items-center">
+          <p className="text-sm text-white/45">© {new Date().getFullYear()} TinyUR. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-4">
             <a
               href="https://github.com/anantkrsingh/Next-URL-Shortner"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600"
+              className="glass-btn inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold"
             >
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
               </svg>
               Fork on GitHub
             </a>
-            <span className="text-sm font-semibold text-gray-900">Follow Us</span>
+            <span className="text-sm font-semibold text-white">Follow Us</span>
             <a
               href="https://www.linkedin.com/company/tinyur/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 hover:text-blue-600"
+              className="text-white/70 hover:text-white"
               aria-label="LinkedIn"
             >
               <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -137,7 +133,7 @@ function Footer() {
               href="https://www.instagram.com/tinyur_official/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 hover:text-pink-600"
+              className="text-white/70 hover:text-pink-300"
               aria-label="Instagram"
             >
               <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">

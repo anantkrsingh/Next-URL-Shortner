@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import GlassBackdrop from "@/components/GlassBackdrop";
 
 export const metadata: Metadata = {
   title: "Page Not Found | Tinyur",
@@ -8,19 +9,17 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-6">
-      <div className="text-center">
-        <h1 className="text-7xl font-extrabold">404</h1>
-        <h2 className="text-3xl font-bold mt-4">
+    <div className="relative flex min-h-screen flex-col items-center justify-center gap-6 px-4">
+      <GlassBackdrop />
+      <div className="glass-panel relative z-10 max-w-lg p-10 text-center">
+        <h1 className="text-7xl font-extrabold text-white">404</h1>
+        <h2 className="mt-4 text-3xl font-bold text-white">
           This short link doesn&apos;t exist
         </h2>
-        <p className="mt-4 text-lg">
+        <p className="mt-4 text-lg text-white/70">
           The link may have been mistyped or was never created.
         </p>
-        <Link
-          href="/"
-          className="inline-block mt-6 font-semibold underline underline-offset-4"
-        >
+        <Link href="/" className="glass-btn mt-6 inline-block px-5 py-2.5 font-semibold">
           Create a short link on Tinyur
         </Link>
       </div>

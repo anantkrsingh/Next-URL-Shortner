@@ -8,7 +8,6 @@ import {
   MotionValue,
   Transition,
   useMotionValue,
-  useScroll,
   useSpring,
   useTransform,
 } from "motion/react";
@@ -70,7 +69,7 @@ const DynamicScrollIslandTOC = ({
       c.removeEventListener("scroll", updateScrollProgress);
       resizeObserver.disconnect();
     };
-  }, [ref?.current]);
+  }, [ref, sp]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -173,22 +172,10 @@ export default DynamicScrollIslandTOC;
 function Progress({
   value,
   setValue,
-  ref,
   sp,
   lPrefix,
 }: Props & { sp: MotionValue }) {
-  const [p, setP] = useState(0);
-  const isWindowRef = ref?.current === window;
-  const { scrollYProgress } = useScroll({ 
-    container: isWindowRef ? undefined : (ref as React.RefObject<HTMLElement> | undefined)
-  });
-
-  useEffect(() => {
-    setP(Math.round(sp.get() * 100));
-    const unsubscribe = sp.on("change", (v) => setP(Math.round(v * 100)));
-
-    return () => unsubscribe();
-  }, [ref, scrollYProgress]);
+  const percent = useTransform(sp, (v) => `${Math.round(v * 100)}%`);
 
   return (
     <motion.button
@@ -203,7 +190,7 @@ function Progress({
         "bg-white/[0.1] transition-colors hover:bg-white/[0.15]"
       )}
     >
-      {value?.value ? <TbX /> : `${p}%`}
+      {value?.value ? <TbX /> : <motion.span>{percent}</motion.span>}
     </motion.button>
   );
 }

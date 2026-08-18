@@ -1,21 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #060814;
+  --foreground: #f4f6ff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-nunito);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
@@ -49,4 +42,80 @@ body {
   a[aria-disabled="true"] {
     cursor: not-allowed;
   }
+}
+
+.glass-panel {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.14),
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.glass-nav {
+  background: rgba(6, 8, 20, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 0.9rem;
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: rgba(147, 197, 253, 0.7);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+.glass-btn {
+  background: linear-gradient(
+    135deg,
+    rgba(96, 165, 250, 0.65),
+    rgba(139, 92, 246, 0.55)
+  );
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  border-radius: 0.9rem;
+}
+
+.glass-btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(96, 165, 250, 0.8),
+    rgba(139, 92, 246, 0.7)
+  );
+}
+
+.glass-doc h1,
+.glass-doc h2,
+.glass-doc h3,
+.glass-doc strong {
+  color: #fff !important;
+}
+
+.glass-doc p,
+.glass-doc li,
+.glass-doc label {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.glass-doc a {
+  color: #93c5fd;
 }

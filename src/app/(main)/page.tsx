@@ -1,7 +1,5 @@
 import Short from "@/components/short";
 import { Metadata } from "next";
-import Image from "next/image";
-import Navbar from "@/components/Navbar";
 import HomeSections from "@/components/home/sections";
 export const metadata: Metadata = {
   title: "Tinyur | Free URL Shortener — Create Short Links Instantly",
@@ -88,37 +86,10 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      {/* Hero Section with Background Image */}
-      <div className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-16">
-        {/* Background Image */}
-        <Image
-          src="/bg.jpg"
-          alt="Background"
-          fill
-          className="object-cover"
-          priority
-        />
-        
-        {/* Grain Overlay */}
-        <div className="absolute inset-0 opacity-30 z-10">
-          <Image
-            src="/grain.png"
-            alt=""
-            fill
-            className="object-repeat"
-            style={{ mixBlendMode: "overlay" }}
-          />
-        </div>
-        
-        {/* Navbar */}
-        <Navbar />
-        
-        {/* Short URL Card */}
-        
-        <div className="relative z-10 w-full max-w-4xl px-4">
+      <div className="relative flex min-h-[78vh] items-center justify-center px-4 pt-32 pb-16">
+        <div className="glass-panel relative z-10 w-full max-w-3xl p-6 sm:p-10">
           <Short />
         </div>
-
       </div>
       <HomeSections />
     </>

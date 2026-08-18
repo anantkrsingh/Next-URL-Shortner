@@ -43,7 +43,7 @@ export default function ContactForm() {
   };
 
   const fieldClass =
-    "w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 outline-none focus:border-blue-500 disabled:opacity-60";
+    "w-full glass-input px-4 py-2.5 disabled:opacity-60";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -124,7 +124,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={loading}
-        className="rounded-lg bg-blue-600 px-6 py-2.5 font-semibold text-white hover:bg-blue-700 disabled:opacity-60"
+        className="glass-btn w-fit px-6 py-2.5 font-semibold disabled:opacity-60"
       >
         {loading ? "Sending…" : "Send message"}
       </button>

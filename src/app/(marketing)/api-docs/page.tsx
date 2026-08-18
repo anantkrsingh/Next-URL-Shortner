@@ -1,7 +1,5 @@
 import ApiDocsClient from "@/components/api-docs-client";
 import { Metadata } from "next";
-import Image from "next/image";
-import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "API Docs | TinyUR",
@@ -106,47 +104,18 @@ const endpoints = [
 export default function ApiDocs() {
   return (
     <>
-      {/* Hero Section with Background Image */}
-      <div className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-32 pb-16">
-        {/* Background Image */}
-        <Image
-          src="/bg.jpg"
-          alt="Background"
-          fill
-          className="object-cover"
-          priority
-        />
-
-        {/* Grain Overlay */}
-        <div className="absolute inset-0 opacity-30 z-10">
-          <Image
-            src="/grain.png"
-            alt=""
-            fill
-            className="object-repeat"
-            style={{ mixBlendMode: "overlay" }}
-          />
-        </div>
-        
-        {/* Navbar */}
-        <Navbar />
-        
-        {/* Hero Content */}
-        <div className="relative z-10 w-full max-w-4xl px-4 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 drop-shadow-lg">
+      <div className="relative flex min-h-[40vh] items-center justify-center px-4 pt-32 pb-10">
+        <div className="glass-panel w-full max-w-4xl p-8 text-center sm:p-10">
+          <h1 className="mb-3 text-3xl font-bold text-white sm:text-4xl md:text-5xl">
             API Documentation
           </h1>
-          <p className="text-white/90 text-base sm:text-lg drop-shadow-md max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-base text-white/75 sm:text-lg">
             Complete guide to integrating the TinyUR URL Shortener API into your applications
           </p>
         </div>
       </div>
-      <div className="bg-black">
-<div id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
-      </div>
-      {/* API Content Section */}
-      <div className="bg-gray-50 py-16 px-4">
-        <div className="max-w-6xl mx-auto">
+      <div className="px-4 py-16">
+        <div className="glass-panel mx-auto max-w-6xl p-4 sm:p-8">
           <ApiDocsClient endpoints={endpoints} />
         </div>
       </div>

@@ -91,12 +91,12 @@ export default function Unshorten() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Enter short code or URL (e.g., abc123)"
               required
-              className="flex-1 min-h-[56px] h-[56px] px-4 bg-white/90 backdrop-blur-md border border-white/30 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 transition-all"
+              className="glass-input flex-1 min-h-[56px] h-[56px] px-4"
             />
             <button
               type="submit"
               disabled={loading}
-              className="relative overflow-hidden w-full sm:w-auto sm:min-w-[120px] min-h-[56px] h-[56px] bg-blue-500 text-white font-semibold rounded-lg transition-all duration-300 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="glass-btn relative overflow-hidden w-full sm:w-auto sm:min-w-[120px] min-h-[56px] h-[56px] font-semibold disabled:opacity-50"
             >
               <div 
                 className="absolute inset-0 opacity-20 pointer-events-none"
@@ -115,10 +115,10 @@ export default function Unshorten() {
 
         {urlData && (
           <div className="mt-6 space-y-4">
-            <div className="p-4 bg-white/90 backdrop-blur-md rounded-xl border border-white/30">
-              <div className="text-center mb-4">
-                <div className="text-gray-600 text-sm mb-2">Original URL</div>
-                <div className="text-lg font-semibold text-gray-900 break-all">
+            <div className="glass-panel rounded-xl p-4">
+              <div className="mb-4 text-center">
+                <div className="mb-2 text-sm text-white/60">Original URL</div>
+                <div className="break-all text-lg font-semibold text-white">
                   {urlData.originalUrl}
                 </div>
               </div>
@@ -127,7 +127,7 @@ export default function Unshorten() {
                   href={urlData.originalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-white transition-colors"
+                  className="glass-btn inline-flex items-center gap-2 px-4 py-2"
                 >
                   <span>Visit URL</span>
                   <FaExternalLinkAlt className="text-sm" />
@@ -135,16 +135,16 @@ export default function Unshorten() {
               </div>
             </div>
             
-            <div className="p-4 bg-white/90 backdrop-blur-md rounded-xl border border-white/30 space-y-2">
+            <div className="glass-panel space-y-2 rounded-xl p-4">
               <div>
-                <span className="text-gray-600 text-sm">Short Code:</span>
-                <div className="text-gray-900 font-mono break-all">
+                <span className="text-sm text-white/60">Short Code:</span>
+                <div className="break-all font-mono text-white">
                   {urlData.shortCode}
                 </div>
               </div>
               <div>
-                <span className="text-gray-600 text-sm">Created:</span>
-                <div className="text-gray-900">
+                <span className="text-sm text-white/60">Created:</span>
+                <div className="text-white">
                   {new Date(urlData.createdAt).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
