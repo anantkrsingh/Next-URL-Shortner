@@ -47,7 +47,7 @@ export default function CookieConsent() {
     <div
       role="dialog"
       aria-label="Cookie notice"
-      className="glass-panel fixed right-4 bottom-4 left-4 z-[60] rounded-2xl p-4 md:right-6 md:bottom-6 md:left-6 md:p-5"
+      className="fixed right-4 bottom-4 left-4 z-[60] rounded-2xl border border-white/15 bg-[#060814]/70 p-4 shadow-2xl backdrop-blur-2xl md:right-6 md:bottom-6 md:left-6 md:p-5"
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <p className="text-sm leading-relaxed text-white/80">
