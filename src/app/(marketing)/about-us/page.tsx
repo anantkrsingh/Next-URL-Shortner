@@ -87,6 +87,22 @@ export default function AboutUsPage() {
           </ul>
         </section>
 
+        <section className="mb-16 backdrop-blur-md bg-white/5 rounded-lg p-8 border border-white/10">
+          <h2 className="text-3xl font-bold text-white mb-4">Contact</h2>
+          <p className="text-gray-300 leading-relaxed mb-4">
+            TinyUR is operated from India. For support, privacy requests, or to report a
+            harmful short link, email{" "}
+            <a href="mailto:contact@tinyur.in" className="text-blue-400 hover:underline">
+              contact@tinyur.in
+            </a>{" "}
+            or use the{" "}
+            <Link href="/contact" className="text-blue-400 hover:underline">
+              Contact page
+            </Link>
+            . We typically respond within 1–2 business days.
+          </p>
+        </section>
+
         {/* CTA Section */}
         <section className="text-center">
           <h2 className="text-3xl font-bold text-white mb-6">Ready to Get Started?</h2>

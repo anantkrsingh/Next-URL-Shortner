@@ -14,6 +14,14 @@ export default function BrandSchema() {
               url: "https://tinyur.in",
               logo: "https://tinyur.in/icon.png",
               description: "Tinyur is a fast and secure URL shortener.",
+              email: "contact@tinyur.in",
+              contactPoint: {
+                "@type": "ContactPoint",
+                email: "contact@tinyur.in",
+                contactType: "customer support",
+                availableLanguage: "English",
+                url: "https://tinyur.in/contact",
+              },
               sameAs: [
                 "https://instagram.com/tinyur_official",
                 "https://linkedin.com/company/tinyur",

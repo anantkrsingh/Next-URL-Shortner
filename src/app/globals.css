@@ -23,3 +23,30 @@ body {
   color: var(--foreground);
   font-family: var(--font-nunito), sans-serif;
 }
+
+@layer base {
+  a,
+  button,
+  summary,
+  select,
+  label[for],
+  [role="button"],
+  [type="button"],
+  [type="submit"],
+  [type="reset"],
+  [type="checkbox"],
+  [type="radio"] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  select:disabled,
+  [type="button"]:disabled,
+  [type="submit"]:disabled,
+  [type="reset"]:disabled,
+  [type="checkbox"]:disabled,
+  [type="radio"]:disabled,
+  a[aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}

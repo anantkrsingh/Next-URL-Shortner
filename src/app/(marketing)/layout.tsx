@@ -33,7 +33,7 @@ export default function MarketingLayout({
 
             <Navbar />
             <div className="relative min-h-screen flex flex-col">
-                <main className="flex-grow">{children}</main>
+                <main id="main-content" className="flex-grow">{children}</main>
                 <Footer />
             </div>
         </>

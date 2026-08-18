@@ -4,8 +4,8 @@ import "./globals.css";
 // import { Analytics } from "@vercel/analytics/next"
 import Analytics from "@/components/Analytics";
 import Script from "next/script";
-import Footer from "@/components/Footer";
 import BrandSchema from "@/components/BrandSchema";
+import CookieConsent from "@/components/CookieConsent";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -14,25 +14,19 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Tinyur url shortener platform | Free & No Ads",
-  description: "URL Shortener, No Ads, No Tracking, No BS",
+  title: "Tinyur | Free URL Shortener — Create Short Links Instantly",
+  description:
+    "Free URL shortener to create short links, custom aliases, and click analytics. Fast, secure, and easy to share on WhatsApp, Instagram, email, and more.",
   keywords: [
     "URL Shortener",
     "Tinyur url shortener",
-    "Tinyur url shortning platform",
     "Free URL Shortener",
-    "No Ads",
-    "Open Source URL Shortener",
-    "No Tracking",
-    "No BS",
     "Open Source URL Shortener",
     "Simple URL Shortener",
     "Tinyur",
-    "Tinyur url shortener platform",
-    "Tinyur url shortning platform",
+    "Link Shortener",
+    "Custom short links",
     "Free and Unlimited URL Shortener",
-    "Unlimited Hits url shortner",
-    "Zero pricing url shortner",
   ],
   icons: "/icon.png",
   robots: {
@@ -54,10 +48,11 @@ export const metadata: Metadata = {
       url: "https://tinyur.in/opengraph-image.png",
       height: 1920,
       width: 1008,
-      alt: "Tinyur URL Shortener, Free & No Ads",
+      alt: "Tinyur — Free URL Shortener",
     },
-    title: "Tinyur URL Shortener, Free & No Ads",
-    description: "Free URL Shortener, No Ads, No Tracking, No BS",
+    title: "Tinyur | Free URL Shortener",
+    description:
+      "Create short, shareable links in seconds. Custom aliases, click analytics, and a free developer API.",
     url: "https://tinyur.in",
     type: "website",
     siteName: "Tinyur URL Shortener",
@@ -66,8 +61,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tinyur URL Shortener, Free & No Ads",
-    description: "Free URL Shortener, No Ads, No Tracking, No BS",
+    title: "Tinyur | Free URL Shortener",
+    description:
+      "Create short, shareable links in seconds. Custom aliases, click analytics, and a free developer API.",
     images: [
       {
         url: "https://tinyur.in/opengraph-image.png",
@@ -78,6 +74,9 @@ export const metadata: Metadata = {
     site: "@tinyur",
     creator: "@tinyur",
     creatorId: "1234567890",
+  },
+  other: {
+    "google-adsense-account": "ca-pub-7464509288176224",
   },
 };
 export default function RootLayout({
@@ -93,12 +92,15 @@ export default function RootLayout({
         crossOrigin="anonymous"
         strategy="afterInteractive"
       />
-      <Script
-      async
-      src="https://pl28767194.effectivegatecpm.com/9049c3c244f96a9f73fec77b523bbc33/invoke.js"
-      />
       <body className={`${nunito.variable} font-sans antialiased`}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-gray-900"
+        >
+          Skip to main content
+        </a>
         {children}
+        <CookieConsent />
         <Analytics />
         <BrandSchema />
       </body>

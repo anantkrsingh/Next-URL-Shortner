@@ -15,7 +15,7 @@ export default function TermsOfServicePage() {
         </Link>
         
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Terms of Service</h1>
-        <p className="text-gray-600 mb-8">Last updated: February 18, 2026</p>
+        <p className="text-gray-600 mb-8">Last updated: August 18, 2026</p>
 
         <div className="prose prose-gray max-w-none space-y-8">
           <section>
@@ -52,7 +52,17 @@ export default function TermsOfServicePage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Service Availability</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Advertising</h2>
+            <p className="text-gray-700 leading-relaxed">
+              TinyUR may display third-party advertisements, including Google AdSense. Ads are
+              not an endorsement of any advertiser. Advertising partners may use cookies as
+              described in our Privacy Policy and Cookie Policy. You agree not to click ads
+              fraudulently or encourage invalid traffic.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Service Availability</h2>
             <p className="text-gray-700 leading-relaxed">
               We strive to maintain high availability of our service, but we do not guarantee uninterrupted 
               access. We reserve the right to modify, suspend, or discontinue the service at any time without 
@@ -61,7 +71,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Content and Links</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Content and Links</h2>
             <p className="text-gray-700 leading-relaxed">
               TinyUR is not responsible for the content of shortened URLs or the websites they link to. 
               Users are solely responsible for the URLs they shorten and share. We reserve the right to 
@@ -70,7 +80,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Intellectual Property</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Intellectual Property</h2>
             <p className="text-gray-700 leading-relaxed">
               The TinyUR service, including its design, code, and branding, is protected by intellectual 
               property rights. You may not copy, modify, distribute, or reverse engineer any part of our 
@@ -79,7 +89,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Limitation of Liability</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Limitation of Liability</h2>
             <p className="text-gray-700 leading-relaxed">
               TinyUR is provided &quot;as is&quot; without warranties of any kind. We shall not be liable for any 
               damages arising from the use or inability to use our service, including but not limited to 
@@ -88,7 +98,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Indemnification</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Indemnification</h2>
             <p className="text-gray-700 leading-relaxed">
               You agree to indemnify and hold harmless TinyUR and its operators from any claims, damages, 
               losses, or expenses arising from your use of the service or violation of these terms.
@@ -96,7 +106,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. API Usage</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. API Usage</h2>
             <p className="text-gray-700 leading-relaxed">
               If you use our API, you agree to use it responsibly and not exceed reasonable rate limits. 
               We reserve the right to restrict or terminate API access for abuse or excessive usage.
@@ -104,7 +114,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Termination</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Termination</h2>
             <p className="text-gray-700 leading-relaxed">
               We reserve the right to terminate or suspend access to our service immediately, without prior 
               notice, for any reason, including breach of these terms.
@@ -112,7 +122,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Changes to Terms</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Changes to Terms</h2>
             <p className="text-gray-700 leading-relaxed">
               We may modify these terms at any time. Continued use of the service after changes constitutes 
               acceptance of the modified terms. We will update the &quot;Last updated&quot; date at the top of this page.
@@ -120,7 +130,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Governing Law</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">13. Governing Law</h2>
             <p className="text-gray-700 leading-relaxed">
               These terms shall be governed by and construed in accordance with applicable laws, without 
               regard to conflict of law provisions.
@@ -128,7 +138,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">13. Contact Information</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">14. Contact Information</h2>
             <p className="text-gray-700 leading-relaxed">
               If you have any questions about these Terms of Service, please contact us at:
             </p>
@@ -137,6 +147,11 @@ export default function TermsOfServicePage() {
               <a href="mailto:contact@tinyur.in" className="text-blue-600 hover:text-blue-700">
                 contact@tinyur.in
               </a>
+              {" "}or the{" "}
+              <Link href="/contact" className="text-blue-600 hover:text-blue-700">
+                Contact page
+              </Link>
+              .
             </p>
           </section>
         </div>

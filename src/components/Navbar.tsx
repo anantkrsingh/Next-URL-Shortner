@@ -115,6 +115,13 @@ export default function Navbar() {
               <span className="relative z-10">Click Counter</span>
               <span className="absolute inset-0 bg-white/20 rounded-none transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
             </Link>
+            <Link
+              href="/contact"
+              className="relative text-white font-semibold transition-colors overflow-hidden group px-3 py-2"
+            >
+              <span className="relative z-10">Contact</span>
+              <span className="absolute inset-0 bg-white/20 rounded-none transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+            </Link>
             <a
               href="https://github.com/anantkrsingh/Next-URL-Shortner"
               target="_blank"
@@ -211,6 +218,13 @@ export default function Navbar() {
             className="text-white text-4xl font-semibold hover:text-blue-400 transition-colors"
           >
             Click Counter
+          </Link>
+          <Link
+            href="/contact"
+            onClick={closeMenu}
+            className="text-white text-4xl font-semibold hover:text-blue-400 transition-colors"
+          >
+            Contact
           </Link>
           <a
             href="https://github.com/anantkrsingh/Next-URL-Shortner"

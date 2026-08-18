@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
         </Link>
         
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Privacy Policy</h1>
-        <p className="text-gray-600 mb-8">Last updated: February 18, 2026</p>
+        <p className="text-gray-600 mb-8">Last updated: August 18, 2026</p>
 
         <div className="prose prose-gray max-w-none space-y-8">
           <section>
@@ -37,6 +37,8 @@ export default function PrivacyPolicyPage() {
               <li>Click statistics for your shortened URLs</li>
               <li>Basic analytics data (timestamp of URL creation and clicks)</li>
               <li>IP addresses for security and fraud prevention purposes</li>
+              <li>Device and browser information from cookies and similar technologies</li>
+              <li>Contact details you send us (for example, if you email support)</li>
             </ul>
           </section>
 
@@ -64,10 +66,40 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">5. No Tracking or Advertising</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Cookies, Analytics, and Advertising</h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              TinyUR uses cookies and similar technologies as described in our{" "}
+              <Link href="/cookie-policy" className="text-blue-600 hover:text-blue-700">
+                Cookie Policy
+              </Link>
+              . We may use analytics to understand how the site is used.
+            </p>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              This site displays advertisements served by Google AdSense. Google and its partners
+              use cookies to serve and measure ads, including ads based on your visits to this
+              site and other sites. We do not sell your personal information. Advertising partners
+              process data under their own policies.
+            </p>
             <p className="text-gray-700 leading-relaxed">
-              TinyUR does not use tracking cookies, third-party analytics, or display advertisements. 
-              We do not sell, rent, or share your personal information with third parties for marketing purposes.
+              You can opt out of personalized Google ads at{" "}
+              <a
+                href="https://www.google.com/settings/ads"
+                className="text-blue-600 hover:text-blue-700"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google Ads Settings
+              </a>
+              . Additional opt-out tools are available at{" "}
+              <a
+                href="https://www.aboutads.info/choices/"
+                className="text-blue-600 hover:text-blue-700"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                aboutads.info
+              </a>
+              .
             </p>
           </section>
 
@@ -122,6 +154,11 @@ export default function PrivacyPolicyPage() {
               <a href="mailto:contact@tinyur.in" className="text-blue-600 hover:text-blue-700">
                 contact@tinyur.in
               </a>
+              {" "}or use our{" "}
+              <Link href="/contact" className="text-blue-600 hover:text-blue-700">
+                Contact page
+              </Link>
+              .
             </p>
           </section>
         </div>

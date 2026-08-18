@@ -15,11 +15,7 @@ export const metadata: Metadata = {
     "API Documentation",
     "Unlimited API Calls",
     "Free URL Sortner API",
-    "No Ads API",
-    "No Tracking API",
-    "No BS API",
     "Simple URL Shortener API",
-    "No Tracking API",
     "Simple URL Shortener API",
     "Implement URL Shortener API",
     "Implement URL Shortener API in your project",
@@ -57,7 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "API Documentation - TinyUR URL Shortener",
-    description: "Free URL Shortener, No Ads, No Tracking, No BS",
+    description: "Complete guide to the TinyUR URL Shortener API with unlimited API calls.",
     images: [
       {
         url: "https://tinyur.in/api.png",
@@ -119,11 +115,8 @@ export default function ApiDocs() {
           fill
           className="object-cover"
           priority
-          style={{
-            maxWidth: "100%",
-            height: "auto"
-          }} />
-        
+        />
+
         {/* Grain Overlay */}
         <div className="absolute inset-0 opacity-30 z-10">
           <Image
@@ -131,11 +124,8 @@ export default function ApiDocs() {
             alt=""
             fill
             className="object-repeat"
-            style={{
-              mixBlendMode: "overlay",
-              maxWidth: "100%",
-              height: "auto"
-            }} />
+            style={{ mixBlendMode: "overlay" }}
+          />
         </div>
         
         {/* Navbar */}
