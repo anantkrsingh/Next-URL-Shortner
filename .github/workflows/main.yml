@@ -59,15 +59,19 @@ jobs:
       - name: Build Next.js
         run: yarn build
 
-      - name: Stop existing app
+      - name: Ensure PM2
+        run: npm install -g pm2
+
+      - name: Start Next.js with PM2
         run: |
           if command -v lsof >/dev/null 2>&1 && lsof -ti :3000 >/dev/null 2>&1; then
-            kill $(lsof -ti :3000) || true
-            sleep 2
+            if ! pm2 describe tinyur >/dev/null 2>&1; then
+              kill $(lsof -ti :3000) || true
+              sleep 2
+            fi
           fi
-
-      - name: Start Next.js
-        run: |
-          nohup yarn start --port 3000 > next.log 2>&1 &
+          pm2 delete tinyur || true
+          pm2 start ecosystem.config.cjs --update-env
+          pm2 save
           sleep 4
           curl -fsS http://127.0.0.1:3000 >/dev/null
