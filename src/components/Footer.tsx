@@ -2,6 +2,24 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 
+const relatedSearches = [
+  { label: "Free URL shortener", href: "/" },
+  { label: "Custom short links", href: "/" },
+  { label: "TinyURL alternative", href: "/" },
+  { label: "Bitly alternative", href: "/" },
+  { label: "Unshorten URL", href: "/unshorten" },
+  { label: "URL click counter", href: "/click-counter" },
+  { label: "Short link for WhatsApp", href: "/" },
+  { label: "Instagram bio link", href: "/" },
+  { label: "Branded links", href: "/branded-links-guide" },
+  { label: "How URL shorteners work", href: "/how-url-shortners-work" },
+  { label: "URL shortening best practices", href: "/url-shortening-best-practices" },
+  { label: "Free URL shortener API", href: "/api-docs" },
+  { label: "goo.gl alternative", href: "/" },
+  { label: "Shorten Amazon links", href: "/" },
+  { label: "SMS short links", href: "/" },
+];
+
 function Footer() {
   return (
     <div className="relative z-10 flex w-full items-center justify-center px-4 py-12">
@@ -100,6 +118,21 @@ function Footer() {
               contact@tinyur.in
             </a>
             <p className="mt-3 text-sm text-white/60">India · Mon–Fri, 9:00 AM – 6:00 PM IST</p>
+          </div>
+        </div>
+
+        <div className="border-t border-white/10 pt-6">
+          <h3 className="mb-4 text-sm font-semibold text-white">People also search for</h3>
+          <div className="flex flex-wrap gap-2">
+            {relatedSearches.map((item) => (
+              <Link
+                key={item.href + item.label}
+                href={item.href}
+                className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-white/70 hover:border-white/30 hover:bg-white/10 hover:text-white"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
 
