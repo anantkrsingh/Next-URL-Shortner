@@ -42,9 +42,9 @@ export const PLANS: Plan[] = [
     id: "pro",
     name: "Pro",
     tagline: "For creators and growing teams",
-    inr: { monthly: 1999, yearly: 1499 },
+    inr: { monthly: 199, yearly: 199 },
     payable: true,
-    priceNote: "billed annually, ₹1,999/mo billed monthly",
+    priceNote: "per month",
     cta: "Upgrade to Pro",
     highlighted: true,
     features: [
@@ -62,9 +62,9 @@ export const PLANS: Plan[] = [
     id: "bulk",
     name: "Bulk & API",
     tagline: "For high-volume campaigns",
-    inr: { monthly: 9999, yearly: 7999 },
+    inr: { monthly: 799, yearly: 799 },
     payable: true,
-    priceNote: "billed annually, ₹9,999/mo billed monthly",
+    priceNote: "per month",
     cta: "Upgrade to Bulk",
     features: [
       "Everything in Pro",
