@@ -7,6 +7,7 @@ import "./globals.css";
 import Analytics from "@/components/Analytics";
 import BrandSchema from "@/components/BrandSchema";
 import CookieConsent from "@/components/CookieConsent";
+import QueryProvider from "@/components/providers/QueryProvider";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -110,9 +111,11 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        {children}
+        <QueryProvider>
+          {children}
 
-        <CookieConsent />
+          <CookieConsent />
+        </QueryProvider>
         <Analytics />
         <BrandSchema />
       </body>

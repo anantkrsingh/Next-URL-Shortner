@@ -47,13 +47,20 @@ export default function Navbar() {
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-6">
             <Link prefetch={false}
+              href="/pricing"
+              className="relative text-white font-semibold transition-colors overflow-hidden group px-3 py-2"
+            >
+              <span className="relative z-10">Pricing</span>
+              <span className="absolute inset-0 bg-white/20 rounded-none transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+            </Link>
+            <Link prefetch={false}
               href="/api-docs"
               className="relative text-white font-semibold transition-colors overflow-hidden group px-3 py-2"
             >
               <span className="relative z-10">API Docs</span>
               <span className="absolute inset-0 bg-white/20 rounded-none transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
             </Link>
-            
+
             {/* Resources Dropdown */}
             <div 
               className="relative" 
@@ -145,13 +152,20 @@ export default function Navbar() {
       <div className={`fixed inset-0 z-40 bg-[#060814]/70 backdrop-blur-2xl transition-all duration-500 ease-in-out ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
         <div className={`flex flex-col items-center justify-center h-full gap-8 transition-all duration-700 ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <Link prefetch={false}
+            href="/pricing"
+            onClick={closeMenu}
+            className="text-white text-4xl font-semibold hover:text-blue-400 transition-colors"
+          >
+            Pricing
+          </Link>
+          <Link prefetch={false}
             href="/api-docs"
             onClick={closeMenu}
             className="text-white text-4xl font-semibold hover:text-blue-400 transition-colors"
           >
             API Docs
           </Link>
-          
+
           {/* Mobile Resources Dropdown */}
           <div className="flex flex-col items-center gap-4">
             <button

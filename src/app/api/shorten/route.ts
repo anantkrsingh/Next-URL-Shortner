@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { generateShortCode, isValidUrl } from '@/lib/utils'
 import cache from '../../../lib/cache'
 import { getCurrentUser } from '@/lib/auth'
+import { getUserFromAuthHeader } from '@/lib/apiKeys'
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,14 +16,27 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const cachedUrl = await cache.get(url);
+    // An API key (Authorization: Bearer <key>) takes priority over the
+    // cookie session — a wrong/unknown key is rejected outright rather than
+    // silently falling back to anonymous, per-key so integrations notice a
+    // typo'd or revoked key immediately.
+    const apiKeyUser = await getUserFromAuthHeader(request.headers.get('authorization'))
+    if (apiKeyUser === null) {
+      return NextResponse.json({ error: 'Invalid API key.' }, { status: 401 })
+    }
+    const user = apiKeyUser ?? await getCurrentUser()
 
-    if (cachedUrl && !customAlias) {
-      console.log("Sending from cache")
-      return NextResponse.json(
-        { originalUrl: cachedUrl, shortCode: cachedUrl, shortUrl: `${process.env.NEXT_PUBLIC_APP_URL}/${cachedUrl}` },
-        { status: 201 }
-      )
+    // Fast path straight from cache. Skipped for signed-in users so their
+    // link always gets attributed to their account via the DB lookups below.
+    if (!user) {
+      const cachedShortCode = await cache.get(url);
+      if (cachedShortCode && !customAlias) {
+        console.log("Sending from cache")
+        return NextResponse.json(
+          { originalUrl: url, shortCode: cachedShortCode, shortUrl: `${process.env.NEXT_PUBLIC_APP_URL}/${cachedShortCode}` },
+          { status: 201 }
+        )
+      }
     }
 
     if (!isValidUrl(url)) {
@@ -65,6 +79,12 @@ export async function POST(request: NextRequest) {
       })
 
       if (existingAlias && existingAlias.customAlias === customAlias && existingAlias.originalUrl === url) {
+        if (user && !existingAlias.userId) {
+          await prisma.url.update({
+            where: { id: existingAlias.id },
+            data: { userId: user.id },
+          })
+        }
         await cache.set(customAlias, url);
         await cache.set(url, customAlias);
         return NextResponse.json(
@@ -94,6 +114,12 @@ export async function POST(request: NextRequest) {
       })
 
       if (existingUrl) {
+        if (user && !existingUrl.userId) {
+          await prisma.url.update({
+            where: { id: existingUrl.id },
+            data: { userId: user.id },
+          })
+        }
         await cache.set(existingUrl.shortCode, existingUrl.originalUrl);
         await cache.set(existingUrl.originalUrl, existingUrl.shortCode);
         return NextResponse.json({
@@ -115,8 +141,6 @@ export async function POST(request: NextRequest) {
         }
       }
     }
-
-    const user = await getCurrentUser()
 
     const newUrl = await prisma.url.create({
       data: {

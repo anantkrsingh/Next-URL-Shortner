@@ -1,44 +1,33 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { useSendContactMessage } from "@/hooks/useContact";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+
+  const sendMessage = useSendContactMessage();
+  const loading = sendMessage.isPending;
+  const error =
+    sendMessage.error instanceof Error ? sendMessage.error.message : "";
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
     setSuccess(false);
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, subject, message }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Something went wrong");
-      }
-
+      await sendMessage.mutateAsync({ name, email, subject, message });
       setSuccess(true);
       setName("");
       setEmail("");
       setSubject("");
       setMessage("");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
+    } catch {
+      // error surfaced below via sendMessage.error
     }
   };
 

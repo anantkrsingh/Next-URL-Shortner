@@ -92,6 +92,11 @@ export default function HomeSections() {
               title="Always Free Core Tools"
               body="Shorten, unshorten, and count clicks at no charge. No premium paywall for the basic workflow."
             />
+            <Feature
+              color="bg-teal-500"
+              title="99.99% Uptime Guarantee"
+              body="Your short links stay live and redirect reliably, backed by a 99.99% uptime guarantee on paid plans."
+            />
           </div>
         </div>
       </section>

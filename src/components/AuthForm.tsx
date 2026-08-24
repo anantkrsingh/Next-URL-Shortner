@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useLogin, useSignup } from "@/hooks/useAuth";
 
 type AuthMode = "login" | "signup";
 
@@ -17,35 +18,28 @@ export default function AuthForm({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(initialError);
+
+  const loginMutation = useLogin();
+  const signupMutation = useSignup();
+  const mutation = mode === "signup" ? signupMutation : loginMutation;
+  const loading = mutation.isPending;
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError("");
 
     try {
-      const response = await fetch(`/api/auth/${mode}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(
-          mode === "signup" ? { name, email, password } : { email, password }
-        ),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Something went wrong");
+      if (mode === "signup") {
+        await signupMutation.mutateAsync({ name, email, password });
+      } else {
+        await loginMutation.mutateAsync({ email, password });
       }
 
       router.push("/");
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
     }
   };
 

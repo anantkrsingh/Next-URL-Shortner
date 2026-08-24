@@ -41,15 +41,130 @@ model Contact {
 }
 
 model User {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  email        String   @unique
-  passwordHash String?
-  googleId     String?  @unique
-  image        String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  urls         Url[]
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String          @unique
+  passwordHash   String?
+  googleId       String?         @unique
+  image          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  urls           Url[]
+  subscription   Subscription?
+  orders         Order[]
+  billingDetails BillingDetails?
+  apiKey         ApiKey?
 
   @@map("users")
+}
+
+// One personal API key per user. Generating a new one replaces the old —
+// there's only ever a single valid key per account. Only a SHA-256 hash of
+// the raw key is stored; the raw value is returned once, at creation.
+model ApiKey {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String    @unique @db.ObjectId
+  user       User      @relation(fields: [userId], references: [id])
+  keyHash    String    @unique
+  prefix     String
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+
+  @@map("api_keys")
+}
+
+// The billing/GST details collected before a purchase. One per user,
+// reused (and editable) across checkouts; a snapshot of it is copied onto
+// each Order at the time of purchase so past invoices don't change if the
+// user later edits these.
+model BillingDetails {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @unique @db.ObjectId
+  user          User     @relation(fields: [userId], references: [id])
+  fullName      String
+  email         String
+  phone         String
+  addressLine1  String
+  addressLine2  String?
+  city          String
+  state         String
+  postalCode    String
+  country       String   @default("India")
+  isBusiness    Boolean  @default(false)
+  gstNumber     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("billing_details")
+}
+
+enum PlanId {
+  free
+  pro
+  bulk
+  enterprise
+}
+
+enum BillingCycle {
+  monthly
+  yearly
+}
+
+enum SubscriptionStatus {
+  active
+  canceled
+  expired
+}
+
+model Subscription {
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String             @unique @db.ObjectId
+  user             User               @relation(fields: [userId], references: [id])
+  plan             PlanId             @default(free)
+  billingCycle     BillingCycle?
+  status           SubscriptionStatus @default(active)
+  currentPeriodEnd DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@map("subscriptions")
+}
+
+enum OrderStatus {
+  pending
+  completed
+  failed
+}
+
+// One row per checkout attempt. Doubles as the billing history shown on
+// the Invoices tab once its status is "completed".
+model Order {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String      @db.ObjectId
+  user            User        @relation(fields: [userId], references: [id])
+  merchantOrderId String      @unique
+  phonePeOrderId  String?
+  plan            PlanId
+  billingCycle    BillingCycle
+  amount          Int // in paise
+  currency        String      @default("INR")
+  status          OrderStatus @default(pending)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Snapshot of BillingDetails at the time of purchase.
+  billingName         String?
+  billingEmail        String?
+  billingPhone        String?
+  billingAddressLine1 String?
+  billingAddressLine2 String?
+  billingCity         String?
+  billingState        String?
+  billingPostalCode   String?
+  billingCountry      String?
+  isBusiness          Boolean?
+  gstNumber           String?
+
+  @@index([userId])
+  @@map("orders")
 }
