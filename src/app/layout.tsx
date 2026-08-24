@@ -96,6 +96,13 @@ export default function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7464509288176224"
         />
 
+<Script
+          id="adsterra"
+          async
+          strategy="lazyOnload"
+          crossOrigin="anonymous"
+          src="https://pl28767194.profitableratecpmnetwork.com/9049c3c244f96a9f73fec77b523bbc33/invoke.js"
+        />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-white/20 focus:px-4 focus:py-2 focus:text-white"

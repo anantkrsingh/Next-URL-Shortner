@@ -180,9 +180,11 @@ export default function Short() {
           </div>
         )}
       </div>
+
       <p className="mt-6 text-center text-white/90 text-sm max-w-xl mx-auto drop-shadow-md">
         TinyUR is a free tool to shorten URLs and generate short links. URL shortener allows to create a shortened link making it easy to share.
       </p>
+      
     </div>
   );
 }
