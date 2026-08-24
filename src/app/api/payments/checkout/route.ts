@@ -27,6 +27,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "That plan can't be purchased online." }, { status: 400 });
   }
 
+  const billingDetails = await prisma.billingDetails.findUnique({ where: { userId: user.id } });
+  if (!billingDetails) {
+    return NextResponse.json(
+      { error: "Please add your billing details before checking out." },
+      { status: 400 }
+    );
+  }
+
   const amountRupees = billingCycle === "monthly" ? plan.inr.monthly : plan.inr.yearly;
   const amountPaise = Math.round(amountRupees * 100);
   const merchantOrderId = `tur_${randomUUID().replace(/-/g, "")}`;
@@ -39,6 +47,19 @@ export async function POST(request: NextRequest) {
       billingCycle,
       amount: amountPaise,
       status: "pending",
+      // Snapshot billing details as they stand right now — later edits to
+      // the user's saved details shouldn't rewrite past invoices.
+      billingName: billingDetails.fullName,
+      billingEmail: billingDetails.email,
+      billingPhone: billingDetails.phone,
+      billingAddressLine1: billingDetails.addressLine1,
+      billingAddressLine2: billingDetails.addressLine2,
+      billingCity: billingDetails.city,
+      billingState: billingDetails.state,
+      billingPostalCode: billingDetails.postalCode,
+      billingCountry: billingDetails.country,
+      isBusiness: billingDetails.isBusiness,
+      gstNumber: billingDetails.gstNumber,
     },
   });
 

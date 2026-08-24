@@ -8,6 +8,7 @@ export const queryKeys = {
     usage: ["account", "usage"] as const,
     subscription: ["account", "subscription"] as const,
     invoices: ["account", "invoices"] as const,
+    billingDetails: ["account", "billing-details"] as const,
   },
   payments: {
     orderStatus: (merchantOrderId: string) =>

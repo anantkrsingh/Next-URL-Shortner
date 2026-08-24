@@ -9,7 +9,10 @@ export default function ProfileSection({ user }: { user: AccountUser }) {
   const [success, setSuccess] = useState(false);
   const updateProfile = useUpdateProfile();
 
-  const memberSince = new Date(user.memberSince).toLocaleDateString(undefined, {
+  // Fixed locale so the server-rendered string always matches what the
+  // client renders on hydration, regardless of the visitor's OS/browser
+  // locale (an `undefined` locale here caused a hydration mismatch).
+  const memberSince = new Date(user.memberSince).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",

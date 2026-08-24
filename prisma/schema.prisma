@@ -41,19 +41,45 @@ model Contact {
 }
 
 model User {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  email        String        @unique
-  passwordHash String?
-  googleId     String?       @unique
-  image        String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  urls         Url[]
-  subscription Subscription?
-  orders       Order[]
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String          @unique
+  passwordHash   String?
+  googleId       String?         @unique
+  image          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  urls           Url[]
+  subscription   Subscription?
+  orders         Order[]
+  billingDetails BillingDetails?
 
   @@map("users")
+}
+
+// The billing/GST details collected before a purchase. One per user,
+// reused (and editable) across checkouts; a snapshot of it is copied onto
+// each Order at the time of purchase so past invoices don't change if the
+// user later edits these.
+model BillingDetails {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @unique @db.ObjectId
+  user          User     @relation(fields: [userId], references: [id])
+  fullName      String
+  email         String
+  phone         String
+  addressLine1  String
+  addressLine2  String?
+  city          String
+  state         String
+  postalCode    String
+  country       String   @default("India")
+  isBusiness    Boolean  @default(false)
+  gstNumber     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("billing_details")
 }
 
 enum PlanId {
@@ -109,6 +135,19 @@ model Order {
   status          OrderStatus @default(pending)
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
+
+  // Snapshot of BillingDetails at the time of purchase.
+  billingName         String?
+  billingEmail        String?
+  billingPhone        String?
+  billingAddressLine1 String?
+  billingAddressLine2 String?
+  billingCity         String?
+  billingState        String?
+  billingPostalCode   String?
+  billingCountry      String?
+  isBusiness          Boolean?
+  gstNumber           String?
 
   @@index([userId])
   @@map("orders")

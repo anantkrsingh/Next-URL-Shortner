@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { FiCheck } from "react-icons/fi";
-import { PLANS, type BillingCycle, type PlanId } from "@/lib/plans";
-import { useCheckout, useSubscription } from "@/hooks/useSubscription";
+import { PLANS, type BillingCycle, type Plan } from "@/lib/plans";
+import { useSubscription } from "@/hooks/useSubscription";
+import BillingDetailsModal from "./BillingDetailsModal";
 
 const PAYMENT_BANNERS: Record<string, { tone: "success" | "error" | "pending"; text: string }> = {
   success: { tone: "success", text: "Payment received — your plan is now active." },
@@ -20,25 +21,11 @@ export default function SubscriptionSection() {
   const banner = paymentStatus ? PAYMENT_BANNERS[paymentStatus] : null;
 
   const [yearly, setYearly] = useState(true);
-  const [pendingPlanId, setPendingPlanId] = useState<PlanId | null>(null);
-  const [checkoutError, setCheckoutError] = useState("");
+  const [checkoutPlan, setCheckoutPlan] = useState<Plan | null>(null);
 
   const { data: subscription, isLoading: subscriptionLoading } = useSubscription();
-  const checkout = useCheckout();
   const currentPlanId = subscription?.plan ?? "free";
-
-  const handleUpgrade = async (planId: PlanId) => {
-    setCheckoutError("");
-    setPendingPlanId(planId);
-    try {
-      const billingCycle: BillingCycle = yearly ? "yearly" : "monthly";
-      const { redirectUrl } = await checkout.mutateAsync({ planId, billingCycle });
-      window.location.assign(redirectUrl);
-    } catch (err) {
-      setCheckoutError(err instanceof Error ? err.message : "Could not start checkout.");
-      setPendingPlanId(null);
-    }
-  };
+  const billingCycle: BillingCycle = yearly ? "yearly" : "monthly";
 
   return (
     <div className="space-y-6">
@@ -105,17 +92,10 @@ export default function SubscriptionSection() {
           </div>
         </div>
 
-        {checkoutError && (
-          <p className="mb-4 rounded-lg bg-red-500/20 px-4 py-2 text-sm text-red-200">
-            {checkoutError}
-          </p>
-        )}
-
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {PLANS.map((plan) => {
             const inrPrice = plan.inr ? (yearly ? plan.inr.yearly : plan.inr.monthly) : null;
             const isCurrent = plan.id === currentPlanId;
-            const isPendingThisPlan = checkout.isPending && pendingPlanId === plan.id;
 
             return (
               <div
@@ -163,11 +143,10 @@ export default function SubscriptionSection() {
                 ) : plan.payable ? (
                   <button
                     type="button"
-                    onClick={() => handleUpgrade(plan.id)}
-                    disabled={checkout.isPending}
-                    className="glass-btn mt-6 px-4 py-2.5 text-center font-semibold disabled:opacity-60"
+                    onClick={() => setCheckoutPlan(plan)}
+                    className="glass-btn mt-6 px-4 py-2.5 text-center font-semibold"
                   >
-                    {isPendingThisPlan ? "Redirecting to PhonePe…" : plan.cta}
+                    {plan.cta}
                   </button>
                 ) : (
                   <Link prefetch={false}
@@ -187,6 +166,14 @@ export default function SubscriptionSection() {
           priced in INR. Checkout runs through PhonePe.
         </p>
       </section>
+
+      {checkoutPlan && (
+        <BillingDetailsModal
+          plan={checkoutPlan}
+          billingCycle={billingCycle}
+          onClose={() => setCheckoutPlan(null)}
+        />
+      )}
     </div>
   );
 }
