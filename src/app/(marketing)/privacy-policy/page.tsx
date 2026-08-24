@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen px-4 py-12 pt-28">
       <div className="glass-panel glass-doc mx-auto max-w-4xl rounded-2xl p-8 md:p-12">
-        <Link href="/" className="text-blue-600 hover:text-blue-700 font-medium mb-6 inline-block">
+        <Link prefetch={false} href="/" className="text-blue-600 hover:text-blue-700 font-medium mb-6 inline-block">
           ← Back to Home
         </Link>
         
@@ -69,7 +69,7 @@ export default function PrivacyPolicyPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Cookies, Analytics, and Advertising</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
               TinyUR uses cookies and similar technologies as described in our{" "}
-              <Link href="/cookie-policy" className="text-blue-600 hover:text-blue-700">
+              <Link prefetch={false} href="/cookie-policy" className="text-blue-600 hover:text-blue-700">
                 Cookie Policy
               </Link>
               . We may use analytics to understand how the site is used.
@@ -155,7 +155,7 @@ export default function PrivacyPolicyPage() {
                 contact@tinyur.in
               </a>
               {" "}or use our{" "}
-              <Link href="/contact" className="text-blue-600 hover:text-blue-700">
+              <Link prefetch={false} href="/contact" className="text-blue-600 hover:text-blue-700">
                 Contact page
               </Link>
               .

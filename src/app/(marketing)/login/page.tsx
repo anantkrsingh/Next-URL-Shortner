@@ -24,7 +24,7 @@ export default async function LoginPage({
         <AuthForm mode="login" initialError={error} />
         <p className="mt-6 text-center text-sm text-gray-600">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="font-semibold text-blue-600 hover:underline">
+          <Link prefetch={false} href="/signup" className="font-semibold text-blue-600 hover:underline">
             Sign up
           </Link>
         </p>

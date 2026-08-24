@@ -68,11 +68,11 @@ export default function SymmetricVsAsymmetricEncryptionPage() {
       <nav aria-label="Breadcrumb" className="text-sm mb-4">
         <ol className="flex items-center gap-2 opacity-80">
           <li>
-            <Link href="/" className="underline underline-offset-2">Home</Link>
+            <Link prefetch={false} href="/" className="underline underline-offset-2">Home</Link>
           </li>
           <li aria-hidden>›</li>
           <li>
-            <Link href="/blogs" className="underline underline-offset-2">Blogs</Link>
+            <Link prefetch={false} href="/blogs" className="underline underline-offset-2">Blogs</Link>
           </li>
           <li aria-hidden>›</li>
           <li aria-current="page" className="opacity-90">Symmetric vs Asymmetric Encryption</li>
@@ -389,10 +389,10 @@ export default function SymmetricVsAsymmetricEncryptionPage() {
       </section>
 
       <footer className="mt-10 flex items-center gap-4 text-sm">
-        <Link href="/blogs" className="underline underline-offset-2">
+        <Link prefetch={false} href="/blogs" className="underline underline-offset-2">
           ← Back to Blogs
         </Link>
-        <Link href="/" className="underline underline-offset-2">
+        <Link prefetch={false} href="/" className="underline underline-offset-2">
           Home
         </Link>
       </footer>

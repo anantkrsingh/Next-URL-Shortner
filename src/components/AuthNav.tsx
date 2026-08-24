@@ -84,14 +84,14 @@ export default function AuthNav({
   if (variant === "mobile") {
     return (
       <>
-        <Link
+        <Link prefetch={false}
           href="/login"
           onClick={onNavigate}
           className="text-white text-4xl font-semibold hover:text-blue-400"
         >
           Login
         </Link>
-        <Link href="/signup" onClick={onNavigate} className="glass-btn px-6 py-3 text-2xl font-semibold">
+        <Link prefetch={false} href="/signup" onClick={onNavigate} className="glass-btn px-6 py-3 text-2xl font-semibold">
           Sign up
         </Link>
       </>
@@ -100,14 +100,14 @@ export default function AuthNav({
 
   return (
     <>
-      <Link
+      <Link prefetch={false}
         href="/login"
         className="relative overflow-hidden px-3 py-2 font-semibold text-white group"
       >
         <span className="relative z-10">Login</span>
         <span className="absolute inset-0 origin-left scale-x-0 rounded-none bg-white/20 transition-transform duration-300 group-hover:scale-x-100" />
       </Link>
-      <Link href="/signup" className="glass-btn px-4 py-2 font-semibold">
+      <Link prefetch={false} href="/signup" className="glass-btn px-4 py-2 font-semibold">
         Sign up
       </Link>
     </>

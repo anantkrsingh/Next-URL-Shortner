@@ -117,7 +117,7 @@ export default function BlogsPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogs.map((blog, index) => (
-            <Link
+            <Link prefetch={false}
               key={index}
               href={blog.href}
               className="glass-panel group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"

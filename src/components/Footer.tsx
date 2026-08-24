@@ -43,22 +43,22 @@ function Footer() {
             <h3 className="mb-3 text-sm font-semibold text-white">Pages</h3>
             <ul className="space-y-2 text-sm text-white/70">
               <li>
-                <Link href="/" className="hover:text-white">
+                <Link prefetch={false} href="/" className="hover:text-white">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/about-us" className="hover:text-white">
+                <Link prefetch={false} href="/about-us" className="hover:text-white">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-white">
+                <Link prefetch={false} href="/contact" className="hover:text-white">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/blogs" className="hover:text-white">
+                <Link prefetch={false} href="/blogs" className="hover:text-white">
                   Blog
                 </Link>
               </li>
@@ -68,22 +68,22 @@ function Footer() {
             <h3 className="mb-3 text-sm font-semibold text-white">Tools</h3>
             <ul className="space-y-2 text-sm text-white/70">
               <li>
-                <Link href="/" className="hover:text-white">
+                <Link prefetch={false} href="/" className="hover:text-white">
                   Shorten URL
                 </Link>
               </li>
               <li>
-                <Link href="/click-counter" className="hover:text-white">
+                <Link prefetch={false} href="/click-counter" className="hover:text-white">
                   URL Click Counter
                 </Link>
               </li>
               <li>
-                <Link href="/unshorten" className="hover:text-white">
+                <Link prefetch={false} href="/unshorten" className="hover:text-white">
                   Unshorten URL
                 </Link>
               </li>
               <li>
-                <Link href="/api-docs" className="hover:text-white">
+                <Link prefetch={false} href="/api-docs" className="hover:text-white">
                   API Docs
                 </Link>
               </li>
@@ -93,17 +93,17 @@ function Footer() {
             <h3 className="mb-3 text-sm font-semibold text-white">Legal</h3>
             <ul className="space-y-2 text-sm text-white/70">
               <li>
-                <Link href="/privacy-policy" className="hover:text-white">
+                <Link prefetch={false} href="/privacy-policy" className="hover:text-white">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/cookie-policy" className="hover:text-white">
+                <Link prefetch={false} href="/cookie-policy" className="hover:text-white">
                   Cookie Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms-of-service" className="hover:text-white">
+                <Link prefetch={false} href="/terms-of-service" className="hover:text-white">
                   Terms of Service
                 </Link>
               </li>
@@ -125,7 +125,7 @@ function Footer() {
           <h3 className="mb-4 text-sm font-semibold text-white">People also search for</h3>
           <div className="flex flex-wrap gap-2">
             {relatedSearches.map((item) => (
-              <Link
+              <Link prefetch={false}
                 key={item.href + item.label}
                 href={item.href}
                 className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-white/70 hover:border-white/30 hover:bg-white/10 hover:text-white"

@@ -27,11 +27,11 @@ export default function WhiteHatSEOPage() {
       <nav aria-label="Breadcrumb" className="text-sm mb-4">
         <ol className="flex items-center gap-2 opacity-80">
           <li>
-            <Link href="/" className="underline underline-offset-2">Home</Link>
+            <Link prefetch={false} href="/" className="underline underline-offset-2">Home</Link>
           </li>
           <li aria-hidden>›</li>
           <li>
-            <Link href="/blogs" className="underline underline-offset-2">Blogs</Link>
+            <Link prefetch={false} href="/blogs" className="underline underline-offset-2">Blogs</Link>
           </li>
           <li aria-hidden>›</li>
           <li aria-current="page" className="opacity-90">White Hat SEO</li>
@@ -51,11 +51,11 @@ export default function WhiteHatSEOPage() {
         engine guidelines. It emphasizes content quality, site experience, and
         accessibility. Compare this with
         {" "}
-        <Link href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
+        <Link prefetch={false} href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
         {" "}
         tactics, and see our side-by-side
         {" "}
-        <Link href="/blogs/white-hat-seo-vs-black-hat-seo" className="underline underline-offset-2">comparison</Link>
+        <Link prefetch={false} href="/blogs/white-hat-seo-vs-black-hat-seo" className="underline underline-offset-2">comparison</Link>
         {" "}
         to choose the right strategy.
       </p>
@@ -79,9 +79,9 @@ export default function WhiteHatSEOPage() {
       </ul>
 
       <footer className="mt-10 flex items-center gap-4 text-sm">
-        <Link href="/blogs" className="underline underline-offset-2">← Back to Blogs</Link>
-        <Link href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
-        <Link href="/blogs/white-hat-seo-vs-black-hat-seo" className="underline underline-offset-2">White vs Black Hat</Link>
+        <Link prefetch={false} href="/blogs" className="underline underline-offset-2">← Back to Blogs</Link>
+        <Link prefetch={false} href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
+        <Link prefetch={false} href="/blogs/white-hat-seo-vs-black-hat-seo" className="underline underline-offset-2">White vs Black Hat</Link>
       </footer>
     </article>
   );

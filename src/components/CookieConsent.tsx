@@ -53,11 +53,11 @@ export default function CookieConsent() {
         <p className="text-sm leading-relaxed text-white/80">
           We use cookies and similar technologies, including Google AdSense, to
           operate this site, measure usage, and show relevant ads. See our{" "}
-          <Link href="/privacy-policy" className="font-semibold text-blue-300 hover:underline">
+          <Link prefetch={false} href="/privacy-policy" className="font-semibold text-blue-300 hover:underline">
             Privacy Policy
           </Link>{" "}
           and{" "}
-          <Link href="/cookie-policy" className="font-semibold text-blue-300 hover:underline">
+          <Link prefetch={false} href="/cookie-policy" className="font-semibold text-blue-300 hover:underline">
             Cookie Policy
           </Link>
           .

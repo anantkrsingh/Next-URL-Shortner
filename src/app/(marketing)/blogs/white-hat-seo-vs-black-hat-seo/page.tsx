@@ -27,11 +27,11 @@ export default function ComparisonSEOPage() {
       <nav aria-label="Breadcrumb" className="text-sm mb-4">
         <ol className="flex items-center gap-2 opacity-80">
           <li>
-            <Link href="/" className="underline underline-offset-2">Home</Link>
+            <Link prefetch={false} href="/" className="underline underline-offset-2">Home</Link>
           </li>
           <li aria-hidden>›</li>
           <li>
-            <Link href="/blogs" className="underline underline-offset-2">Blogs</Link>
+            <Link prefetch={false} href="/blogs" className="underline underline-offset-2">Blogs</Link>
           </li>
           <li aria-hidden>›</li>
           <li aria-current="page" className="opacity-90">White Hat SEO vs Black Hat SEO</li>
@@ -49,11 +49,11 @@ export default function ComparisonSEOPage() {
       <p className="mt-6">
         If you are new to SEO, start with
         {" "}
-        <Link href="/blogs/white-hat-seo" className="underline underline-offset-2">White Hat SEO</Link>
+        <Link prefetch={false} href="/blogs/white-hat-seo" className="underline underline-offset-2">White Hat SEO</Link>
         {" "}
         and learn which tactics to avoid in
         {" "}
-        <Link href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
+        <Link prefetch={false} href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
         {" "}
         before using this guide to compare both approaches.
       </p>
@@ -79,9 +79,9 @@ export default function ComparisonSEOPage() {
       </ul>
 
       <footer className="mt-10 flex items-center gap-4 text-sm">
-        <Link href="/blogs" className="underline underline-offset-2">← Back to Blogs</Link>
-        <Link href="/blogs/white-hat-seo" className="underline underline-offset-2">White Hat SEO</Link>
-        <Link href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
+        <Link prefetch={false} href="/blogs" className="underline underline-offset-2">← Back to Blogs</Link>
+        <Link prefetch={false} href="/blogs/white-hat-seo" className="underline underline-offset-2">White Hat SEO</Link>
+        <Link prefetch={false} href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
       </footer>
     </article>
   );

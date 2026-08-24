@@ -28,7 +28,7 @@ export default function BulkUrlShorteningApiPage() {
     <div className="min-h-screen pt-24 pb-16 px-6">
       <article className="max-w-4xl mx-auto">
         <header className="mb-12">
-          <Link
+          <Link prefetch={false}
             href="/blogs"
             className="inline-flex items-center text-blue-400 hover:text-blue-300 mb-6 transition-colors"
           >
@@ -62,7 +62,7 @@ export default function BulkUrlShorteningApiPage() {
             </p>
             <p className="text-white/70 leading-relaxed">
               The TinyUR API exposes a single, focused endpoint — <code className="text-blue-400">POST /api/shorten</code> — for creating a short link from a URL and an optional custom alias. There&apos;s no separate &quot;bulk&quot; endpoint, and that&apos;s fine: a plain loop with sensible pacing gets you the same result reliably. Full parameter details live on the{" "}
-              <Link href="/api-docs" className="underline underline-offset-2 text-blue-400">
+              <Link prefetch={false} href="/api-docs" className="underline underline-offset-2 text-blue-400">
                 API docs
               </Link>{" "}
               page.
@@ -159,7 +159,7 @@ writeFileSync("links-with-short-urls.csv", toCsv(results));`}</code></pre>
                 <h3 className="text-xl font-semibold text-white mb-3">🏷️ Derive Aliases from Structured Data</h3>
                 <p className="text-white/70">
                   When source rows have a natural identifier — a SKU, a campaign name, an influencer handle — build the alias from it (<code className="text-blue-400">sku-4471</code>, <code className="text-blue-400">creator-jdoe-q3</code>) instead of leaving it blank. See our{" "}
-                  <Link href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400">
+                  <Link prefetch={false} href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400">
                     URL shortening best practices
                   </Link>{" "}
                   guide for more on naming conventions that stay readable at scale.
@@ -210,13 +210,13 @@ writeFileSync("links-with-short-urls.csv", toCsv(results));`}</code></pre>
           </section>
 
           <div className="mt-12 flex flex-wrap items-center gap-4 text-sm">
-            <Link href="/blogs" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/blogs" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               ← Back to Blogs
             </Link>
-            <Link href="/api-docs" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/api-docs" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               API Docs
             </Link>
-            <Link href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               URL Shortening Best Practices
             </Link>
           </div>
