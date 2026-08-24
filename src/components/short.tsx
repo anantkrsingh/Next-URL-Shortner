@@ -5,62 +5,38 @@ import { FaCheck, FaCopy } from "react-icons/fa";
 import { CircularProgress } from "@mui/material";
 import { analytics } from "../lib/firebase";
 import { logEvent } from "firebase/analytics";
-interface ShortUrlResponse {
-  originalUrl: string;
-  shortCode: string;
-  shortUrl: string;
-}
+import { useShortenUrl } from "@/hooks/useShorten";
 
 export default function Short() {
   const [url, setUrl] = useState("");
   const [customAlias, setCustomAlias] = useState("");
   const [useCustomAlias, setUseCustomAlias] = useState(false);
-  const [shortUrl, setShortUrl] = useState<ShortUrlResponse | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+
+  const shortenMutation = useShortenUrl();
+  const shortUrl = shortenMutation.data ?? null;
+  const loading = shortenMutation.isPending;
+  const error =
+    shortenMutation.error instanceof Error ? shortenMutation.error.message : "";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-    setShortUrl(null);
 
-    try {
-      const requestBody: { url: string; customAlias?: string } = { url };
-      if (useCustomAlias && customAlias.trim()) {
-        requestBody.customAlias = customAlias.trim();
-      }
-
-      // Add analytics
-      if (analytics) {
-        logEvent(analytics, "short_url_created", {
-          url,
-          customAlias,
-          useCustomAlias,
-        });
-      }
-
-      const response = await fetch("/api/shorten", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Something went wrong");
-      }
-
-      setShortUrl(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
+    const requestBody: { url: string; customAlias?: string } = { url };
+    if (useCustomAlias && customAlias.trim()) {
+      requestBody.customAlias = customAlias.trim();
     }
+
+    // Add analytics
+    if (analytics) {
+      logEvent(analytics, "short_url_created", {
+        url,
+        customAlias,
+        useCustomAlias,
+      });
+    }
+
+    shortenMutation.mutate(requestBody);
   };
 
   const copyToClipboard = async () => {

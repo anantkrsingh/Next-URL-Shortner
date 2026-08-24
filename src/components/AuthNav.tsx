@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiChevronDown, FiLogOut, FiUser } from "react-icons/fi";
-
-type AuthUser = { id: string; name: string; email: string };
+import { useCurrentUser, useLogout } from "@/hooks/useAuth";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function AuthNav({
   variant = "desktop",
@@ -15,33 +15,13 @@ export default function AuthNav({
   onNavigate?: () => void;
 }) {
   const router = useRouter();
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [loaded, setLoaded] = useState(false);
+  useCurrentUser(); // fetches /api/auth/me and syncs it into useAuthStore
+  const user = useAuthStore((s) => s.user);
+  const hydrated = useAuthStore((s) => s.hydrated);
+  const logoutMutation = useLogout();
+
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    fetch("/api/auth/me")
-      .then(async (res) => {
-        if (!res.ok) return { user: null };
-        return res.json();
-      })
-      .then((data) => {
-        if (!cancelled) setUser(data.user ?? null);
-      })
-      .catch(() => {
-        if (!cancelled) setUser(null);
-      })
-      .finally(() => {
-        if (!cancelled) setLoaded(true);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   // Close the account dropdown when clicking outside of it
   useEffect(() => {
@@ -60,15 +40,14 @@ export default function AuthNav({
   const closeMenu = () => setIsOpen(false);
 
   const logout = async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
-    setUser(null);
+    await logoutMutation.mutateAsync();
     closeMenu();
     onNavigate?.();
     router.push("/");
     router.refresh();
   };
 
-  if (!loaded) {
+  if (!hydrated) {
     return variant === "desktop" ? <div className="h-10 w-28" /> : null;
   }
 
@@ -146,10 +125,11 @@ export default function AuthNav({
             <button
               type="button"
               onClick={logout}
-              className="relative z-10 flex w-full items-center gap-2 px-4 py-3 text-left text-sm text-red-300 transition-colors hover:bg-white/10"
+              disabled={logoutMutation.isPending}
+              className="relative z-10 flex w-full items-center gap-2 px-4 py-3 text-left text-sm text-red-300 transition-colors hover:bg-white/10 disabled:opacity-60"
             >
               <FiLogOut className="h-4 w-4" />
-              Log out
+              {logoutMutation.isPending ? "Logging out…" : "Log out"}
             </button>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { useMutation } from "@tanstack/react-query";
 
 interface ApiResponse {
   data?: unknown;
@@ -44,8 +45,43 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEndpoint, setSelectedEndpoint] = useState<Endpoint | null>(null);
   const [requestBody, setRequestBody] = useState("");
-  const [response, setResponse] = useState<ApiResponse | null>(null);
-  const [loading, setLoading] = useState(false);
+
+  const testRequestMutation = useMutation({
+    mutationFn: async (endpoint: Endpoint): Promise<ApiResponse> => {
+      try {
+        const options: RequestInit = {
+          method: endpoint.method,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+
+        if (endpoint.method === "POST" && requestBody) {
+          options.body = requestBody;
+        }
+
+        const res = await fetch(endpoint.endpoint, options);
+        const data = await res.json();
+
+        return {
+          data,
+          status: res.status,
+          error: res.ok ? undefined : data.error || "Request failed",
+        };
+      } catch (error) {
+        // Network errors are rendered the same way as API errors here, so
+        // resolve instead of reject.
+        return {
+          data: null,
+          status: 0,
+          error: error instanceof Error ? error.message : "Network error",
+        };
+      }
+    },
+  });
+
+  const response = testRequestMutation.data ?? null;
+  const loading = testRequestMutation.isPending;
 
   const handleTryInBrowser = (endpoint: Endpoint) => {
     setSelectedEndpoint(endpoint);
@@ -53,46 +89,13 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
       url: "https://google.com",
       customAlias: "my-custom-alias"
     }, null, 2));
-    setResponse(null);
+    testRequestMutation.reset();
     setIsModalOpen(true);
   };
 
-  const handleTestRequest = async () => {
+  const handleTestRequest = () => {
     if (!selectedEndpoint) return;
-
-    setLoading(true);
-    setResponse(null);
-
-    try {
-      const url = selectedEndpoint.endpoint;
-      const options: RequestInit = {
-        method: selectedEndpoint.method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      if (selectedEndpoint.method === "POST" && requestBody) {
-        options.body = requestBody;
-      }
-
-      const res = await fetch(url, options);
-      const data = await res.json();
-
-      setResponse({
-        data,
-        status: res.status,
-        error: res.ok ? undefined : data.error || "Request failed"
-      });
-    } catch (error) {
-      setResponse({
-        data: null,
-        status: 0,
-        error: error instanceof Error ? error.message : "Network error"
-      });
-    } finally {
-      setLoading(false);
-    }
+    testRequestMutation.mutate(selectedEndpoint);
   };
 
   const copyToClipboard = async (text: string) => {

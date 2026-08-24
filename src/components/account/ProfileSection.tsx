@@ -1,19 +1,13 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { useUpdateProfile } from "@/hooks/useAccount";
 import type { AccountUser } from "./AccountView";
 
-export default function ProfileSection({
-  user,
-  onUpdated,
-}: {
-  user: AccountUser;
-  onUpdated: (next: { name: string }) => void;
-}) {
+export default function ProfileSection({ user }: { user: AccountUser }) {
   const [name, setName] = useState(user.name);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const updateProfile = useUpdateProfile();
 
   const memberSince = new Date(user.memberSince).toLocaleDateString(undefined, {
     year: "numeric",
@@ -25,28 +19,12 @@ export default function ProfileSection({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
     setSuccess(false);
-
     try {
-      const res = await fetch("/api/account/profile", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Could not update profile.");
-      }
-
-      onUpdated({ name: data.user.name });
+      await updateProfile.mutateAsync({ name });
       setSuccess(true);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not update profile.");
-    } finally {
-      setLoading(false);
+    } catch {
+      // error is surfaced below via updateProfile.error
     }
   };
 
@@ -73,7 +51,7 @@ export default function ProfileSection({
                 setName(e.target.value);
                 setSuccess(false);
               }}
-              disabled={loading}
+              disabled={updateProfile.isPending}
               className="w-full glass-input px-4 py-2.5 disabled:opacity-60"
             />
           </div>
@@ -94,8 +72,12 @@ export default function ProfileSection({
             </p>
           </div>
 
-          {error && (
-            <p className="rounded-lg bg-red-500/20 px-4 py-2 text-sm text-red-200">{error}</p>
+          {updateProfile.isError && (
+            <p className="rounded-lg bg-red-500/20 px-4 py-2 text-sm text-red-200">
+              {updateProfile.error instanceof Error
+                ? updateProfile.error.message
+                : "Could not update profile."}
+            </p>
           )}
           {success && (
             <p className="rounded-lg bg-green-500/20 px-4 py-2 text-sm text-green-200">
@@ -105,10 +87,10 @@ export default function ProfileSection({
 
           <button
             type="submit"
-            disabled={loading || !dirty || name.trim().length < 2}
+            disabled={updateProfile.isPending || !dirty || name.trim().length < 2}
             className="glass-btn px-6 py-2.5 font-semibold disabled:opacity-50"
           >
-            {loading ? "Saving…" : "Save changes"}
+            {updateProfile.isPending ? "Saving…" : "Save changes"}
           </button>
         </form>
       </section>

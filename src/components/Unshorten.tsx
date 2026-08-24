@@ -3,12 +3,7 @@
 import { useState } from "react";
 import { CircularProgress } from "@mui/material";
 import { FaExternalLinkAlt } from "react-icons/fa";
-
-interface UnshortenResponse {
-  shortCode: string;
-  originalUrl: string;
-  createdAt: string;
-}
+import { useUnshortenUrl } from "@/hooks/useUnshorten";
 
 function extractShortCode(input: string): string {
   const trimmed = input.trim();
@@ -36,41 +31,27 @@ function extractShortCode(input: string): string {
   return trimmed;
 }
 
-async function getOriginalUrl(shortCode: string): Promise<UnshortenResponse> {
-  const response = await fetch(`/api/unshorten/${shortCode}`);
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || "Failed to fetch original URL");
-  }
-  
-  return response.json();
-}
-
 export default function Unshorten() {
   const [input, setInput] = useState("");
-  const [urlData, setUrlData] = useState<UnshortenResponse | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [validationError, setValidationError] = useState("");
+  const unshortenMutation = useUnshortenUrl();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const urlData = unshortenMutation.data ?? null;
+  const loading = unshortenMutation.isPending;
+  const error =
+    validationError ||
+    (unshortenMutation.error instanceof Error ? unshortenMutation.error.message : "");
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-    setUrlData(null);
+    setValidationError("");
 
-    try {
-      const shortCode = extractShortCode(input);
-      if (!shortCode) {
-        throw new Error("Please enter a valid short code or URL");
-      }
-      const data = await getOriginalUrl(shortCode);
-      setUrlData(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
+    const shortCode = extractShortCode(input);
+    if (!shortCode) {
+      setValidationError("Please enter a valid short code or URL");
+      return;
     }
+    unshortenMutation.mutate(shortCode);
   };
 
   return (

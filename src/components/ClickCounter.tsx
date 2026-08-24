@@ -2,13 +2,7 @@
 
 import { useState } from "react";
 import { CircularProgress } from "@mui/material";
-
-interface ClickCountResponse {
-  shortCode: string;
-  clicks: number;
-  originalUrl: string;
-  createdAt: string;
-}
+import { useClickCount } from "@/hooks/useClickCount";
 
 function extractShortCode(input: string): string {
   const trimmed = input.trim();
@@ -36,41 +30,27 @@ function extractShortCode(input: string): string {
   return trimmed;
 }
 
-async function getClickCount(shortCode: string): Promise<ClickCountResponse> {
-  const response = await fetch(`/api/clicks/${shortCode}`);
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || "Failed to fetch click count");
-  }
-  
-  return response.json();
-}
-
 export default function ClickCounter() {
   const [input, setInput] = useState("");
-  const [clickData, setClickData] = useState<ClickCountResponse | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [validationError, setValidationError] = useState("");
+  const clickCountMutation = useClickCount();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const clickData = clickCountMutation.data ?? null;
+  const loading = clickCountMutation.isPending;
+  const error =
+    validationError ||
+    (clickCountMutation.error instanceof Error ? clickCountMutation.error.message : "");
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-    setClickData(null);
+    setValidationError("");
 
-    try {
-      const shortCode = extractShortCode(input);
-      if (!shortCode) {
-        throw new Error("Please enter a valid short code or URL");
-      }
-      const data = await getClickCount(shortCode);
-      setClickData(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
+    const shortCode = extractShortCode(input);
+    if (!shortCode) {
+      setValidationError("Please enter a valid short code or URL");
+      return;
     }
+    clickCountMutation.mutate(shortCode);
   };
 
   return (

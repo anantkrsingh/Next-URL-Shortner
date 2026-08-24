@@ -1,46 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-
-type RecentLink = {
-  id: string;
-  shortCode: string;
-  originalUrl: string;
-  clicks: number;
-  createdAt: string;
-};
-
-type Usage = {
-  totalLinks: number;
-  linksThisMonth: number;
-  totalClicks: number;
-  recentLinks: RecentLink[];
-};
+import { useUsage } from "@/hooks/useAccount";
 
 export default function UsageSection() {
-  const [usage, setUsage] = useState<Usage | null>(null);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let cancelled = false;
-
-    fetch("/api/account/usage")
-      .then(async (res) => {
-        if (!res.ok) throw new Error("Could not load usage.");
-        return res.json();
-      })
-      .then((data) => {
-        if (!cancelled) setUsage(data);
-      })
-      .catch(() => {
-        if (!cancelled) setError("Could not load usage right now.");
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { data: usage, isError } = useUsage();
 
   return (
     <div className="space-y-6">
@@ -51,8 +15,10 @@ export default function UsageSection() {
           <StatCard label="Total clicks" value={usage?.totalClicks} />
           <StatCard label="Links this month" value={usage?.linksThisMonth} />
         </div>
-        {error && (
-          <p className="mt-4 rounded-lg bg-red-500/20 px-4 py-2 text-sm text-red-200">{error}</p>
+        {isError && (
+          <p className="mt-4 rounded-lg bg-red-500/20 px-4 py-2 text-sm text-red-200">
+            Could not load usage right now.
+          </p>
         )}
       </section>
 

@@ -9,6 +9,8 @@ import {
   FiShield,
   FiUser,
 } from "react-icons/fi";
+import { useCurrentUser } from "@/hooks/useAuth";
+import { useAuthStore } from "@/store/useAuthStore";
 import ProfileSection from "./ProfileSection";
 import SecuritySection from "./SecuritySection";
 import UsageSection from "./UsageSection";
@@ -54,11 +56,16 @@ const NAV_GROUPS: {
   },
 ];
 
-export default function AccountView({ user: initialUser }: { user: AccountUser }) {
-  const [user, setUser] = useState(initialUser);
+export default function AccountView({ user: serverUser }: { user: AccountUser }) {
+  // Seeds the shared TanStack Query cache + Zustand store with what the
+  // server already knew, then keeps them live for the rest of the app.
+  useCurrentUser();
+  const liveUser = useAuthStore((s) => s.user);
+  const displayName = liveUser?.name ?? serverUser.name;
+
   const [section, setSection] = useState<SectionId>("profile");
 
-  const initial = user.name.trim().charAt(0).toUpperCase() || "U";
+  const initial = displayName.trim().charAt(0).toUpperCase() || "U";
 
   return (
     <div>
@@ -69,9 +76,9 @@ export default function AccountView({ user: initialUser }: { user: AccountUser }
         </span>
         <div className="min-w-0">
           <h1 className="truncate text-2xl font-bold text-white sm:text-3xl">
-            {user.name}
+            {displayName}
           </h1>
-          <p className="truncate text-sm text-white/60">{user.email}</p>
+          <p className="truncate text-sm text-white/60">{serverUser.email}</p>
         </div>
       </div>
 
@@ -115,9 +122,9 @@ export default function AccountView({ user: initialUser }: { user: AccountUser }
         {/* Content */}
         <div className="min-w-0">
           {section === "profile" && (
-            <ProfileSection user={user} onUpdated={(next) => setUser({ ...user, ...next })} />
+            <ProfileSection user={{ ...serverUser, name: displayName }} />
           )}
-          {section === "security" && <SecuritySection user={user} />}
+          {section === "security" && <SecuritySection user={serverUser} />}
           {section === "usage" && <UsageSection />}
           {section === "domains" && (
             <DomainsSection onUpgrade={() => setSection("subscription")} />

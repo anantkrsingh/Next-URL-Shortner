@@ -2,6 +2,8 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUpdatePassword } from "@/hooks/useAccount";
+import { useLogout } from "@/hooks/useAuth";
 import type { AccountUser } from "./AccountView";
 
 export default function SecuritySection({ user }: { user: AccountUser }) {
@@ -9,51 +11,46 @@ export default function SecuritySection({ user }: { user: AccountUser }) {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [matchError, setMatchError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [loggingOut, setLoggingOut] = useState(false);
+
+  const updatePassword = useUpdatePassword();
+  const logoutMutation = useLogout();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError("");
+    setMatchError("");
     setSuccess(false);
 
     if (newPassword !== confirmPassword) {
-      setError("New passwords do not match.");
+      setMatchError("New passwords do not match.");
       return;
     }
 
-    setLoading(true);
     try {
-      const res = await fetch("/api/account/password", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ currentPassword, newPassword }),
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Could not update password.");
-      }
-
+      await updatePassword.mutateAsync({ currentPassword, newPassword });
       setSuccess(true);
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not update password.");
-    } finally {
-      setLoading(false);
+    } catch {
+      // error surfaced below via updatePassword.error
     }
   };
 
   const logoutHere = async () => {
-    setLoggingOut(true);
-    await fetch("/api/auth/logout", { method: "POST" });
+    await logoutMutation.mutateAsync();
     router.push("/");
     router.refresh();
   };
+
+  const error =
+    matchError ||
+    (updatePassword.isError
+      ? updatePassword.error instanceof Error
+        ? updatePassword.error.message
+        : "Could not update password."
+      : "");
 
   return (
     <div className="space-y-6">
@@ -82,7 +79,7 @@ export default function SecuritySection({ user }: { user: AccountUser }) {
                   autoComplete="current-password"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
-                  disabled={loading}
+                  disabled={updatePassword.isPending}
                   className="w-full glass-input px-4 py-2.5 disabled:opacity-60"
                 />
               </div>
@@ -98,7 +95,7 @@ export default function SecuritySection({ user }: { user: AccountUser }) {
                   autoComplete="new-password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  disabled={loading}
+                  disabled={updatePassword.isPending}
                   className="w-full glass-input px-4 py-2.5 disabled:opacity-60"
                 />
               </div>
@@ -114,7 +111,7 @@ export default function SecuritySection({ user }: { user: AccountUser }) {
                   autoComplete="new-password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  disabled={loading}
+                  disabled={updatePassword.isPending}
                   className="w-full glass-input px-4 py-2.5 disabled:opacity-60"
                 />
               </div>
@@ -130,10 +127,10 @@ export default function SecuritySection({ user }: { user: AccountUser }) {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={updatePassword.isPending}
                 className="glass-btn px-6 py-2.5 font-semibold disabled:opacity-50"
               >
-                {loading ? "Updating…" : "Update password"}
+                {updatePassword.isPending ? "Updating…" : "Update password"}
               </button>
             </form>
           </>
@@ -148,10 +145,10 @@ export default function SecuritySection({ user }: { user: AccountUser }) {
         <button
           type="button"
           onClick={logoutHere}
-          disabled={loggingOut}
+          disabled={logoutMutation.isPending}
           className="glass-input mt-4 px-5 py-2.5 font-semibold text-white transition-colors hover:bg-white/10 disabled:opacity-60"
         >
-          {loggingOut ? "Logging out…" : "Log out of this device"}
+          {logoutMutation.isPending ? "Logging out…" : "Log out of this device"}
         </button>
       </section>
     </div>
