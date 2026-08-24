@@ -67,6 +67,34 @@ export default function BlogsPage() {
       readTime: "~9 min read",
       category: "SEO",
     },
+    {
+      href: "/blogs/qr-codes-vs-short-links",
+      title: "QR Codes vs Short Links: Which One Should You Use?",
+      description: "A practical comparison of QR codes and short links, and how to combine them for print, packaging, and event campaigns.",
+      readTime: "~8 min read",
+      category: "URL Shortening",
+    },
+    {
+      href: "/blogs/utm-parameters-guide",
+      title: "UTM Parameters Explained",
+      description: "A complete guide to building UTM tags that scale, and pairing them with short links for clean, reliable tracking.",
+      readTime: "~10 min read",
+      category: "URL Shortening",
+    },
+    {
+      href: "/blogs/link-phishing-safety",
+      title: "Short Link Safety: Spotting Malicious Redirects",
+      description: "How to preview short links safely, spot phishing patterns, and choose (or build) a trustworthy URL shortener.",
+      readTime: "~9 min read",
+      category: "URL Shortening",
+    },
+    {
+      href: "/blogs/bulk-url-shortening-api",
+      title: "Bulk URL Shortening with the API",
+      description: "Automate short link creation at scale: batching requests, custom aliases, error handling, and CSV import patterns.",
+      readTime: "~10 min read",
+      category: "URL Shortening",
+    },
   ];
 
   return (
