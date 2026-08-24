@@ -2,12 +2,19 @@
 // (tinyurl.com/app/pricing, as referenced Aug 2026). Used to render the
 // Subscription tab on the account page.
 
+export type PlanId = "free" | "pro" | "bulk" | "enterprise";
+export type BillingCycle = "monthly" | "yearly";
+
 export type Plan = {
-  id: "free" | "pro" | "bulk" | "enterprise";
+  id: PlanId;
   name: string;
   tagline: string;
   monthlyPrice: number | null;
   yearlyPrice: number | null;
+  /** Whole rupees — the amount actually charged through PhonePe checkout. */
+  inr: { monthly: number; yearly: number } | null;
+  /** Can this plan be bought online, or is it "current"/"contact sales"? */
+  payable: boolean;
   custom?: boolean;
   priceNote: string;
   cta: string;
@@ -22,6 +29,8 @@ export const PLANS: Plan[] = [
     tagline: "For personal use and trying things out",
     monthlyPrice: 0,
     yearlyPrice: 0,
+    inr: null,
+    payable: false,
     priceNote: "free forever",
     cta: "Current plan",
     features: [
@@ -38,6 +47,8 @@ export const PLANS: Plan[] = [
     tagline: "For creators and growing teams",
     monthlyPrice: 16,
     yearlyPrice: 9.99,
+    inr: { monthly: 1999, yearly: 1499 },
+    payable: true,
     priceNote: "billed annually — $16/mo billed monthly",
     cta: "Upgrade to Pro",
     highlighted: true,
@@ -58,6 +69,8 @@ export const PLANS: Plan[] = [
     tagline: "For high-volume campaigns",
     monthlyPrice: 99,
     yearlyPrice: 83,
+    inr: { monthly: 9999, yearly: 7999 },
+    payable: true,
     priceNote: "billed annually — $99/mo billed monthly",
     cta: "Upgrade to Bulk",
     features: [
@@ -76,6 +89,8 @@ export const PLANS: Plan[] = [
     tagline: "For large organizations",
     monthlyPrice: null,
     yearlyPrice: null,
+    inr: null,
+    payable: false,
     custom: true,
     priceNote: "starting at $299/mo — custom pricing",
     cta: "Contact sales",
@@ -89,3 +104,7 @@ export const PLANS: Plan[] = [
     ],
   },
 ];
+
+export function getPlan(id: string): Plan | undefined {
+  return PLANS.find((p) => p.id === id);
+}

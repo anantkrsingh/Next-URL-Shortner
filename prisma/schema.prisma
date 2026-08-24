@@ -41,15 +41,75 @@ model Contact {
 }
 
 model User {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
   name         String
-  email        String   @unique
+  email        String        @unique
   passwordHash String?
-  googleId     String?  @unique
+  googleId     String?       @unique
   image        String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   urls         Url[]
+  subscription Subscription?
+  orders       Order[]
 
   @@map("users")
+}
+
+enum PlanId {
+  free
+  pro
+  bulk
+  enterprise
+}
+
+enum BillingCycle {
+  monthly
+  yearly
+}
+
+enum SubscriptionStatus {
+  active
+  canceled
+  expired
+}
+
+model Subscription {
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String             @unique @db.ObjectId
+  user             User               @relation(fields: [userId], references: [id])
+  plan             PlanId             @default(free)
+  billingCycle     BillingCycle?
+  status           SubscriptionStatus @default(active)
+  currentPeriodEnd DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@map("subscriptions")
+}
+
+enum OrderStatus {
+  pending
+  completed
+  failed
+}
+
+// One row per checkout attempt. Doubles as the billing history shown on
+// the Invoices tab once its status is "completed".
+model Order {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String      @db.ObjectId
+  user            User        @relation(fields: [userId], references: [id])
+  merchantOrderId String      @unique
+  phonePeOrderId  String?
+  plan            PlanId
+  billingCycle    BillingCycle
+  amount          Int // in paise
+  currency        String      @default("INR")
+  status          OrderStatus @default(pending)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([userId])
+  @@map("orders")
 }

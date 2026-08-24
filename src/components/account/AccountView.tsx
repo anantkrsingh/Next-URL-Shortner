@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   FiBarChart2,
   FiCreditCard,
@@ -56,6 +57,8 @@ const NAV_GROUPS: {
   },
 ];
 
+const SECTION_IDS = NAV_GROUPS.flatMap((group) => group.items.map((item) => item.id));
+
 export default function AccountView({ user: serverUser }: { user: AccountUser }) {
   // Seeds the shared TanStack Query cache + Zustand store with what the
   // server already knew, then keeps them live for the rest of the app.
@@ -63,7 +66,14 @@ export default function AccountView({ user: serverUser }: { user: AccountUser })
   const liveUser = useAuthStore((s) => s.user);
   const displayName = liveUser?.name ?? serverUser.name;
 
-  const [section, setSection] = useState<SectionId>("profile");
+  // The PhonePe checkout callback redirects back here with ?tab=subscription
+  // so the user lands back where they left off.
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get("tab") as SectionId | null;
+  const initialSection: SectionId =
+    tabParam && SECTION_IDS.includes(tabParam) ? tabParam : "profile";
+
+  const [section, setSection] = useState<SectionId>(initialSection);
 
   const initial = displayName.trim().charAt(0).toUpperCase() || "U";
 
