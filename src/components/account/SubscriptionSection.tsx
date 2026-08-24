@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { FiCheck } from "react-icons/fi";
-import { PLANS, type BillingCycle, type Plan } from "@/lib/plans";
+import { PLANS, yearlyTotal, type BillingCycle, type Plan } from "@/lib/plans";
 import { useSubscription } from "@/hooks/useSubscription";
 import BillingDetailsModal from "./BillingDetailsModal";
 
@@ -94,7 +94,7 @@ export default function SubscriptionSection() {
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {PLANS.map((plan) => {
-            const inrPrice = plan.inr ? (yearly ? plan.inr.yearly : plan.inr.monthly) : null;
+            const inrPrice = plan.inr ? (yearly ? plan.inr.yearlyMonthly : plan.inr.monthly) : null;
             const isCurrent = plan.id === currentPlanId;
 
             return (
@@ -124,7 +124,13 @@ export default function SubscriptionSection() {
                   ) : (
                     <p className="text-3xl font-bold text-white">Free</p>
                   )}
-                  <p className="mt-1 text-xs text-white/40">{plan.priceNote}</p>
+                  <p className="mt-1 text-xs text-white/40">
+                    {plan.inr
+                      ? yearly
+                        ? `billed ₹${yearlyTotal(plan)!.toLocaleString("en-IN")} once a year`
+                        : "billed monthly"
+                      : plan.priceNote}
+                  </p>
                 </div>
 
                 <ul className="mt-6 flex-1 space-y-2.5">

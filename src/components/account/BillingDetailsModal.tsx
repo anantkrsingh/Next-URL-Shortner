@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { createPortal } from "react-dom";
 import { FiX } from "react-icons/fi";
-import type { Plan } from "@/lib/plans";
+import { chargeAmount, type Plan } from "@/lib/plans";
 import { useAuthStore } from "@/store/useAuthStore";
 import {
   useBillingDetails,
@@ -81,7 +81,9 @@ export default function BillingDetailsModal({
     }
   }
 
-  const price = billingCycle === "monthly" ? plan.inr?.monthly : plan.inr?.yearly;
+  // The actual PhonePe charge: 12 months upfront on yearly billing, not
+  // the per-month figure shown on the plan card.
+  const price = chargeAmount(plan, billingCycle);
 
   const updateField = <K extends keyof BillingDetailsInput>(key: K, value: BillingDetailsInput[K]) => {
     setForm((f) => ({ ...f, [key]: value }));
@@ -347,10 +349,15 @@ export default function BillingDetailsModal({
               </p>
               <div className="mt-3 flex items-center justify-between text-sm">
                 <span className="text-white/70">
-                  {plan.name} ({billingCycle})
+                  {plan.name} ({billingCycle === "yearly" ? "12 months, billed now" : "1 month"})
                 </span>
                 <span className="font-semibold text-white">₹{price?.toLocaleString("en-IN")}</span>
               </div>
+              {billingCycle === "yearly" && plan.inr && (
+                <p className="mt-1 text-xs text-white/40">
+                  ₹{plan.inr.yearlyMonthly.toLocaleString("en-IN")}/mo equivalent
+                </p>
+              )}
               <div className="mt-2 flex items-center justify-between border-t border-white/10 pt-2 text-sm font-bold">
                 <span className="text-white">Total</span>
                 <span className="text-white">₹{price?.toLocaleString("en-IN")}</span>

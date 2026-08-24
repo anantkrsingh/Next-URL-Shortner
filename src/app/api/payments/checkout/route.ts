@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
 import { prisma } from "@/lib/prisma";
 import { getAppUrl, getCurrentUser } from "@/lib/auth";
-import { getPlan } from "@/lib/plans";
+import { chargeAmount, getPlan } from "@/lib/plans";
 import { createOrder, isPhonePeConfigured } from "@/lib/phonepe";
 
 export async function POST(request: NextRequest) {
@@ -35,7 +35,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const amountRupees = billingCycle === "monthly" ? plan.inr.monthly : plan.inr.yearly;
+  // Yearly billing is charged as a single upfront payment for all 12
+  // months (plan.inr.yearlyMonthly * 12), not the per-month display figure.
+  const amountRupees = chargeAmount(plan, billingCycle)!;
   const amountPaise = Math.round(amountRupees * 100);
   const merchantOrderId = `tur_${randomUUID().replace(/-/g, "")}`;
 
