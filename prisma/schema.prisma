@@ -53,8 +53,24 @@ model User {
   subscription   Subscription?
   orders         Order[]
   billingDetails BillingDetails?
+  apiKey         ApiKey?
 
   @@map("users")
+}
+
+// One personal API key per user. Generating a new one replaces the old —
+// there's only ever a single valid key per account. Only a SHA-256 hash of
+// the raw key is stored; the raw value is returned once, at creation.
+model ApiKey {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String    @unique @db.ObjectId
+  user       User      @relation(fields: [userId], references: [id])
+  keyHash    String    @unique
+  prefix     String
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+
+  @@map("api_keys")
 }
 
 // The billing/GST details collected before a purchase. One per user,

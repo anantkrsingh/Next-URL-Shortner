@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { generateShortCode, isValidUrl } from '@/lib/utils'
 import cache from '../../../lib/cache'
 import { getCurrentUser } from '@/lib/auth'
+import { getUserFromAuthHeader } from '@/lib/apiKeys'
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,7 +16,15 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const user = await getCurrentUser()
+    // An API key (Authorization: Bearer <key>) takes priority over the
+    // cookie session — a wrong/unknown key is rejected outright rather than
+    // silently falling back to anonymous, per-key so integrations notice a
+    // typo'd or revoked key immediately.
+    const apiKeyUser = await getUserFromAuthHeader(request.headers.get('authorization'))
+    if (apiKeyUser === null) {
+      return NextResponse.json({ error: 'Invalid API key.' }, { status: 401 })
+    }
+    const user = apiKeyUser ?? await getCurrentUser()
 
     // Fast path straight from cache. Skipped for signed-in users so their
     // link always gets attributed to their account via the DB lookups below.

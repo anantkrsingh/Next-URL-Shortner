@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   FiBarChart2,
+  FiCode,
   FiCreditCard,
   FiFileText,
   FiGlobe,
@@ -16,6 +17,7 @@ import ProfileSection from "./ProfileSection";
 import SecuritySection from "./SecuritySection";
 import UsageSection from "./UsageSection";
 import DomainsSection from "./DomainsSection";
+import ApiKeySection from "./ApiKeySection";
 import SubscriptionSection from "./SubscriptionSection";
 import InvoicesSection from "./InvoicesSection";
 
@@ -31,6 +33,7 @@ type SectionId =
   | "profile"
   | "security"
   | "usage"
+  | "api"
   | "domains"
   | "subscription"
   | "invoices";
@@ -45,6 +48,7 @@ const NAV_GROUPS: {
       { id: "profile", label: "Profile", icon: FiUser },
       { id: "security", label: "Security", icon: FiShield },
       { id: "usage", label: "Account Usage", icon: FiBarChart2 },
+      { id: "api", label: "API", icon: FiCode },
       { id: "domains", label: "Branded Domains", icon: FiGlobe },
     ],
   },
@@ -136,6 +140,7 @@ export default function AccountView({ user: serverUser }: { user: AccountUser })
           )}
           {section === "security" && <SecuritySection user={serverUser} />}
           {section === "usage" && <UsageSection />}
+          {section === "api" && <ApiKeySection />}
           {section === "domains" && (
             <DomainsSection onUpgrade={() => setSection("subscription")} />
           )}

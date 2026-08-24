@@ -70,8 +70,15 @@ const endpoints = [
     method: "POST",
     endpoint: "/api/shorten",
     description:
-      "Create a short URL from a long URL with optional custom alias",
+      "Create a short URL from a long URL with optional custom alias. Pass a personal API key (Account → API in your dashboard) as a Bearer token to save the link to your account; omit it to shorten anonymously. A key that's present but wrong is rejected with an error rather than falling back to anonymous.",
     parameters: [
+      {
+        name: "Authorization",
+        type: "header",
+        required: false,
+        description: "Bearer <your API key> — attributes the short link to your account",
+        example: "Bearer tur_live_xxxxxxxxxxxxxxxxxxxxxxxx",
+      },
       {
         name: "url",
         type: "string",
