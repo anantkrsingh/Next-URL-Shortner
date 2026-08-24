@@ -53,6 +53,11 @@ function Footer() {
                 </Link>
               </li>
               <li>
+                <Link prefetch={false} href="/pricing" className="hover:text-white">
+                  Pricing
+                </Link>
+              </li>
+              <li>
                 <Link prefetch={false} href="/contact" className="hover:text-white">
                   Contact
                 </Link>
@@ -100,6 +105,11 @@ function Footer() {
               <li>
                 <Link prefetch={false} href="/cookie-policy" className="hover:text-white">
                   Cookie Policy
+                </Link>
+              </li>
+              <li>
+                <Link prefetch={false} href="/refund-policy" className="hover:text-white">
+                  Refund Policy
                 </Link>
               </li>
               <li>
