@@ -17,13 +17,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Tinyur Team", url: "https://tinyur.in" }],
   alternates: {
-    canonical: "https://tinyur.in/how-url-shortners-work",
+    canonical: "https://tinyur.in/blogs/how-url-shortners-work",
   },
   openGraph: {
     title: "How URL Shorteners work | Tinyur",
     description:
       "Understand the full lifecycle of a shortened link: generation, storage, redirection, analytics, reliability and security best practices.",
-    url: "https://tinyur.in/how-url-shortners-work",
+    url: "https://tinyur.in/blogs/how-url-shortners-work",
     type: "article",
     siteName: "Tinyur",
     locale: "en_US",
@@ -271,7 +271,7 @@ export default function BlogHowUrlShortenersWork() {
           },
           mainEntityOfPage: {
             '@type': 'WebPage',
-            '@id': 'https://tinyur.in/how-url-shortners-work',
+            '@id': 'https://tinyur.in/blogs/how-url-shortners-work',
           },
         })}
       </Script>
@@ -298,7 +298,7 @@ export default function BlogHowUrlShortenersWork() {
               '@type': 'ListItem',
               position: 3,
               name: 'How URL Shorteners work',
-              item: 'https://tinyur.in/how-url-shortners-work',
+              item: 'https://tinyur.in/blogs/how-url-shortners-work',
             },
           ],
         })}

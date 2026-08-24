@@ -5,12 +5,12 @@ export const metadata: Metadata = {
   title: "White Hat SEO vs Black Hat SEO: Key Differences & When to Use | Tinyur Blogs",
   description:
     "Compare white hat and black hat SEO across tactics, risks, and long-term outcomes to choose the right strategy for sustainable growth.",
-  alternates: { canonical: "https://tinyur.in/white-hat-seo-vs-black-hat-seo" },
+  alternates: { canonical: "https://tinyur.in/blogs/white-hat-seo-vs-black-hat-seo" },
   openGraph: {
     title: "White Hat SEO vs Black Hat SEO | Tinyur",
     description:
       "Compare ethical vs manipulative SEO tactics, their risks, and results.",
-    url: "https://tinyur.in/white-hat-seo-vs-black-hat-seo",
+    url: "https://tinyur.in/blogs/white-hat-seo-vs-black-hat-seo",
     type: "article",
   },
   twitter: {
@@ -49,11 +49,11 @@ export default function ComparisonSEOPage() {
       <p className="mt-6">
         If you are new to SEO, start with
         {" "}
-        <Link href="/white-hat-seo" className="underline underline-offset-2">White Hat SEO</Link>
+        <Link href="/blogs/white-hat-seo" className="underline underline-offset-2">White Hat SEO</Link>
         {" "}
         and learn which tactics to avoid in
         {" "}
-        <Link href="/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
+        <Link href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
         {" "}
         before using this guide to compare both approaches.
       </p>
@@ -80,8 +80,8 @@ export default function ComparisonSEOPage() {
 
       <footer className="mt-10 flex items-center gap-4 text-sm">
         <Link href="/blogs" className="underline underline-offset-2">← Back to Blogs</Link>
-        <Link href="/white-hat-seo" className="underline underline-offset-2">White Hat SEO</Link>
-        <Link href="/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
+        <Link href="/blogs/white-hat-seo" className="underline underline-offset-2">White Hat SEO</Link>
+        <Link href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
       </footer>
     </article>
   );

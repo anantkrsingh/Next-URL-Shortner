@@ -20,13 +20,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Tinyur Team", url: "https://tinyur.in" }],
   alternates: {
-    canonical: "https://tinyur.in/react-vs-nextjs",
+    canonical: "https://tinyur.in/blogs/react-vs-nextjs",
   },
   openGraph: {
     title: "React.js vs Next.js: Complete Framework Comparison | Tinyur",
     description:
       "Detailed comparison of React and Next.js: rendering strategies, performance, SEO, and choosing the right framework.",
-    url: "https://tinyur.in/react-vs-nextjs",
+    url: "https://tinyur.in/blogs/react-vs-nextjs",
     type: "article",
     siteName: "Tinyur",
     locale: "en_US",
@@ -657,7 +657,7 @@ export default function Page() {
           },
           mainEntityOfPage: {
             '@type': 'WebPage',
-            '@id': 'https://tinyur.in/react-vs-nextjs',
+            '@id': 'https://tinyur.in/blogs/react-vs-nextjs',
           },
         })}
       </Script>
@@ -684,7 +684,7 @@ export default function Page() {
               '@type': 'ListItem',
               position: 3,
               name: 'React vs Next.js',
-              item: 'https://tinyur.in/react-vs-nextjs',
+              item: 'https://tinyur.in/blogs/react-vs-nextjs',
             },
           ],
         })}

@@ -5,12 +5,12 @@ export const metadata: Metadata = {
   title: "URL Shortening Best Practices: Security, Analytics & Management | TinyUR",
   description: "Essential strategies for creating effective short links: security, analytics, custom domains, and link management at scale.",
   alternates: {
-    canonical: "https://tinyur.in/url-shortening-best-practices",
+    canonical: "https://tinyur.in/blogs/url-shortening-best-practices",
   },
   openGraph: {
     title: "URL Shortening Best Practices | TinyUR",
     description: "Essential strategies for creating effective short links: security, analytics, custom domains, and link management.",
-    url: "https://tinyur.in/url-shortening-best-practices",
+    url: "https://tinyur.in/blogs/url-shortening-best-practices",
     type: "article",
   },
 };

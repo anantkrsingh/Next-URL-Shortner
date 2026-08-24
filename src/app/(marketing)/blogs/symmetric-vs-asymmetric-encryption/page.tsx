@@ -20,13 +20,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Tinyur Team", url: "https://tinyur.in" }],
   alternates: {
-    canonical: "https://tinyur.in/symmetric-vs-asymmetric-encryption",
+    canonical: "https://tinyur.in/blogs/symmetric-vs-asymmetric-encryption",
   },
   openGraph: {
     title: "Symmetric vs Asymmetric Key Encryption: Complete Guide | Tinyur",
     description:
       "Understand symmetric and asymmetric encryption: algorithms, performance, security, and practical use cases for securing your data.",
-    url: "https://tinyur.in/symmetric-vs-asymmetric-encryption",
+    url: "https://tinyur.in/blogs/symmetric-vs-asymmetric-encryption",
     type: "article",
     siteName: "Tinyur",
     locale: "en_US",
@@ -413,7 +413,7 @@ export default function SymmetricVsAsymmetricEncryptionPage() {
           },
           mainEntityOfPage: {
             '@type': 'WebPage',
-            '@id': 'https://tinyur.in/symmetric-vs-asymmetric-encryption',
+            '@id': 'https://tinyur.in/blogs/symmetric-vs-asymmetric-encryption',
           },
         })}
       </Script>
@@ -440,7 +440,7 @@ export default function SymmetricVsAsymmetricEncryptionPage() {
               '@type': 'ListItem',
               position: 3,
               name: 'Symmetric vs Asymmetric Encryption',
-              item: 'https://tinyur.in/symmetric-vs-asymmetric-encryption',
+              item: 'https://tinyur.in/blogs/symmetric-vs-asymmetric-encryption',
             },
           ],
         })}
