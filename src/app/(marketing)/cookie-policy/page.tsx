@@ -11,7 +11,7 @@ export default function CookiePolicyPage() {
   return (
     <div className="min-h-screen px-4 py-12 pt-28">
       <div className="glass-panel glass-doc mx-auto max-w-4xl rounded-2xl p-8 md:p-12">
-        <Link href="/" className="mb-6 inline-block font-medium text-blue-600 hover:text-blue-700">
+        <Link prefetch={false} href="/" className="mb-6 inline-block font-medium text-blue-600 hover:text-blue-700">
           ← Back to Home
         </Link>
 
@@ -94,7 +94,7 @@ export default function CookiePolicyPage() {
             <h2 className="mb-4 text-2xl font-bold text-gray-900">5. More information</h2>
             <p>
               For how we handle personal data, read the{" "}
-              <Link href="/privacy-policy" className="text-blue-600 hover:underline">
+              <Link prefetch={false} href="/privacy-policy" className="text-blue-600 hover:underline">
                 Privacy Policy
               </Link>
               . Questions:{" "}

@@ -12,7 +12,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen px-4 py-12 pt-28">
       <div className="glass-panel glass-doc mx-auto max-w-4xl rounded-2xl p-8 md:p-12">
-        <Link href="/" className="mb-6 inline-block font-medium text-blue-600 hover:text-blue-700">
+        <Link prefetch={false} href="/" className="mb-6 inline-block font-medium text-blue-600 hover:text-blue-700">
           ← Back to Home
         </Link>
 
@@ -63,14 +63,14 @@ export default function ContactPage() {
               <strong className="text-gray-900">Privacy:</strong> To access, correct,
               or delete personal data we may hold, email us from the address you
               used to contact us and describe the request. See the{" "}
-              <Link href="/privacy-policy" className="text-blue-600 hover:underline">
+              <Link prefetch={false} href="/privacy-policy" className="text-blue-600 hover:underline">
                 Privacy Policy
               </Link>
               .
             </p>
             <p>
               <strong className="text-gray-900">API:</strong> Documentation lives on{" "}
-              <Link href="/api-docs" className="text-blue-600 hover:underline">
+              <Link prefetch={false} href="/api-docs" className="text-blue-600 hover:underline">
                 API Docs
               </Link>
               . For integration questions, include your use case in the email.

@@ -28,7 +28,7 @@ export default function LinkPhishingSafetyPage() {
     <div className="min-h-screen pt-24 pb-16 px-6">
       <article className="max-w-4xl mx-auto">
         <header className="mb-12">
-          <Link
+          <Link prefetch={false}
             href="/blogs"
             className="inline-flex items-center text-blue-400 hover:text-blue-300 mb-6 transition-colors"
           >
@@ -72,7 +72,7 @@ export default function LinkPhishingSafetyPage() {
                 <h3 className="text-xl font-semibold text-white mb-3">👀 Preview the Destination First</h3>
                 <p className="text-white/70">
                   Use an{" "}
-                  <Link href="/unshorten" className="underline underline-offset-2 text-blue-400">
+                  <Link prefetch={false} href="/unshorten" className="underline underline-offset-2 text-blue-400">
                     unshorten tool
                   </Link>{" "}
                   to resolve a short link to its real destination without visiting it. Paste the link in, read the full URL it reveals, and only proceed if it points somewhere you recognize and expect.
@@ -112,7 +112,7 @@ export default function LinkPhishingSafetyPage() {
                 <h3 className="text-xl font-semibold text-white mb-3">✅ Offer a Preview Path</h3>
                 <p className="text-white/70">
                   A dedicated way to resolve a short link&apos;s destination without following it — like our own{" "}
-                  <Link href="/unshorten" className="underline underline-offset-2 text-blue-400">
+                  <Link prefetch={false} href="/unshorten" className="underline underline-offset-2 text-blue-400">
                     unshorten page
                   </Link>{" "}
                   — gives cautious users a safe way to inspect a link before they commit to opening it.
@@ -122,7 +122,7 @@ export default function LinkPhishingSafetyPage() {
                 <h3 className="text-xl font-semibold text-white mb-3">✅ Rate-Limit Link Creation</h3>
                 <p className="text-white/70">
                   Reasonable limits on how many links a single source can create in a short window make it harder to mass-produce disposable phishing links, which is exactly the kind of abuse rate limiting is meant to slow down. See our{" "}
-                  <Link href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400">
+                  <Link prefetch={false} href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400">
                     URL shortening best practices
                   </Link>{" "}
                   guide for more on this.
@@ -144,7 +144,7 @@ export default function LinkPhishingSafetyPage() {
                 <h3 className="text-xl font-semibold text-white mb-3">🏷️ Prefer Branded, Custom Slugs</h3>
                 <p className="text-white/70">
                   A recognizable custom alias like <code className="text-blue-400">tinyur.in/acme-webinar</code> builds far more trust than a random string, because it gives recipients something legible to judge before they click. Our{" "}
-                  <Link href="/blogs/branded-links-guide" className="underline underline-offset-2 text-blue-400">
+                  <Link prefetch={false} href="/blogs/branded-links-guide" className="underline underline-offset-2 text-blue-400">
                     branded links guide
                   </Link>{" "}
                   goes deeper on this.
@@ -192,13 +192,13 @@ export default function LinkPhishingSafetyPage() {
           </section>
 
           <div className="mt-12 flex flex-wrap items-center gap-4 text-sm">
-            <Link href="/blogs" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/blogs" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               ← Back to Blogs
             </Link>
-            <Link href="/unshorten" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/unshorten" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               Unshorten a Link
             </Link>
-            <Link href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               URL Shortening Best Practices
             </Link>
           </div>

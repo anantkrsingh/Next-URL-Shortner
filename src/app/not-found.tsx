@@ -19,7 +19,7 @@ export default function NotFound() {
         <p className="mt-4 text-lg text-white/70">
           The link may have been mistyped or was never created.
         </p>
-        <Link href="/" className="glass-btn mt-6 inline-block px-5 py-2.5 font-semibold">
+        <Link prefetch={false} href="/" className="glass-btn mt-6 inline-block px-5 py-2.5 font-semibold">
           Create a short link on Tinyur
         </Link>
       </div>

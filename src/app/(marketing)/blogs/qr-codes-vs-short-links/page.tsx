@@ -28,7 +28,7 @@ export default function QrCodesVsShortLinksPage() {
     <div className="min-h-screen pt-24 pb-16 px-6">
       <article className="max-w-4xl mx-auto">
         <header className="mb-12">
-          <Link
+          <Link prefetch={false}
             href="/blogs"
             className="inline-flex items-center text-blue-400 hover:text-blue-300 mb-6 transition-colors"
           >
@@ -113,7 +113,7 @@ export default function QrCodesVsShortLinksPage() {
                 <h3 className="text-xl font-semibold text-white mb-3">📊 Fast, Granular Analytics</h3>
                 <p className="text-white/70">
                   Because the redirect happens on your own server, a short link gives you click counts, referrers, and timestamps immediately — see our{" "}
-                  <Link href="/click-counter" className="underline underline-offset-2 text-blue-400">
+                  <Link prefetch={false} href="/click-counter" className="underline underline-offset-2 text-blue-400">
                     click counter
                   </Link>{" "}
                   for an example. QR codes only produce analytics if the URL they encode is itself a tracked short link.
@@ -218,13 +218,13 @@ export default function QrCodesVsShortLinksPage() {
           </section>
 
           <div className="mt-12 flex flex-wrap items-center gap-4 text-sm">
-            <Link href="/blogs" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/blogs" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               ← Back to Blogs
             </Link>
-            <Link href="/blogs/utm-parameters-guide" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/blogs/utm-parameters-guide" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               UTM Parameters Guide
             </Link>
-            <Link href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               URL Shortening Best Practices
             </Link>
           </div>

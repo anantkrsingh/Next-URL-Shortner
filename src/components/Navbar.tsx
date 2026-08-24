@@ -40,13 +40,13 @@ export default function Navbar() {
       <nav className="glass-nav fixed top-0 right-0 left-0 z-50 px-6 py-3 backdrop-blur-2xl">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo/Brand */}
-          <Link href="/" className="text-white font-bold text-2xl hover:opacity-80 transition-opacity" onClick={closeMenu}>
+          <Link prefetch={false} href="/" className="text-white font-bold text-2xl hover:opacity-80 transition-opacity" onClick={closeMenu}>
             TinyUR
           </Link>
           
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-6">
-            <Link
+            <Link prefetch={false}
               href="/api-docs"
               className="relative text-white font-semibold transition-colors overflow-hidden group px-3 py-2"
             >
@@ -86,13 +86,13 @@ export default function Navbar() {
                   {/* Arrow pointing upwards */}
                   <div className="absolute -top-2 right-4 w-4 h-4 bg-black/90 border-l border-t border-white/20 transform rotate-45"></div>
                   
-                  <Link
+                  <Link prefetch={false}
                     href="/blogs"
                     className="block px-4 py-3 text-white hover:bg-white/10 transition-colors border-b border-white/10 relative z-10"
                   >
                     Blogs
                   </Link>
-                  <Link
+                  <Link prefetch={false}
                     href="/about-us"
                     className="block px-4 py-3 text-white hover:bg-white/10 transition-colors relative z-10"
                   >
@@ -102,21 +102,21 @@ export default function Navbar() {
               </div>
             </div>
             
-            <Link
+            <Link prefetch={false}
               href="/unshorten"
               className="relative text-white font-semibold transition-colors overflow-hidden group px-3 py-2"
             >
               <span className="relative z-10">Unshorten</span>
               <span className="absolute inset-0 bg-white/20 rounded-none transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
             </Link>
-            <Link
+            <Link prefetch={false}
               href="/click-counter"
               className="relative text-white font-semibold transition-colors overflow-hidden group px-3 py-2"
             >
               <span className="relative z-10">Click Counter</span>
               <span className="absolute inset-0 bg-white/20 rounded-none transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
             </Link>
-            <Link
+            <Link prefetch={false}
               href="/contact"
               className="relative text-white font-semibold transition-colors overflow-hidden group px-3 py-2"
             >
@@ -144,7 +144,7 @@ export default function Navbar() {
       {/* Full-Screen Mobile Menu */}
       <div className={`fixed inset-0 z-40 bg-[#060814]/70 backdrop-blur-2xl transition-all duration-500 ease-in-out ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
         <div className={`flex flex-col items-center justify-center h-full gap-8 transition-all duration-700 ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <Link
+          <Link prefetch={false}
             href="/api-docs"
             onClick={closeMenu}
             className="text-white text-4xl font-semibold hover:text-blue-400 transition-colors"
@@ -170,14 +170,14 @@ export default function Navbar() {
             </button>
             
             <div className={`flex flex-col items-center gap-4 overflow-hidden transition-all duration-300 ${isMobileResourcesOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-              <Link
+              <Link prefetch={false}
                 href="/blogs"
                 onClick={closeMenu}
                 className="text-white text-3xl font-semibold hover:text-blue-400 transition-colors"
               >
                 Blogs
               </Link>
-              <Link
+              <Link prefetch={false}
                 href="/about-us"
                 onClick={closeMenu}
                 className="text-white text-3xl font-semibold hover:text-blue-400 transition-colors"
@@ -187,21 +187,21 @@ export default function Navbar() {
             </div>
           </div>
           
-          <Link
+          <Link prefetch={false}
             href="/unshorten"
             onClick={closeMenu}
             className="text-white text-4xl font-semibold hover:text-blue-400 transition-colors"
           >
             Unshorten
           </Link>
-          <Link
+          <Link prefetch={false}
             href="/click-counter"
             onClick={closeMenu}
             className="text-white text-4xl font-semibold hover:text-blue-400 transition-colors"
           >
             Click Counter
           </Link>
-          <Link
+          <Link prefetch={false}
             href="/contact"
             onClick={closeMenu}
             className="text-white text-4xl font-semibold hover:text-blue-400 transition-colors"

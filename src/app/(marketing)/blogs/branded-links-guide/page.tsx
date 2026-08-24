@@ -21,7 +21,7 @@ export default function BrandedLinksGuidePage() {
       <article className="max-w-4xl mx-auto">
         {/* Header */}
         <header className="mb-12">
-          <Link
+          <Link prefetch={false}
             href="/blogs"
             className="inline-flex items-center text-blue-400 hover:text-blue-300 mb-6 transition-colors"
           >
@@ -202,7 +202,7 @@ export default function BrandedLinksGuidePage() {
             <p className="text-white/70 leading-relaxed mb-6">
               Ready to elevate your link sharing strategy? TinyUR supports custom domains, allowing you to create branded short links that build trust and drive engagement.
             </p>
-            <Link
+            <Link prefetch={false}
               href="/"
               className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
             >

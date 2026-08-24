@@ -96,7 +96,7 @@ export default function AboutUsPage() {
               contact@tinyur.in
             </a>{" "}
             or use the{" "}
-            <Link href="/contact" className="text-blue-400 hover:underline">
+            <Link prefetch={false} href="/contact" className="text-blue-400 hover:underline">
               Contact page
             </Link>
             . We typically respond within 1–2 business days.
@@ -109,7 +109,7 @@ export default function AboutUsPage() {
           <p className="text-gray-300 mb-8">
             Start shortening your URLs today and experience the difference.
           </p>
-          <Link
+          <Link prefetch={false}
             href="/"
             className="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
           >

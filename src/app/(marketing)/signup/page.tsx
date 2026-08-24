@@ -18,7 +18,7 @@ export default function SignupPage() {
         <AuthForm mode="signup" />
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <Link href="/login" className="font-semibold text-blue-600 hover:underline">
+          <Link prefetch={false} href="/login" className="font-semibold text-blue-600 hover:underline">
             Log in
           </Link>
         </p>

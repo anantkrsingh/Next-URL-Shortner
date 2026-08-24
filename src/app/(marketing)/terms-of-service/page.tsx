@@ -10,7 +10,7 @@ export default function TermsOfServicePage() {
   return (
     <div className="min-h-screen px-4 py-12 pt-28">
       <div className="glass-panel glass-doc mx-auto max-w-4xl rounded-2xl p-8 md:p-12">
-        <Link href="/" className="text-blue-600 hover:text-blue-700 font-medium mb-6 inline-block">
+        <Link prefetch={false} href="/" className="text-blue-600 hover:text-blue-700 font-medium mb-6 inline-block">
           ← Back to Home
         </Link>
         
@@ -148,7 +148,7 @@ export default function TermsOfServicePage() {
                 contact@tinyur.in
               </a>
               {" "}or the{" "}
-              <Link href="/contact" className="text-blue-600 hover:text-blue-700">
+              <Link prefetch={false} href="/contact" className="text-blue-600 hover:text-blue-700">
                 Contact page
               </Link>
               .

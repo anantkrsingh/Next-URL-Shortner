@@ -28,7 +28,7 @@ export default function UtmParametersGuidePage() {
     <div className="min-h-screen pt-24 pb-16 px-6">
       <article className="max-w-4xl mx-auto">
         <header className="mb-12">
-          <Link
+          <Link prefetch={false}
             href="/blogs"
             className="inline-flex items-center text-blue-400 hover:text-blue-300 mb-6 transition-colors"
           >
@@ -125,7 +125,7 @@ export default function UtmParametersGuidePage() {
               </div>
               <p className="text-white/70">
                 Wrapping it in a short link fixes three problems at once: it becomes short enough to fit in a bio, a story sticker, or a printed flyer; it stops leaking your internal campaign naming to anyone who inspects the URL; and it gives you a second, independent layer of click data — see our{" "}
-                <Link href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400">
+                <Link prefetch={false} href="/blogs/url-shortening-best-practices" className="underline underline-offset-2 text-blue-400">
                   URL shortening best practices
                 </Link>{" "}
                 guide — that still works even if the destination page&apos;s analytics script fails to load.
@@ -214,13 +214,13 @@ export default function UtmParametersGuidePage() {
           </section>
 
           <div className="mt-12 flex flex-wrap items-center gap-4 text-sm">
-            <Link href="/blogs" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/blogs" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               ← Back to Blogs
             </Link>
-            <Link href="/blogs/qr-codes-vs-short-links" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/blogs/qr-codes-vs-short-links" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               QR Codes vs Short Links
             </Link>
-            <Link href="/click-counter" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
+            <Link prefetch={false} href="/click-counter" className="underline underline-offset-2 text-blue-400 hover:text-blue-300">
               URL Click Counter
             </Link>
           </div>

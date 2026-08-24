@@ -23,6 +23,7 @@ export default function URLShorteningBestPracticesPage() {
         <header className="mb-12">
           <Link
             href="/blogs"
+            prefetch={false}
             className="inline-flex items-center text-blue-400 hover:text-blue-300 mb-6 transition-colors"
           >
             <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
