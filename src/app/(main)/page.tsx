@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     "Branded short links",
   ],
   authors: [{ name: "Tinyur Team", url: "https://tinyur.in" }],
-  
+
   applicationName: "Tinyur",
   referrer: "origin-when-cross-origin",
   publisher: "Tinyur",
@@ -87,10 +87,12 @@ export default function Home() {
   return (
     <>
       <div className="relative flex min-h-[78vh] items-center justify-center px-4 pt-32 pb-16">
-        <div className="glass-panel relative z-10 w-full max-w-3xl p-6 sm:p-10">
-          <Short />
+        <div className="flex flex-col gap-4 items-center justify-center w-full">
+          <div className="glass-panel relative z-10 w-full max-w-3xl p-6 sm:p-10">
+            <Short />
+          </div>
+          <div id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
         </div>
-        <div id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
       </div>
       <HomeSections />
     </>
