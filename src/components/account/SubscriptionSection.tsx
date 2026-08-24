@@ -114,7 +114,6 @@ export default function SubscriptionSection() {
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {PLANS.map((plan) => {
             const inrPrice = plan.inr ? (yearly ? plan.inr.yearly : plan.inr.monthly) : null;
-            const usdPrice = yearly ? plan.yearlyPrice : plan.monthlyPrice;
             const isCurrent = plan.id === currentPlanId;
             const isPendingThisPlan = checkout.isPending && pendingPlanId === plan.id;
 
@@ -145,10 +144,7 @@ export default function SubscriptionSection() {
                   ) : (
                     <p className="text-3xl font-bold text-white">Free</p>
                   )}
-                  <p className="mt-1 text-xs text-white/40">
-                    {plan.priceNote}
-                    {usdPrice ? ` · ~$${usdPrice}/mo internationally` : ""}
-                  </p>
+                  <p className="mt-1 text-xs text-white/40">{plan.priceNote}</p>
                 </div>
 
                 <ul className="mt-6 flex-1 space-y-2.5">
@@ -187,8 +183,8 @@ export default function SubscriptionSection() {
         </div>
 
         <p className="mt-6 text-xs text-white/40">
-          Feature lists and USD reference pricing are modeled on TinyURL&apos;s
-          publicly listed plans. Checkout runs in INR through PhonePe.
+          Feature lists are modeled on TinyURL&apos;s publicly listed plans,
+          priced in INR. Checkout runs through PhonePe.
         </p>
       </section>
     </div>
