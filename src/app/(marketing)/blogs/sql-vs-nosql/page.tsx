@@ -20,13 +20,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Tinyur Team", url: "https://tinyur.in" }],
   alternates: {
-    canonical: "https://tinyur.in/sql-vs-nosql",
+    canonical: "https://tinyur.in/blogs/sql-vs-nosql",
   },
   openGraph: {
     title: "SQL vs NoSQL Databases: Complete Comparison Guide | Tinyur",
     description:
       "Detailed comparison of SQL and NoSQL: structure, scalability, ACID, use cases, and how to choose the right database.",
-    url: "https://tinyur.in/sql-vs-nosql",
+    url: "https://tinyur.in/blogs/sql-vs-nosql",
     type: "article",
     siteName: "Tinyur",
     locale: "en_US",
@@ -565,7 +565,7 @@ CREATE TABLE orders (
           },
           mainEntityOfPage: {
             '@type': 'WebPage',
-            '@id': 'https://tinyur.in/sql-vs-nosql',
+            '@id': 'https://tinyur.in/blogs/sql-vs-nosql',
           },
         })}
       </Script>
@@ -592,7 +592,7 @@ CREATE TABLE orders (
               '@type': 'ListItem',
               position: 3,
               name: 'SQL vs NoSQL',
-              item: 'https://tinyur.in/sql-vs-nosql',
+              item: 'https://tinyur.in/blogs/sql-vs-nosql',
             },
           ],
         })}

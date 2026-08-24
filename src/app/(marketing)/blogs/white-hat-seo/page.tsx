@@ -5,12 +5,12 @@ export const metadata: Metadata = {
   title: "White Hat SEO: Strategies for Sustainable Growth | Tinyur Blogs",
   description:
     "Learn ethical SEO tactics: content quality, E-E-A-T, site performance, accessibility, and technical SEO for sustainable rankings.",
-  alternates: { canonical: "https://tinyur.in/white-hat-seo" },
+  alternates: { canonical: "https://tinyur.in/blogs/white-hat-seo" },
   openGraph: {
     title: "White Hat SEO: Strategies for Sustainable Growth | Tinyur",
     description:
       "Ethical SEO tactics: content quality, E-E-A-T, performance, accessibility, and technical SEO.",
-    url: "https://tinyur.in/white-hat-seo",
+    url: "https://tinyur.in/blogs/white-hat-seo",
     type: "article",
   },
   twitter: {
@@ -51,11 +51,11 @@ export default function WhiteHatSEOPage() {
         engine guidelines. It emphasizes content quality, site experience, and
         accessibility. Compare this with
         {" "}
-        <Link href="/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
+        <Link href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
         {" "}
         tactics, and see our side-by-side
         {" "}
-        <Link href="/white-hat-seo-vs-black-hat-seo" className="underline underline-offset-2">comparison</Link>
+        <Link href="/blogs/white-hat-seo-vs-black-hat-seo" className="underline underline-offset-2">comparison</Link>
         {" "}
         to choose the right strategy.
       </p>
@@ -80,8 +80,8 @@ export default function WhiteHatSEOPage() {
 
       <footer className="mt-10 flex items-center gap-4 text-sm">
         <Link href="/blogs" className="underline underline-offset-2">← Back to Blogs</Link>
-        <Link href="/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
-        <Link href="/white-hat-seo-vs-black-hat-seo" className="underline underline-offset-2">White vs Black Hat</Link>
+        <Link href="/blogs/black-hat-seo" className="underline underline-offset-2">Black Hat SEO</Link>
+        <Link href="/blogs/white-hat-seo-vs-black-hat-seo" className="underline underline-offset-2">White vs Black Hat</Link>
       </footer>
     </article>
   );

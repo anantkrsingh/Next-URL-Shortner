@@ -5,12 +5,12 @@ export const metadata: Metadata = {
   title: "What Are Branded Links? Complete Guide | TinyUR",
   description: "Learn how branded short links boost trust, increase click-through rates, and strengthen your brand identity in every share.",
   alternates: {
-    canonical: "https://tinyur.in/branded-links-guide",
+    canonical: "https://tinyur.in/blogs/branded-links-guide",
   },
   openGraph: {
     title: "What Are Branded Links? Complete Guide | TinyUR",
     description: "Learn how branded short links boost trust, increase click-through rates, and strengthen your brand identity.",
-    url: "https://tinyur.in/branded-links-guide",
+    url: "https://tinyur.in/blogs/branded-links-guide",
     type: "article",
   },
 };

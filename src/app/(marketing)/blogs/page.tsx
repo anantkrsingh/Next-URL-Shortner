@@ -26,42 +26,42 @@ export const metadata: Metadata = {
 export default function BlogsPage() {
   const blogs = [
     {
-      href: "/how-url-shortners-work",
+      href: "/blogs/how-url-shortners-work",
       title: "How URL Shorteners Work",
       description: "A deep dive into the mechanics of shortening, redirecting, tracking, and the infrastructure behind reliable short links.",
       readTime: "~10 min read",
       category: "URL Shortening",
     },
     {
-      href: "/branded-links-guide",
+      href: "/blogs/branded-links-guide",
       title: "What Are Branded Links?",
       description: "Learn how branded short links boost trust, increase click-through rates, and strengthen your brand identity in every share.",
       readTime: "~8 min read",
       category: "URL Shortening",
     },
     {
-      href: "/url-shortening-best-practices",
+      href: "/blogs/url-shortening-best-practices",
       title: "URL Shortening Best Practices",
       description: "Essential strategies for creating effective short links: security, analytics, custom domains, and link management at scale.",
       readTime: "~9 min read",
       category: "URL Shortening",
     },
     {
-      href: "/white-hat-seo",
+      href: "/blogs/white-hat-seo",
       title: "White Hat SEO",
       description: "Ethical SEO strategies for sustainable rankings and long-term growth.",
       readTime: "~8 min read",
       category: "SEO",
     },
     {
-      href: "/black-hat-seo",
+      href: "/blogs/black-hat-seo",
       title: "Black Hat SEO",
       description: "Risks, tactics, and penalties of manipulative SEO strategies.",
       readTime: "~8 min read",
       category: "SEO",
     },
     {
-      href: "/white-hat-seo-vs-black-hat-seo",
+      href: "/blogs/white-hat-seo-vs-black-hat-seo",
       title: "White Hat SEO vs Black Hat SEO",
       description: "A practical comparison to evaluate trade-offs and choose wisely.",
       readTime: "~9 min read",

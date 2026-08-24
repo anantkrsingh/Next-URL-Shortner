@@ -20,13 +20,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Tinyur Team", url: "https://tinyur.in" }],
   alternates: {
-    canonical: "https://tinyur.in/salting-and-hashing",
+    canonical: "https://tinyur.in/blogs/salting-and-hashing",
   },
   openGraph: {
     title: "Salting and Hashing: Password Security Best Practices | Tinyur",
     description:
       "Comprehensive guide to password hashing and salting: algorithms, rainbow table defense, bcrypt, Argon2, and security best practices.",
-    url: "https://tinyur.in/salting-and-hashing",
+    url: "https://tinyur.in/blogs/salting-and-hashing",
     type: "article",
     siteName: "Tinyur",
     locale: "en_US",
@@ -465,7 +465,7 @@ async function verifyPassword(password, storedHash) {
           },
           mainEntityOfPage: {
             '@type': 'WebPage',
-            '@id': 'https://tinyur.in/salting-and-hashing',
+            '@id': 'https://tinyur.in/blogs/salting-and-hashing',
           },
         })}
       </Script>
@@ -492,7 +492,7 @@ async function verifyPassword(password, storedHash) {
               '@type': 'ListItem',
               position: 3,
               name: 'Salting and Hashing',
-              item: 'https://tinyur.in/salting-and-hashing',
+              item: 'https://tinyur.in/blogs/salting-and-hashing',
             },
           ],
         })}
