@@ -1,6 +1,7 @@
 import Short from "@/components/short";
 import { Metadata } from "next";
 import HomeSections from "@/components/home/sections";
+import RecentLinksSection from "@/components/RecentLinksSection";
 export const metadata: Metadata = {
   title: "Tinyur | Free URL Shortener — Create Short Links Instantly",
   description:
@@ -90,6 +91,9 @@ export default function Home() {
         <div className="flex flex-col gap-4 items-center justify-center w-full">
           <div className="glass-panel relative z-10 w-full max-w-3xl p-6 sm:p-10">
             <Short />
+          </div>
+          <div className="w-full max-w-3xl">
+            <RecentLinksSection />
           </div>
           <div id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
         </div>

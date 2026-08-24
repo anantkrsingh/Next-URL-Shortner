@@ -20,10 +20,11 @@ export type Usage = {
   recentLinks: RecentLink[];
 };
 
-export function useUsage() {
+export function useUsage(options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: queryKeys.account.usage,
     queryFn: () => apiFetch<Usage>("/api/account/usage"),
+    enabled: options?.enabled,
   });
 }
 

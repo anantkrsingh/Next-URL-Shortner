@@ -5,6 +5,8 @@ import { CircularProgress } from "@mui/material";
 import { analytics } from "../lib/firebase";
 import { logEvent } from "firebase/analytics";
 import { useShortenUrl } from "@/hooks/useShorten";
+import { useRecentLinks } from "@/hooks/useRecentLinks";
+import { useAuthStore } from "@/store/useAuthStore";
 import ShortUrlResultCard from "./ShortUrlResultCard";
 
 export default function Short() {
@@ -12,13 +14,15 @@ export default function Short() {
   const [customAlias, setCustomAlias] = useState("");
   const [useCustomAlias, setUseCustomAlias] = useState(false);
 
+  const user = useAuthStore((s) => s.user);
+  const { addLink } = useRecentLinks();
   const shortenMutation = useShortenUrl();
   const shortUrl = shortenMutation.data ?? null;
   const loading = shortenMutation.isPending;
   const error =
     shortenMutation.error instanceof Error ? shortenMutation.error.message : "";
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const requestBody: { url: string; customAlias?: string } = { url };
@@ -35,7 +39,13 @@ export default function Short() {
       });
     }
 
-    shortenMutation.mutate(requestBody);
+    shortenMutation.mutate(requestBody, {
+      onSuccess: (result) => {
+        // Signed-in users' links already come from the database (see
+        // RecentLinksSection); anonymous ones are only remembered locally.
+        if (!user) addLink(result);
+      },
+    });
   };
 
   return (
@@ -49,32 +59,41 @@ export default function Short() {
       
       <div className="rounded-3xl p-4 sm:p-8">
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex flex-col sm:flex-row gap-2">
-            <input
-              type="url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="Paste your URL here"
-              required
-              className="glass-input flex-1 min-h-[56px] h-[56px] px-4"
-            />
-            <button
-              type="submit"
-              disabled={loading}
-              className="glass-btn relative overflow-hidden w-full sm:w-auto sm:min-w-[120px] min-h-[56px] h-[56px] font-semibold disabled:opacity-50"
+          <div>
+            <label
+              htmlFor="long-url"
+              className="mb-1.5 block text-sm font-semibold text-white/90 drop-shadow-md"
             >
-              <div 
-                className="absolute inset-0 opacity-20 pointer-events-none"
-                style={{
-                  backgroundImage: "url(/grain.png)",
-                  backgroundSize: "200px 200px",
-                  backgroundRepeat: "repeat"
-                }}
+              Long URL
+            </label>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <input
+                id="long-url"
+                type="url"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="Paste your URL here"
+                required
+                className="glass-input flex-1 min-h-[56px] h-[56px] px-4"
               />
-              <span className="relative z-10">
-                {loading ? <CircularProgress size={20} sx={{ color: "white" }} /> : "Shorten"}
-              </span>
-            </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="glass-btn relative overflow-hidden w-full sm:w-auto sm:min-w-[120px] min-h-[56px] h-[56px] font-semibold disabled:opacity-50"
+              >
+                <div
+                  className="absolute inset-0 opacity-20 pointer-events-none"
+                  style={{
+                    backgroundImage: "url(/grain.png)",
+                    backgroundSize: "200px 200px",
+                    backgroundRepeat: "repeat"
+                  }}
+                />
+                <span className="relative z-10">
+                  {loading ? <CircularProgress size={20} sx={{ color: "white" }} /> : "Shorten"}
+                </span>
+              </button>
+            </div>
           </div>
 
           {useCustomAlias && (
@@ -111,7 +130,7 @@ export default function Short() {
       <p className="mt-6 text-center text-white/90 text-sm max-w-xl mx-auto drop-shadow-md">
         TinyUR is a free tool to shorten URLs and generate short links. URL shortener allows to create a shortened link making it easy to share.
       </p>
-      
+
     </div>
   );
 }
