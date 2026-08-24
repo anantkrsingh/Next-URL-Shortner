@@ -1,17 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { FaCheck, FaCopy } from "react-icons/fa";
 import { CircularProgress } from "@mui/material";
 import { analytics } from "../lib/firebase";
 import { logEvent } from "firebase/analytics";
 import { useShortenUrl } from "@/hooks/useShorten";
+import ShortUrlResultCard from "./ShortUrlResultCard";
 
 export default function Short() {
   const [url, setUrl] = useState("");
   const [customAlias, setCustomAlias] = useState("");
   const [useCustomAlias, setUseCustomAlias] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   const shortenMutation = useShortenUrl();
   const shortUrl = shortenMutation.data ?? null;
@@ -37,36 +36,6 @@ export default function Short() {
     }
 
     shortenMutation.mutate(requestBody);
-  };
-
-  const copyToClipboard = async () => {
-    if (shortUrl) {
-      try {
-        // Check if clipboard API is available
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          await navigator.clipboard.writeText(shortUrl.shortUrl);
-        } else {
-          // Fallback method for older browsers or non-HTTPS environments
-          const textArea = document.createElement("textarea");
-          textArea.value = shortUrl.shortUrl;
-          textArea.style.position = "fixed";
-          textArea.style.left = "-999999px";
-          textArea.style.top = "-999999px";
-          document.body.appendChild(textArea);
-          textArea.focus();
-          textArea.select();
-          document.execCommand("copy");
-          document.body.removeChild(textArea);
-        }
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      } catch (err) {
-        console.error("Failed to copy:", err);
-        // Still show copied state even if there was an error
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }
-    }
   };
 
   return (
@@ -130,25 +99,7 @@ export default function Short() {
           </div>
         </form>
 
-        {shortUrl && (
-          <div className="glass-panel mt-6 flex items-center gap-3 rounded-xl p-4">
-            <a
-              className="flex-1 truncate font-medium text-white hover:text-blue-200 transition-colors"
-              href={shortUrl.shortUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {shortUrl.shortUrl}
-            </a>
-            <button
-              onClick={copyToClipboard}
-              className="glass-input p-2"
-              title="Copy"
-            >
-              {copied ? <FaCheck className="text-green-400" /> : <FaCopy className="text-white/80" />}
-            </button>
-          </div>
-        )}
+        {shortUrl && <ShortUrlResultCard result={shortUrl} />}
 
         {error && (
           <div className="mt-4 p-4 bg-red-500/90 backdrop-blur-md border border-red-400/50 rounded-xl text-white text-sm font-medium">
