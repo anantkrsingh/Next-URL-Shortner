@@ -2,7 +2,6 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useLogin, useSignup } from "@/hooks/useAuth";
 
 type AuthMode = "login" | "signup";
@@ -115,7 +114,15 @@ export default function AuthForm({
         <div className="h-px flex-1 bg-white/15" />
       </div>
 
-      <Link prefetch={false}
+      {/* Plain <a>, not next/link: this hits an OAuth-initiating Route
+          Handler, not a page. Next's client router probes Link targets with
+          a background fetch before falling back to a real navigation, and
+          that probe sets its own oauth-state cookie — landing after the
+          real navigation's (most likely on a cold first click) overwrites
+          the correct cookie and breaks the state check on Google's
+          callback. A full browser navigation avoids that race entirely. */}
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+      <a
         href="/api/auth/google"
         className="glass-input flex w-full items-center justify-center gap-3 px-6 py-2.5 font-semibold text-white hover:bg-white/10"
       >
@@ -126,7 +133,7 @@ export default function AuthForm({
           <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
         </svg>
         Continue with Google
-      </Link>
+      </a>
     </form>
   );
 }

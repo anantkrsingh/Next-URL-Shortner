@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
 import { prisma } from "@/lib/prisma";
 import { getAppUrl, getCurrentUser } from "@/lib/auth";
-import { getPlan } from "@/lib/plans";
-import { createOrder, isPhonePeConfigured } from "@/lib/phonepe";
+import { chargeAmount, getPlan } from "@/lib/plans";
+import { createOrder as createRazorpayOrder, isRazorpayConfigured } from "@/lib/razorpay";
+import { createOrder as createPhonePeOrder, isPhonePeConfigured } from "@/lib/phonepe";
 
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser();
@@ -11,7 +12,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
   }
 
-  if (!isPhonePeConfigured()) {
+  if (!isRazorpayConfigured() && !isPhonePeConfigured()) {
     return NextResponse.json(
       { error: "Payments aren't configured yet. Please try again shortly." },
       { status: 503 }
@@ -35,7 +36,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const amountRupees = billingCycle === "monthly" ? plan.inr.monthly : plan.inr.yearly;
+  // Yearly billing is charged as a single upfront payment for all 12
+  // months (plan.inr.yearlyMonthly * 12), not the per-month display figure.
+  const amountRupees = chargeAmount(plan, billingCycle)!;
   const amountPaise = Math.round(amountRupees * 100);
   const merchantOrderId = `tur_${randomUUID().replace(/-/g, "")}`;
 
@@ -63,24 +66,68 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  try {
-    const result = await createOrder({
-      merchantOrderId,
-      amountPaise,
-      redirectUrl: `${getAppUrl()}/api/payments/callback?orderId=${merchantOrderId}`,
-      metaInfo: { userId: user.id, plan: plan.id, billingCycle },
-    });
+  // Razorpay is the primary gateway. PhonePe is only tried when Razorpay
+  // order creation itself fails (or isn't configured) — not for later
+  // payment failures inside Razorpay's own checkout, which surface through
+  // its own flow instead.
+  if (isRazorpayConfigured()) {
+    try {
+      const result = await createRazorpayOrder({
+        merchantOrderId,
+        amountPaise,
+        notes: { userId: user.id, plan: plan.id, billingCycle },
+      });
 
-    return NextResponse.json({ redirectUrl: result.redirectUrl });
-  } catch (error) {
-    console.error("PhonePe checkout error:", error);
-    await prisma.order.update({
-      where: { merchantOrderId },
-      data: { status: "failed" },
-    });
-    return NextResponse.json(
-      { error: "Could not start checkout. Please try again." },
-      { status: 502 }
-    );
+      await prisma.order.update({
+        where: { merchantOrderId },
+        data: { gateway: "razorpay", razorpayOrderId: result.orderId },
+      });
+
+      return NextResponse.json({
+        gateway: "razorpay" as const,
+        keyId: result.keyId,
+        orderId: result.orderId,
+        amount: result.amount,
+        currency: result.currency,
+        merchantOrderId,
+        planName: plan.name,
+        prefill: {
+          name: billingDetails.fullName,
+          email: billingDetails.email,
+          contact: billingDetails.phone,
+        },
+      });
+    } catch (error) {
+      console.error("Razorpay checkout error, falling back to PhonePe:", error);
+    }
   }
+
+  if (isPhonePeConfigured()) {
+    try {
+      const result = await createPhonePeOrder({
+        merchantOrderId,
+        amountPaise,
+        redirectUrl: `${getAppUrl()}/api/payments/callback?orderId=${merchantOrderId}`,
+        metaInfo: { userId: user.id, plan: plan.id, billingCycle },
+      });
+
+      await prisma.order.update({
+        where: { merchantOrderId },
+        data: { gateway: "phonepe" },
+      });
+
+      return NextResponse.json({ gateway: "phonepe" as const, redirectUrl: result.redirectUrl });
+    } catch (error) {
+      console.error("PhonePe checkout error:", error);
+    }
+  }
+
+  await prisma.order.update({
+    where: { merchantOrderId },
+    data: { status: "failed" },
+  });
+  return NextResponse.json(
+    { error: "Could not start checkout. Please try again." },
+    { status: 502 }
+  );
 }

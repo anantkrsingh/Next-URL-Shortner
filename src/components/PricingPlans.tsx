@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FiCheck } from "react-icons/fi";
-import { PLANS, type Plan } from "@/lib/plans";
+import { PLANS, yearlyTotal, type Plan } from "@/lib/plans";
 import { useCurrentUser } from "@/hooks/useAuth";
 import { useAuthStore } from "@/store/useAuthStore";
 
@@ -48,7 +48,7 @@ export default function PricingPlans() {
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
         {PLANS.map((plan) => {
-          const inrPrice = plan.inr ? (yearly ? plan.inr.yearly : plan.inr.monthly) : null;
+          const inrPrice = plan.inr ? (yearly ? plan.inr.yearlyMonthly : plan.inr.monthly) : null;
           const cta = ctaFor(plan, Boolean(user));
 
           return (
@@ -78,7 +78,13 @@ export default function PricingPlans() {
                 ) : (
                   <p className="text-3xl font-bold text-white">Free</p>
                 )}
-                <p className="mt-1 text-xs text-white/40">{plan.priceNote}</p>
+                <p className="mt-1 text-xs text-white/40">
+                  {plan.inr
+                    ? yearly
+                      ? `billed ₹${yearlyTotal(plan)!.toLocaleString("en-IN")} once a year`
+                      : "billed monthly"
+                    : plan.priceNote}
+                </p>
               </div>
 
               <ul className="mt-6 flex-1 space-y-2.5">
@@ -103,7 +109,7 @@ export default function PricingPlans() {
 
       <p className="mt-6 text-center text-xs text-white/40">
         Feature lists are modeled on TinyURL&apos;s publicly listed plans, priced
-        in INR. Checkout runs through PhonePe. Paid plans are refundable within
+        in INR. Checkout runs through Razorpay. Paid plans are refundable within
         48 hours — see the{" "}
         <Link prefetch={false} href="/refund-policy" className="text-blue-300 hover:text-blue-200">
           Refund Policy

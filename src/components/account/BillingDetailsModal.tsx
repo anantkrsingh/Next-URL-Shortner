@@ -3,7 +3,8 @@
 import { FormEvent, useState } from "react";
 import { createPortal } from "react-dom";
 import { FiX } from "react-icons/fi";
-import type { Plan } from "@/lib/plans";
+import { apiFetch } from "@/lib/api";
+import { chargeAmount, type Plan } from "@/lib/plans";
 import { useAuthStore } from "@/store/useAuthStore";
 import {
   useBillingDetails,
@@ -14,6 +15,26 @@ import {
 import { useCheckout } from "@/hooks/useSubscription";
 
 const GST_REGEX = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+
+declare global {
+  interface Window {
+    Razorpay?: new (options: Record<string, unknown>) => { open: () => void };
+  }
+}
+
+// Loads Razorpay's Checkout.js once and reuses it on later opens.
+function loadRazorpayScript(): Promise<boolean> {
+  return new Promise((resolve) => {
+    if (typeof window === "undefined") return resolve(false);
+    if (window.Razorpay) return resolve(true);
+
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+}
 
 const EMPTY_FORM: BillingDetailsInput = {
   fullName: "",
@@ -81,7 +102,9 @@ export default function BillingDetailsModal({
     }
   }
 
-  const price = billingCycle === "monthly" ? plan.inr?.monthly : plan.inr?.yearly;
+  // The actual PhonePe charge: 12 months upfront on yearly billing, not
+  // the per-month figure shown on the plan card.
+  const price = chargeAmount(plan, billingCycle);
 
   const updateField = <K extends keyof BillingDetailsInput>(key: K, value: BillingDetailsInput[K]) => {
     setForm((f) => ({ ...f, [key]: value }));
@@ -120,8 +143,54 @@ export default function BillingDetailsModal({
   const handlePayNow = async () => {
     setCheckoutError("");
     try {
-      const { redirectUrl } = await checkout.mutateAsync({ planId: plan.id, billingCycle });
-      window.location.assign(redirectUrl);
+      const result = await checkout.mutateAsync({ planId: plan.id, billingCycle });
+
+      if (result.gateway === "phonepe") {
+        window.location.assign(result.redirectUrl);
+        return;
+      }
+
+      const loaded = await loadRazorpayScript();
+      if (!loaded || !window.Razorpay) {
+        setCheckoutError("Could not load the payment window. Please try again.");
+        return;
+      }
+
+      const razorpay = new window.Razorpay({
+        key: result.keyId,
+        order_id: result.orderId,
+        amount: result.amount,
+        currency: result.currency,
+        name: "TinyUR",
+        description: `${result.planName} · billed ${billingCycle}`,
+        prefill: result.prefill,
+        theme: { color: "#3b82f6" },
+        handler: async (response: {
+          razorpay_order_id: string;
+          razorpay_payment_id: string;
+          razorpay_signature: string;
+        }) => {
+          try {
+            await apiFetch("/api/payments/razorpay/verify", {
+              method: "POST",
+              body: JSON.stringify({
+                merchantOrderId: result.merchantOrderId,
+                razorpayOrderId: response.razorpay_order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature,
+              }),
+            });
+            window.location.assign("/account?tab=subscription&payment=success");
+          } catch (err) {
+            setCheckoutError(err instanceof Error ? err.message : "Payment verification failed.");
+          }
+        },
+        modal: {
+          ondismiss: () => setCheckoutError("Payment cancelled."),
+        },
+      });
+
+      razorpay.open();
     } catch (err) {
       setCheckoutError(err instanceof Error ? err.message : "Could not start checkout.");
     }
@@ -347,10 +416,15 @@ export default function BillingDetailsModal({
               </p>
               <div className="mt-3 flex items-center justify-between text-sm">
                 <span className="text-white/70">
-                  {plan.name} ({billingCycle})
+                  {plan.name} ({billingCycle === "yearly" ? "12 months, billed now" : "1 month"})
                 </span>
                 <span className="font-semibold text-white">₹{price?.toLocaleString("en-IN")}</span>
               </div>
+              {billingCycle === "yearly" && plan.inr && (
+                <p className="mt-1 text-xs text-white/40">
+                  ₹{plan.inr.yearlyMonthly.toLocaleString("en-IN")}/mo equivalent
+                </p>
+              )}
               <div className="mt-2 flex items-center justify-between border-t border-white/10 pt-2 text-sm font-bold">
                 <span className="text-white">Total</span>
                 <span className="text-white">₹{price?.toLocaleString("en-IN")}</span>
@@ -369,7 +443,7 @@ export default function BillingDetailsModal({
               disabled={checkout.isPending}
               className="glass-btn w-full px-5 py-3 font-semibold disabled:opacity-60"
             >
-              {checkout.isPending ? "Redirecting to PhonePe…" : "Pay now"}
+              {checkout.isPending ? "Starting checkout…" : "Pay now"}
             </button>
           </div>
         ) : null}

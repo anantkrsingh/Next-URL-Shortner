@@ -4,7 +4,7 @@ import PricingPlans from "@/components/PricingPlans";
 export const metadata: Metadata = {
   title: "Pricing | TinyUR",
   description:
-    "TinyUR pricing: a free plan plus Pro and Bulk & API plans with branded domains, analytics, and higher limits — billed in INR through PhonePe.",
+    "TinyUR pricing: a free plan plus Pro and Bulk & API plans with branded domains, analytics, and higher limits — billed in INR through Razorpay.",
 };
 
 export default function PricingPage() {

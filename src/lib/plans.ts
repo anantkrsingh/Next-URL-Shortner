@@ -1,6 +1,7 @@
 // Plan data modeled on TinyURL's publicly listed pricing tiers
 // (tinyurl.com/app/pricing, as referenced Aug 2026), localized to INR since
-// checkout runs through PhonePe. Used to render the Subscription tab on the
+// checkout runs through Razorpay (PhonePe as a fallback — see
+// api/payments/checkout). Used to render the Subscription tab on the
 // account page.
 
 export type PlanId = "free" | "pro" | "bulk" | "enterprise";
@@ -10,8 +11,13 @@ export type Plan = {
   id: PlanId;
   name: string;
   tagline: string;
-  /** Whole rupees — the amount actually charged through PhonePe checkout. */
-  inr: { monthly: number; yearly: number } | null;
+  /**
+   * Whole rupees. `monthly` is charged each time on monthly billing.
+   * `yearlyMonthly` is the effective per-month rate shown when yearly
+   * billing is selected — the actual one-time PhonePe charge for the year
+   * is `yearlyMonthly * 12` (see yearlyTotal()), not `yearlyMonthly` itself.
+   */
+  inr: { monthly: number; yearlyMonthly: number } | null;
   /** Can this plan be bought online, or is it "current"/"contact sales"? */
   payable: boolean;
   custom?: boolean;
@@ -20,6 +26,17 @@ export type Plan = {
   highlighted?: boolean;
   features: string[];
 };
+
+/** The actual one-time amount charged for a full year, in whole rupees. */
+export function yearlyTotal(plan: Plan): number | null {
+  return plan.inr ? plan.inr.yearlyMonthly * 12 : null;
+}
+
+/** The rupee amount charged right now for one checkout on this cycle. */
+export function chargeAmount(plan: Plan, billingCycle: BillingCycle): number | null {
+  if (!plan.inr) return null;
+  return billingCycle === "monthly" ? plan.inr.monthly : yearlyTotal(plan);
+}
 
 export const PLANS: Plan[] = [
   {
@@ -42,7 +59,7 @@ export const PLANS: Plan[] = [
     id: "pro",
     name: "Pro",
     tagline: "For creators and growing teams",
-    inr: { monthly: 199, yearly: 199 },
+    inr: { monthly: 199, yearlyMonthly: 119 },
     payable: true,
     priceNote: "per month",
     cta: "Upgrade to Pro",
@@ -62,7 +79,7 @@ export const PLANS: Plan[] = [
     id: "bulk",
     name: "Bulk & API",
     tagline: "For high-volume campaigns",
-    inr: { monthly: 799, yearly: 799 },
+    inr: { monthly: 799, yearlyMonthly: 479 },
     payable: true,
     priceNote: "per month",
     cta: "Upgrade to Bulk",
