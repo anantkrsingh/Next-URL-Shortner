@@ -97,7 +97,7 @@ export default function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7464509288176224"
         />
 
-<Script
+        <Script
           id="adsterra"
           async
           strategy="lazyOnload"

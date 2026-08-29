@@ -38,10 +38,23 @@ export function useInvoices() {
   });
 }
 
+export type CheckoutResult =
+  | {
+      gateway: "razorpay";
+      keyId: string;
+      orderId: string;
+      amount: number;
+      currency: string;
+      merchantOrderId: string;
+      planName: string;
+      prefill: { name: string; email: string; contact: string };
+    }
+  | { gateway: "phonepe"; redirectUrl: string };
+
 export function useCheckout() {
   return useMutation({
     mutationFn: (vars: { planId: PlanId; billingCycle: BillingCycle }) =>
-      apiFetch<{ redirectUrl: string }>("/api/payments/checkout", {
+      apiFetch<CheckoutResult>("/api/payments/checkout", {
         method: "POST",
         body: JSON.stringify(vars),
       }),

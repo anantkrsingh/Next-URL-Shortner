@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { createPortal } from "react-dom";
 import { FiX } from "react-icons/fi";
+import { apiFetch } from "@/lib/api";
 import { chargeAmount, type Plan } from "@/lib/plans";
 import { useAuthStore } from "@/store/useAuthStore";
 import {
@@ -14,6 +15,26 @@ import {
 import { useCheckout } from "@/hooks/useSubscription";
 
 const GST_REGEX = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+
+declare global {
+  interface Window {
+    Razorpay?: new (options: Record<string, unknown>) => { open: () => void };
+  }
+}
+
+// Loads Razorpay's Checkout.js once and reuses it on later opens.
+function loadRazorpayScript(): Promise<boolean> {
+  return new Promise((resolve) => {
+    if (typeof window === "undefined") return resolve(false);
+    if (window.Razorpay) return resolve(true);
+
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+}
 
 const EMPTY_FORM: BillingDetailsInput = {
   fullName: "",
@@ -122,8 +143,54 @@ export default function BillingDetailsModal({
   const handlePayNow = async () => {
     setCheckoutError("");
     try {
-      const { redirectUrl } = await checkout.mutateAsync({ planId: plan.id, billingCycle });
-      window.location.assign(redirectUrl);
+      const result = await checkout.mutateAsync({ planId: plan.id, billingCycle });
+
+      if (result.gateway === "phonepe") {
+        window.location.assign(result.redirectUrl);
+        return;
+      }
+
+      const loaded = await loadRazorpayScript();
+      if (!loaded || !window.Razorpay) {
+        setCheckoutError("Could not load the payment window. Please try again.");
+        return;
+      }
+
+      const razorpay = new window.Razorpay({
+        key: result.keyId,
+        order_id: result.orderId,
+        amount: result.amount,
+        currency: result.currency,
+        name: "TinyUR",
+        description: `${result.planName} · billed ${billingCycle}`,
+        prefill: result.prefill,
+        theme: { color: "#3b82f6" },
+        handler: async (response: {
+          razorpay_order_id: string;
+          razorpay_payment_id: string;
+          razorpay_signature: string;
+        }) => {
+          try {
+            await apiFetch("/api/payments/razorpay/verify", {
+              method: "POST",
+              body: JSON.stringify({
+                merchantOrderId: result.merchantOrderId,
+                razorpayOrderId: response.razorpay_order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature,
+              }),
+            });
+            window.location.assign("/account?tab=subscription&payment=success");
+          } catch (err) {
+            setCheckoutError(err instanceof Error ? err.message : "Payment verification failed.");
+          }
+        },
+        modal: {
+          ondismiss: () => setCheckoutError("Payment cancelled."),
+        },
+      });
+
+      razorpay.open();
     } catch (err) {
       setCheckoutError(err instanceof Error ? err.message : "Could not start checkout.");
     }
@@ -376,7 +443,7 @@ export default function BillingDetailsModal({
               disabled={checkout.isPending}
               className="glass-btn w-full px-5 py-3 font-semibold disabled:opacity-60"
             >
-              {checkout.isPending ? "Redirecting to PhonePe…" : "Pay now"}
+              {checkout.isPending ? "Starting checkout…" : "Pay now"}
             </button>
           </div>
         ) : null}

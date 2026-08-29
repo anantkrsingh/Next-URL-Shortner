@@ -109,7 +109,7 @@ export default function PricingPlans() {
 
       <p className="mt-6 text-center text-xs text-white/40">
         Feature lists are modeled on TinyURL&apos;s publicly listed plans, priced
-        in INR. Checkout runs through PhonePe. Paid plans are refundable within
+        in INR. Checkout runs through Razorpay. Paid plans are refundable within
         48 hours — see the{" "}
         <Link prefetch={false} href="/refund-policy" className="text-blue-300 hover:text-blue-200">
           Refund Policy

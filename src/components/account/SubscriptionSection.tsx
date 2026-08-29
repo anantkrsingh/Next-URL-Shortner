@@ -169,7 +169,7 @@ export default function SubscriptionSection() {
 
         <p className="mt-6 text-xs text-white/40">
           Feature lists are modeled on TinyURL&apos;s publicly listed plans,
-          priced in INR. Checkout runs through PhonePe.
+          priced in INR. Checkout runs through Razorpay.
         </p>
       </section>
 

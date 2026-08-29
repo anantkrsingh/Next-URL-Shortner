@@ -136,21 +136,32 @@ enum OrderStatus {
   failed
 }
 
+// Razorpay is the primary gateway; PhonePe is only used as a fallback when
+// Razorpay order creation itself fails. Null until an order successfully
+// starts checkout with one of them.
+enum PaymentGateway {
+  razorpay
+  phonepe
+}
+
 // One row per checkout attempt. Doubles as the billing history shown on
 // the Invoices tab once its status is "completed".
 model Order {
-  id              String      @id @default(auto()) @map("_id") @db.ObjectId
-  userId          String      @db.ObjectId
-  user            User        @relation(fields: [userId], references: [id])
-  merchantOrderId String      @unique
-  phonePeOrderId  String?
-  plan            PlanId
-  billingCycle    BillingCycle
-  amount          Int // in paise
-  currency        String      @default("INR")
-  status          OrderStatus @default(pending)
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String         @db.ObjectId
+  user              User           @relation(fields: [userId], references: [id])
+  merchantOrderId   String         @unique
+  gateway           PaymentGateway?
+  phonePeOrderId    String?
+  razorpayOrderId   String?        @unique
+  razorpayPaymentId String?
+  plan              PlanId
+  billingCycle      BillingCycle
+  amount            Int // in paise
+  currency          String         @default("INR")
+  status            OrderStatus    @default(pending)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
 
   // Snapshot of BillingDetails at the time of purchase.
   billingName         String?

@@ -24,7 +24,8 @@ export default function RefundPolicyPage() {
             <p>
               This policy applies to paid TinyUR subscriptions (Pro and Bulk &amp;
               API) purchased through checkout on tinyur.in and processed via
-              PhonePe. TinyUR&apos;s free tools — shortening, unshortening, and click
+              Razorpay (or PhonePe, if used as a fallback at checkout).
+              TinyUR&apos;s free tools — shortening, unshortening, and click
               counting — are free and have nothing to refund.
             </p>
           </section>
@@ -58,14 +59,14 @@ export default function RefundPolicyPage() {
                 within 48 hours of the charge.
               </li>
               <li>Use the email address associated with your TinyUR account.</li>
-              <li>Include the plan you purchased and, if you have it, the PhonePe transaction ID from your payment confirmation.</li>
+              <li>Include the plan you purchased and, if you have it, the payment/transaction ID from your payment confirmation.</li>
             </ul>
           </section>
 
           <section>
             <h2 className="mb-4 text-2xl font-bold text-gray-900">4. How refunds are paid</h2>
             <p>
-              Approved refunds are issued back to the original PhonePe payment
+              Approved refunds are issued back to the original payment
               method used at checkout. Once we process the refund on our end
               (within 24 hours of an eligible request), the time it takes to
               actually appear in your account or on your statement depends on

@@ -23,7 +23,7 @@ export default function InvoicesSection() {
     <section className="glass-panel rounded-2xl p-6 sm:p-8">
       <h2 className="text-xl font-bold text-white">Invoices</h2>
       <p className="mt-1 text-sm text-white/60">
-        Every checkout attempt through PhonePe, successful or not.
+        Every checkout attempt, successful or not.
       </p>
 
       <div className="mt-6 overflow-x-auto">
