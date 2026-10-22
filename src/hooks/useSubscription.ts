@@ -38,18 +38,7 @@ export function useInvoices() {
   });
 }
 
-export type CheckoutResult =
-  | {
-      gateway: "razorpay";
-      keyId: string;
-      orderId: string;
-      amount: number;
-      currency: string;
-      merchantOrderId: string;
-      planName: string;
-      prefill: { name: string; email: string; contact: string };
-    }
-  | { gateway: "phonepe"; redirectUrl: string };
+export type CheckoutResult = { gateway: "dodo" | "phonepe"; redirectUrl: string };
 
 export function useCheckout() {
   return useMutation({
