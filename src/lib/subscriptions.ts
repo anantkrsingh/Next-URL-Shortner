@@ -61,15 +61,16 @@ export async function applyOrderStatus(
 }
 
 /**
- * Shared by the Razorpay Checkout.js success handler (payments/razorpay/verify)
- * and the Razorpay webhook, once the caller has already verified the payment
- * signature. Idempotent — a webhook and the client-side handler can both
- * land for the same payment.
+ * Shared by the Dodo redirect callback (payments/callback) and the Dodo
+ * webhook (webhook/dodo), once the caller has already independently
+ * verified the payment (server-to-server status check, or a
+ * signature-verified webhook). Idempotent — both paths can land for the
+ * same payment.
  */
-export async function applyRazorpayPayment(
+export async function applyDodoPayment(
   merchantOrderId: string,
-  razorpayOrderId: string,
-  razorpayPaymentId: string
+  dodoPaymentId: string,
+  status: OrderStatus
 ) {
   const order = await prisma.order.findUnique({ where: { merchantOrderId } });
   if (!order) return null;
@@ -78,14 +79,15 @@ export async function applyRazorpayPayment(
   const updated = await prisma.order.update({
     where: { merchantOrderId },
     data: {
-      status: "completed",
-      gateway: "razorpay",
-      razorpayOrderId,
-      razorpayPaymentId,
+      status,
+      gateway: "dodo",
+      dodoPaymentId,
     },
   });
 
-  await activateSubscriptionFor(updated);
+  if (status === "completed") {
+    await activateSubscriptionFor(updated);
+  }
 
   return updated;
 }

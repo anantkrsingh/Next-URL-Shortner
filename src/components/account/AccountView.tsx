@@ -70,9 +70,8 @@ export default function AccountView({ user: serverUser }: { user: AccountUser })
   const liveUser = useAuthStore((s) => s.user);
   const displayName = liveUser?.name ?? serverUser.name;
 
-  // The payment gateway callback (PhonePe's redirect, or the Razorpay
-  // checkout handler) sends the user back here with ?tab=subscription so
-  // they land where they left off.
+  // The payment gateway callback (Dodo's or PhonePe's redirect) sends the
+  // user back here with ?tab=subscription so they land where they left off.
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab") as SectionId | null;
   const initialSection: SectionId =

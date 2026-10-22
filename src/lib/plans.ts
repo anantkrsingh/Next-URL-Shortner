@@ -1,6 +1,6 @@
 // Plan data modeled on TinyURL's publicly listed pricing tiers
 // (tinyurl.com/app/pricing, as referenced Aug 2026), localized to INR since
-// checkout runs through Razorpay (PhonePe as a fallback — see
+// checkout runs through Dodo Payments (PhonePe as a fallback — see
 // api/payments/checkout). Used to render the Subscription tab on the
 // account page.
 

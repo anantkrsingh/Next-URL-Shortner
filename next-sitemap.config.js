@@ -5,5 +5,6 @@ module.exports = {
     sitemapSize: 7000,
     changefreq: "daily",
     priority: 0.7,
+    exclude: ["/signup", "/login", "/account", "/opengraph-image.png", "/twitter-image.png"],
   };
   

@@ -70,7 +70,7 @@ export default function AboutUsPage() {
           <ul className="space-y-3 text-gray-300">
             <li className="flex items-start">
               <span className="text-blue-400 mr-2">▹</span>
-              <span><strong className="text-white">Next.js 15</strong> - React framework for production</span>
+              <span><strong className="text-white">Next.js 16</strong> - React framework for production</span>
             </li>
             <li className="flex items-start">
               <span className="text-blue-400 mr-2">▹</span>
@@ -85,6 +85,63 @@ export default function AboutUsPage() {
               <span><strong className="text-white">Tailwind CSS</strong> - Modern utility-first styling</span>
             </li>
           </ul>
+        </section>
+
+        <section className="mb-16 backdrop-blur-md bg-white/5 rounded-lg p-8 border border-white/10">
+          <h2 className="text-3xl font-bold text-white mb-4">Why We Built TinyUR</h2>
+          <p className="text-gray-300 leading-relaxed mb-4">
+            Long links are awkward to share. They wrap across several lines in chat apps, eat most of a
+            text message, get broken by email clients, and are almost impossible to read aloud or type
+            from a poster. Many popular shorteners solve this but then hide basic features behind
+            sign-up walls, expire free links, or show interstitial pages before the redirect.
+          </p>
+          <p className="text-gray-300 leading-relaxed">
+            TinyUR is our answer: paste a link, get a short one, and share it. No account is needed for
+            basic shortening, and redirects go straight to the destination. Signing up adds a dashboard
+            for your links, and paid plans add higher limits and API access for teams that create links
+            at scale.
+          </p>
+        </section>
+
+        <section className="mb-16 backdrop-blur-md bg-white/5 rounded-lg p-8 border border-white/10">
+          <h2 className="text-3xl font-bold text-white mb-4">How It Works</h2>
+          <p className="text-gray-300 leading-relaxed mb-4">
+            When you shorten a URL, TinyUR stores it with a unique code, or the custom alias you choose.
+            When someone opens the short link, our server looks up that code, adds one to its click count,
+            and redirects the visitor to the original address. Frequently used links are served from a
+            cache, so the redirect happens in milliseconds.
+          </p>
+          <p className="text-gray-300 leading-relaxed">
+            We count clicks without collecting personal profiles of the people who click. If you want to
+            understand more of the mechanics, our article on{" "}
+            <Link prefetch={false} href="/blogs/how-url-shortners-work" className="text-blue-400 hover:underline">
+              how URL shorteners work
+            </Link>{" "}
+            goes into detail.
+          </p>
+        </section>
+
+        <section className="mb-16 backdrop-blur-md bg-white/5 rounded-lg p-8 border border-white/10">
+          <h2 className="text-3xl font-bold text-white mb-4">Link Safety and Abuse</h2>
+          <p className="text-gray-300 leading-relaxed mb-4">
+            Short links can be misused to hide phishing pages, malware, or spam. Our{" "}
+            <Link prefetch={false} href="/terms-of-service" className="text-blue-400 hover:underline">
+              Terms of Service
+            </Link>{" "}
+            prohibit these uses, and we disable links that break them. Anyone can check where a short link
+            leads before opening it with our free{" "}
+            <Link prefetch={false} href="/unshorten" className="text-blue-400 hover:underline">
+              Unshorten tool
+            </Link>
+            .
+          </p>
+          <p className="text-gray-300 leading-relaxed">
+            If you find a TinyUR link pointing to harmful content, report it to{" "}
+            <a href="mailto:contact@tinyur.in" className="text-blue-400 hover:underline">
+              contact@tinyur.in
+            </a>{" "}
+            with the full short URL. We review every report.
+          </p>
         </section>
 
         <section className="mb-16 backdrop-blur-md bg-white/5 rounded-lg p-8 border border-white/10">
