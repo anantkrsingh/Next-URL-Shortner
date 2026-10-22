@@ -95,7 +95,6 @@ export default function Home() {
           <div className="w-full max-w-3xl">
             <RecentLinksSection />
           </div>
-          <div id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
         </div>
       </div>
       <HomeSections />

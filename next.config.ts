@@ -16,11 +16,19 @@ const movedBlogSlugs = [
 const nextConfig: NextConfig = {
   /* config options here */
   async redirects() {
-    return movedBlogSlugs.map((slug) => ({
-      source: `/${slug}`,
-      destination: `/blogs/${slug}`,
-      permanent: true,
-    }));
+    return [
+      ...movedBlogSlugs.map((slug) => ({
+        source: `/${slug}`,
+        destination: `/blogs/${slug}`,
+        permanent: true,
+      })),
+      // White/black hat posts were merged into the comparison guide
+      ...["white-hat-seo", "black-hat-seo"].map((slug) => ({
+        source: `/blogs/${slug}`,
+        destination: "/blogs/white-hat-seo-vs-black-hat-seo",
+        permanent: true,
+      })),
+    ];
   },
 };
 

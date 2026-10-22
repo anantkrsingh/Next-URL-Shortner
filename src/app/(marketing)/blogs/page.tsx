@@ -47,24 +47,31 @@ export default function BlogsPage() {
       category: "URL Shortening",
     },
     {
-      href: "/blogs/white-hat-seo",
-      title: "White Hat SEO",
-      description: "Ethical SEO strategies for sustainable rankings and long-term growth.",
-      readTime: "~8 min read",
-      category: "SEO",
+      href: "/blogs/short-links-for-social-media",
+      title: "Short Links for WhatsApp, Instagram, SMS, and Email",
+      description: "How each platform treats links — clickability, previews, character limits — and how to share short links well on every channel.",
+      readTime: "~9 min read",
+      category: "URL Shortening",
     },
     {
-      href: "/blogs/black-hat-seo",
-      title: "Black Hat SEO",
-      description: "Risks, tactics, and penalties of manipulative SEO strategies.",
+      href: "/blogs/measuring-link-clicks",
+      title: "How to Measure Link Clicks and Know What They Mean",
+      description: "What click counts measure, why they differ from analytics, and how to compare channels with one short link per placement.",
+      readTime: "~9 min read",
+      category: "URL Shortening",
+    },
+    {
+      href: "/blogs/custom-alias-guide",
+      title: "How to Choose a Custom Short Link Alias",
+      description: "Naming patterns, character rules, and common mistakes for short link aliases people can read, say, and trust.",
       readTime: "~8 min read",
-      category: "SEO",
+      category: "URL Shortening",
     },
     {
       href: "/blogs/white-hat-seo-vs-black-hat-seo",
       title: "White Hat SEO vs Black Hat SEO",
-      description: "A practical comparison to evaluate trade-offs and choose wisely.",
-      readTime: "~9 min read",
+      description: "Tactics on both sides, what penalties look like, and how short links and redirects fit into a sustainable SEO strategy.",
+      readTime: "~11 min read",
       category: "SEO",
     },
     {
@@ -108,11 +115,6 @@ export default function BlogsPage() {
           <p className="text-xl text-white/70 max-w-2xl mx-auto">
             Insights on URL shortening, link management, and digital marketing strategies
           </p>
-        </div>
-
-        <div className="bg-black">
-          <div id="container-9049c3c244f96a9f73fec77b523bbc33"></div>
-
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
