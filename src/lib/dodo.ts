@@ -1,14 +1,10 @@
 // Dodo Payments — Checkout Sessions API (hosted, redirect-based checkout).
 // Docs: https://docs.dodopayments.com/api-reference/checkout-sessions/create
 //
-// Dodo is the primary gateway. PhonePe (see phonepe.ts) is only used as a
-// fallback when session creation here fails — see the checkout route.
-//
 // Unlike Razorpay's Orders API + embedded Checkout.js widget, Dodo's
 // checkout is a hosted page: we create a session, redirect the shopper to
 // its checkout_url, and they land back on our own callback route
-// (api/payments/callback) afterwards — the same redirect shape already
-// used for PhonePe. We never trust that redirect alone; the callback
+// (api/payments/callback) afterwards. We never trust that redirect alone; the callback
 // re-fetches the payment server-to-server before activating anything, and
 // the `payment.succeeded` webhook (webhook/dodo) is the belt-and-braces
 // path alongside it.

@@ -136,9 +136,9 @@ enum OrderStatus {
   failed
 }
 
-// Dodo Payments is the primary gateway; PhonePe is only used as a fallback
-// when Dodo checkout session creation itself fails. Null until an order
-// successfully starts checkout with one of them.
+// Dodo Payments is the only live gateway. `phonepe` (and Order.phonePeOrderId)
+// are kept only so historical PhonePe orders still deserialize. Null until
+// an order successfully starts checkout.
 enum PaymentGateway {
   dodo
   phonepe

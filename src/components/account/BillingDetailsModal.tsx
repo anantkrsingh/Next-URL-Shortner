@@ -123,7 +123,7 @@ export default function BillingDetailsModal({
     setCheckoutError("");
     try {
       const result = await checkout.mutateAsync({ planId: plan.id, billingCycle });
-      // Both gateways (Dodo, PhonePe) use a hosted checkout page — send the
+      // Dodo uses a hosted checkout page — send the
       // shopper there and let the callback route bring them back.
       window.location.assign(result.redirectUrl);
     } catch (err) {

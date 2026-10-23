@@ -38,7 +38,7 @@ export function useInvoices() {
   });
 }
 
-export type CheckoutResult = { gateway: "dodo" | "phonepe"; redirectUrl: string };
+export type CheckoutResult = { gateway: "dodo"; redirectUrl: string };
 
 export function useCheckout() {
   return useMutation({

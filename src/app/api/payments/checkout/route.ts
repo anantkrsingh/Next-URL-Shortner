@@ -4,7 +4,6 @@ import { prisma } from "@/lib/prisma";
 import { getAppUrl, getCurrentUser } from "@/lib/auth";
 import { chargeAmount, getPlan } from "@/lib/plans";
 import { createCheckoutSession, isDodoConfigured } from "@/lib/dodo";
-import { createOrder as createPhonePeOrder, isPhonePeConfigured } from "@/lib/phonepe";
 
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser();
@@ -12,7 +11,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
   }
 
-  if (!isDodoConfigured() && !isPhonePeConfigured()) {
+  if (!isDodoConfigured()) {
     return NextResponse.json(
       { error: "Payments aren't configured yet. Please try again shortly." },
       { status: 503 }
@@ -66,63 +65,37 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  // Dodo Payments is the primary gateway. PhonePe is only tried when Dodo
-  // checkout session creation itself fails (or isn't configured) — not for
-  // later payment failures inside Dodo's own hosted checkout, which surface
-  // through its own flow instead.
-  if (isDodoConfigured()) {
-    try {
-      const result = await createCheckoutSession({
-        merchantOrderId,
-        amountPaise,
-        returnUrl: `${getAppUrl()}/api/payments/callback?orderId=${merchantOrderId}`,
-        customer: {
-          name: billingDetails.fullName,
-          email: billingDetails.email,
-          phone: billingDetails.phone,
-        },
-        billing: {
-          city: billingDetails.city,
-          state: billingDetails.state,
-          street: [billingDetails.addressLine1, billingDetails.addressLine2].filter(Boolean).join(", "),
-          zipcode: billingDetails.postalCode,
-          // Dodo requires an ISO alpha-2 country code; every plan here is
-          // priced (and billed) in INR regardless of the free-text country
-          // on file, which is only used for display/GST on the invoice.
-          country: "IN",
-        },
-        metadata: { userId: user.id, plan: plan.id, billingCycle },
-      });
+  try {
+    const result = await createCheckoutSession({
+      merchantOrderId,
+      amountPaise,
+      returnUrl: `${getAppUrl()}/api/payments/callback?orderId=${merchantOrderId}`,
+      customer: {
+        name: billingDetails.fullName,
+        email: billingDetails.email,
+        phone: billingDetails.phone,
+      },
+      billing: {
+        city: billingDetails.city,
+        state: billingDetails.state,
+        street: [billingDetails.addressLine1, billingDetails.addressLine2].filter(Boolean).join(", "),
+        zipcode: billingDetails.postalCode,
+        // Dodo requires an ISO alpha-2 country code; every plan here is
+        // priced (and billed) in INR regardless of the free-text country
+        // on file, which is only used for display/GST on the invoice.
+        country: "IN",
+      },
+      metadata: { userId: user.id, plan: plan.id, billingCycle },
+    });
 
-      await prisma.order.update({
-        where: { merchantOrderId },
-        data: { gateway: "dodo", dodoSessionId: result.sessionId },
-      });
+    await prisma.order.update({
+      where: { merchantOrderId },
+      data: { gateway: "dodo", dodoSessionId: result.sessionId },
+    });
 
-      return NextResponse.json({ gateway: "dodo" as const, redirectUrl: result.checkoutUrl });
-    } catch (error) {
-      console.error("Dodo checkout error, falling back to PhonePe:", error);
-    }
-  }
-
-  if (isPhonePeConfigured()) {
-    try {
-      const result = await createPhonePeOrder({
-        merchantOrderId,
-        amountPaise,
-        redirectUrl: `${getAppUrl()}/api/payments/callback?orderId=${merchantOrderId}`,
-        metaInfo: { userId: user.id, plan: plan.id, billingCycle },
-      });
-
-      await prisma.order.update({
-        where: { merchantOrderId },
-        data: { gateway: "phonepe" },
-      });
-
-      return NextResponse.json({ gateway: "phonepe" as const, redirectUrl: result.redirectUrl });
-    } catch (error) {
-      console.error("PhonePe checkout error:", error);
-    }
+    return NextResponse.json({ gateway: "dodo" as const, redirectUrl: result.checkoutUrl });
+  } catch (error) {
+    console.error("Dodo checkout error:", error);
   }
 
   await prisma.order.update({
