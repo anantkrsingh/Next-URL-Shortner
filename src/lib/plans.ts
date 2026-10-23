@@ -1,7 +1,6 @@
 // Plan data modeled on TinyURL's publicly listed pricing tiers
 // (tinyurl.com/app/pricing, as referenced Aug 2026), localized to INR since
-// checkout runs through Dodo Payments (PhonePe as a fallback — see
-// api/payments/checkout). Used to render the Subscription tab on the
+// checkout runs through Dodo Payments (see api/payments/checkout). Used to render the Subscription tab on the
 // account page.
 
 export type PlanId = "free" | "pro" | "bulk" | "enterprise";
@@ -14,7 +13,7 @@ export type Plan = {
   /**
    * Whole rupees. `monthly` is charged each time on monthly billing.
    * `yearlyMonthly` is the effective per-month rate shown when yearly
-   * billing is selected — the actual one-time PhonePe charge for the year
+   * billing is selected — the actual one-time charge for the year
    * is `yearlyMonthly * 12` (see yearlyTotal()), not `yearlyMonthly` itself.
    */
   inr: { monthly: number; yearlyMonthly: number } | null;

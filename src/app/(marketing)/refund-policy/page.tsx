@@ -24,7 +24,7 @@ export default function RefundPolicyPage() {
             <p>
               This policy applies to paid TinyUR subscriptions (Pro and Bulk &amp;
               API) purchased through checkout on tinyur.in and processed via
-              Dodo Payments (or PhonePe, if used as a fallback at checkout).
+              Dodo Payments.
               TinyUR&apos;s free tools — shortening, unshortening, and click
               counting — are free and have nothing to refund.
             </p>
