@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MotionConfig } from "motion/react";
 
 export default function QueryProvider({ children }: { children: React.ReactNode }) {
   // Created once per browser session via useState, not on every render.
@@ -21,5 +22,10 @@ export default function QueryProvider({ children }: { children: React.ReactNode 
       })
   );
 
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      {/* Honor the OS Reduce Motion setting for every motion/react animation. */}
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
+    </QueryClientProvider>
+  );
 }

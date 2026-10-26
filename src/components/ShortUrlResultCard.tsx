@@ -8,7 +8,8 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import type { ShortUrlResponse } from "@/hooks/useShorten";
 
 export default function ShortUrlResultCard({ result }: { result: ShortUrlResponse }) {
-  const [copied, setCopied] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "failed">("idle");
+  const copied = copyStatus === "copied";
   const [showQr, setShowQr] = useState(false);
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
 
@@ -50,12 +51,12 @@ export default function ShortUrlResultCard({ result }: { result: ShortUrlRespons
         document.execCommand("copy");
         document.body.removeChild(textArea);
       }
+      setCopyStatus("copied");
     } catch (err) {
       console.error("Failed to copy:", err);
-    } finally {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopyStatus("failed");
     }
+    setTimeout(() => setCopyStatus("idle"), 2000);
   };
 
   const downloadQr = () => {
@@ -79,9 +80,9 @@ export default function ShortUrlResultCard({ result }: { result: ShortUrlRespons
             rel="noopener noreferrer"
           >
             <span className="truncate">{result.shortUrl}</span>
-            <FaExternalLinkAlt className="h-3 w-3 shrink-0 text-white/50" />
+            <FaExternalLinkAlt className="h-3 w-3 shrink-0 text-white/60" />
           </a>
-          <p className="mt-1 truncate text-sm text-white/50">{result.originalUrl}</p>
+          <p className="mt-1 truncate text-sm text-white/60">{result.originalUrl}</p>
         </div>
 
         <div className="flex shrink-0 items-center gap-2">
@@ -95,7 +96,7 @@ export default function ShortUrlResultCard({ result }: { result: ShortUrlRespons
             ) : (
               <FaCopy className="h-4 w-4" />
             )}
-            {copied ? "Copied" : "Copy"}
+            {copied ? "Copied" : copyStatus === "failed" ? "Select and copy manually" : "Copy"}
           </button>
           <button
             type="button"
@@ -131,7 +132,7 @@ export default function ShortUrlResultCard({ result }: { result: ShortUrlRespons
               </div>
               <div className="text-center sm:text-left">
                 <p className="font-semibold text-white">Scan to open this link</p>
-                <p className="mt-1 max-w-xs text-sm text-white/50">
+                <p className="mt-1 max-w-xs text-sm text-white/60">
                   Print it, share it, or drop it into a slide — it points straight to{" "}
                   {result.shortUrl}.
                 </p>

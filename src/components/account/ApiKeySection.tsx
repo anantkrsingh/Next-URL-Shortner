@@ -48,7 +48,7 @@ export default function ApiKeySection() {
         </p>
 
         {isLoading ? (
-          <p className="mt-6 text-sm text-white/50">Loading…</p>
+          <p className="mt-6 text-sm text-white/60">Loading…</p>
         ) : (
           <div className="mt-6 space-y-4">
             {revealedKey && (
@@ -81,7 +81,7 @@ export default function ApiKeySection() {
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <code className="text-sm text-white/80">{apiKey.maskedKey}</code>
-                    <p className="mt-1 text-xs text-white/40">
+                    <p className="mt-1 text-xs text-white/60">
                       Created {new Date(apiKey.createdAt).toLocaleDateString()}
                       {apiKey.lastUsedAt &&
                         ` · Last used ${new Date(apiKey.lastUsedAt).toLocaleDateString()}`}
@@ -118,7 +118,7 @@ export default function ApiKeySection() {
                   </div>
                 </div>
                 {confirmingRevoke && (
-                  <p className="mt-3 text-xs text-white/50">
+                  <p className="mt-3 text-xs text-white/60">
                     Any script using this key will stop working immediately.{" "}
                     <button
                       type="button"

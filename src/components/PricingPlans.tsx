@@ -12,7 +12,7 @@ function ctaFor(plan: Plan, signedIn: boolean): { label: string; href: string } 
   if (!plan.payable) return { label: "Get started free", href: "/signup" };
   return {
     label: plan.cta,
-    href: signedIn ? "/account" : "/signup",
+    href: signedIn ? "/account/subscription" : "/signup",
   };
 }
 
@@ -28,6 +28,7 @@ export default function PricingPlans() {
           <button
             type="button"
             onClick={() => setYearly(true)}
+            aria-pressed={yearly}
             className={`rounded-full px-5 py-1.5 text-sm font-semibold transition-colors ${
               yearly ? "bg-white/15 text-white" : "text-white/60"
             }`}
@@ -37,6 +38,7 @@ export default function PricingPlans() {
           <button
             type="button"
             onClick={() => setYearly(false)}
+            aria-pressed={!yearly}
             className={`rounded-full px-5 py-1.5 text-sm font-semibold transition-colors ${
               !yearly ? "bg-white/15 text-white" : "text-white/60"
             }`}
@@ -73,12 +75,12 @@ export default function PricingPlans() {
                 ) : inrPrice !== null ? (
                   <p className="text-3xl font-bold text-white">
                     ₹{inrPrice.toLocaleString("en-IN")}
-                    <span className="text-base font-normal text-white/50">/mo</span>
+                    <span className="text-base font-normal text-white/60">/mo</span>
                   </p>
                 ) : (
                   <p className="text-3xl font-bold text-white">Free</p>
                 )}
-                <p className="mt-1 text-xs text-white/40">
+                <p className="mt-1 text-xs text-white/60">
                   {plan.inr
                     ? yearly
                       ? `billed ₹${yearlyTotal(plan)!.toLocaleString("en-IN")} once a year`
@@ -107,7 +109,7 @@ export default function PricingPlans() {
         })}
       </div>
 
-      <p className="mt-6 text-center text-xs text-white/40">
+      <p className="mt-6 text-center text-xs text-white/60">
         Feature lists are modeled on TinyURL&apos;s publicly listed plans, priced
         in INR. Checkout runs through Dodo Payments. Paid plans are refundable within
         48 hours — see the{" "}

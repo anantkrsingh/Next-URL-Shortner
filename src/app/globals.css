@@ -44,12 +44,27 @@ body {
   }
 }
 
+:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+/* Content surfaces: no blur, so text sits on a predictable background. */
 .glass-panel {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.14),
-    rgba(255, 255, 255, 0.05)
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.06)
   );
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* Floating layer only: menus, dialogs. */
+.glass-float {
+  background: rgba(20, 23, 38, 0.72);
   backdrop-filter: blur(28px) saturate(170%);
   -webkit-backdrop-filter: blur(28px) saturate(170%);
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -74,7 +89,7 @@ body {
 }
 
 .glass-input::placeholder {
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .glass-input:focus {
@@ -86,21 +101,40 @@ body {
 .glass-btn {
   background: linear-gradient(
     135deg,
-    rgba(96, 165, 250, 0.65),
-    rgba(139, 92, 246, 0.55)
+    #2563eb,
+    #7c3aed
   );
-  backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.28);
   color: #fff;
   border-radius: 0.9rem;
 }
 
 .glass-btn:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(96, 165, 250, 0.8),
-    rgba(139, 92, 246, 0.7)
-  );
+  background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+}
+
+.glass-btn:disabled {
+  opacity: 0.75 !important;
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .glass-panel,
+  .glass-float,
+  .glass-nav {
+    background: #141726;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 .glass-doc h1,

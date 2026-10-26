@@ -48,7 +48,7 @@ export default function AuthForm({
     <form onSubmit={handleSubmit} className="space-y-4">
       {mode === "signup" && (
         <div>
-          <label htmlFor="name" className="mb-1 block text-sm font-semibold text-gray-800">
+          <label htmlFor="name" className="mb-1 block text-sm font-semibold text-white/80">
             Name
           </label>
           <input
@@ -65,7 +65,7 @@ export default function AuthForm({
         </div>
       )}
       <div>
-        <label htmlFor="email" className="mb-1 block text-sm font-semibold text-gray-800">
+        <label htmlFor="email" className="mb-1 block text-sm font-semibold text-white/80">
           Email
         </label>
         <input
@@ -81,7 +81,7 @@ export default function AuthForm({
         />
       </div>
       <div>
-        <label htmlFor="password" className="mb-1 block text-sm font-semibold text-gray-800">
+        <label htmlFor="password" className="mb-1 block text-sm font-semibold text-white/80">
           Password
         </label>
         <input
@@ -110,7 +110,7 @@ export default function AuthForm({
 
       <div className="flex items-center gap-3 py-1">
         <div className="h-px flex-1 bg-white/15" />
-        <span className="text-xs text-white/50">or</span>
+        <span className="text-xs text-white/60">or</span>
         <div className="h-px flex-1 bg-white/15" />
       </div>
 

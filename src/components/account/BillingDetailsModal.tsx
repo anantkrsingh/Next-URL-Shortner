@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FiX } from "react-icons/fi";
 import { chargeAmount, type Plan } from "@/lib/plans";
@@ -63,6 +63,14 @@ export default function BillingDetailsModal({
   const [form, setForm] = useState<BillingDetailsInput>(EMPTY_FORM);
   const [formError, setFormError] = useState("");
   const [checkoutError, setCheckoutError] = useState("");
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [onClose]);
 
   // Once billing details finish their first load, decide whether to show
   // the form or the summary, and seed the form either from saved details
@@ -138,17 +146,23 @@ export default function BillingDetailsModal({
 
   return createPortal(
     <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 p-4 backdrop-blur-md">
-      <div className="glass-panel relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl p-6 sm:p-8">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="billing-modal-title"
+        className="glass-float relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl p-6 sm:p-8"
+      >
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 rounded-lg p-1.5 text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+          autoFocus
+          className="absolute top-3 right-3 rounded-lg p-3 text-white/60 transition-colors hover:bg-white/10 hover:text-white"
           aria-label="Close"
         >
           <FiX className="h-5 w-5" />
         </button>
 
-        <h2 className="text-xl font-bold text-white">
+        <h2 id="billing-modal-title" className="pr-10 text-xl font-bold text-white">
           {isEditing ? "Billing details" : "Confirm your purchase"}
         </h2>
         <p className="mt-1 text-sm text-white/60">
@@ -156,7 +170,7 @@ export default function BillingDetailsModal({
         </p>
 
         {isLoading ? (
-          <p className="mt-8 text-sm text-white/50">Loading…</p>
+          <p className="mt-8 text-sm text-white/60">Loading…</p>
         ) : isEditing ? (
           <form onSubmit={handleSave} className="mt-6 space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -346,7 +360,7 @@ export default function BillingDetailsModal({
             </div>
 
             <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-              <p className="text-xs font-semibold tracking-wide text-white/40 uppercase">
+              <p className="text-xs font-semibold tracking-wide text-white/60 uppercase">
                 Order summary
               </p>
               <div className="mt-3 flex items-center justify-between text-sm">
@@ -356,7 +370,7 @@ export default function BillingDetailsModal({
                 <span className="font-semibold text-white">₹{price?.toLocaleString("en-IN")}</span>
               </div>
               {billingCycle === "yearly" && plan.inr && (
-                <p className="mt-1 text-xs text-white/40">
+                <p className="mt-1 text-xs text-white/60">
                   ₹{plan.inr.yearlyMonthly.toLocaleString("en-IN")}/mo equivalent
                 </p>
               )}

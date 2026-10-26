@@ -31,8 +31,16 @@ export default function Navbar() {
       }
     };
 
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsResourcesOpen(false);
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
   }, []);
 
   return (
@@ -69,6 +77,11 @@ export default function Navbar() {
               onMouseLeave={() => setIsResourcesOpen(false)}
             >
               <button
+                type="button"
+                // Mouse already opens on hover; detail === 0 means Enter/Space.
+                onClick={(e) => e.detail === 0 && setIsResourcesOpen((open) => !open)}
+                aria-haspopup="menu"
+                aria-expanded={isResourcesOpen}
                 className="relative text-white font-semibold transition-colors overflow-hidden group px-3 py-2 flex items-center gap-1"
               >
                 <span className="relative z-10">Resources</span>
@@ -89,7 +102,7 @@ export default function Navbar() {
                   isResourcesOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
                 }`}
               >
-                <div className="glass-panel relative z-10 w-48 overflow-hidden rounded-xl">
+                <div className="glass-float relative z-10 w-48 overflow-hidden rounded-xl">
                   {/* Arrow pointing upwards */}
                   <div className="absolute -top-2 right-4 w-4 h-4 bg-black/90 border-l border-t border-white/20 transform rotate-45"></div>
                   
@@ -136,8 +149,9 @@ export default function Navbar() {
           {/* Hamburger Menu Button */}
           <button
             onClick={toggleMenu}
-            className="lg:hidden text-white p-2 focus:outline-none z-50"
-            aria-label="Toggle menu"
+            className="lg:hidden text-white p-3 z-50"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
           >
             <div className="w-6 h-5 flex flex-col justify-between">
               <span className={`block h-0.5 w-full bg-white transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
@@ -169,7 +183,9 @@ export default function Navbar() {
           {/* Mobile Resources Dropdown */}
           <div className="flex flex-col items-center gap-4">
             <button
+              type="button"
               onClick={toggleMobileResources}
+              aria-expanded={isMobileResourcesOpen}
               className="text-white text-4xl font-semibold hover:text-blue-400 transition-colors flex items-center gap-2"
             >
               Resources

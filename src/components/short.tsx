@@ -81,14 +81,6 @@ export default function Short() {
                 disabled={loading}
                 className="glass-btn relative overflow-hidden w-full sm:w-auto sm:min-w-[120px] min-h-[56px] h-[56px] font-semibold disabled:opacity-50"
               >
-                <div
-                  className="absolute inset-0 opacity-20 pointer-events-none"
-                  style={{
-                    backgroundImage: "url(/grain.png)",
-                    backgroundSize: "200px 200px",
-                    backgroundRepeat: "repeat"
-                  }}
-                />
                 <span className="relative z-10">
                   {loading ? <CircularProgress size={20} sx={{ color: "white" }} /> : "Shorten"}
                 </span>
@@ -128,7 +120,7 @@ export default function Short() {
       </div>
 
       <p className="mt-6 text-center text-white/90 text-sm max-w-xl mx-auto drop-shadow-md">
-        TinyUR is a free tool to shorten URLs and generate short links. URL shortener allows to create a shortened link making it easy to share.
+        TinyUR is a free tool to shorten URLs and generate short links. Paste any long link to get a short one that is easy to share.
       </p>
 
     </div>

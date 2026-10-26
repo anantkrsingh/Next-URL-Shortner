@@ -51,11 +51,11 @@ export default function RecentLinksSection() {
         document.execCommand("copy");
         document.body.removeChild(textArea);
       }
-    } catch (err) {
-      console.error("Failed to copy:", err);
-    } finally {
       setCopiedCode(shortCode);
       setTimeout(() => setCopiedCode((c) => (c === shortCode ? null : c)), 2000);
+    } catch (err) {
+      // No checkmark on failure; the link text stays selectable.
+      console.error("Failed to copy:", err);
     }
   };
 
@@ -80,7 +80,7 @@ export default function RecentLinksSection() {
       <h2 className="mb-4 text-lg font-bold text-white">Your Recent Links</h2>
 
       {isLoading ? (
-        <p className="text-sm text-white/50">Loading…</p>
+        <p className="text-sm text-white/60">Loading…</p>
       ) : (
         <ul className="space-y-3">
           {rows.map((link) => (
@@ -97,16 +97,17 @@ export default function RecentLinksSection() {
                     className="flex items-center gap-1.5 truncate font-semibold text-white hover:text-blue-200"
                   >
                     <span className="truncate">{link.shortUrl}</span>
-                    <FaExternalLinkAlt className="h-3 w-3 shrink-0 text-white/50" />
+                    <FaExternalLinkAlt className="h-3 w-3 shrink-0 text-white/60" />
                   </a>
-                  <p className="truncate text-sm text-white/50">{link.originalUrl}</p>
+                  <p className="truncate text-sm text-white/60">{link.originalUrl}</p>
                 </div>
 
                 <div className="flex shrink-0 items-center gap-2">
                   <button
                     type="button"
                     onClick={() => copyLink(link.shortUrl, link.shortCode)}
-                    className="glass-input p-2"
+                    className="glass-input p-3"
+                    aria-label={copiedCode === link.shortCode ? "Copied" : `Copy ${link.shortUrl}`}
                     title="Copy"
                   >
                     {copiedCode === link.shortCode ? (
@@ -119,9 +120,10 @@ export default function RecentLinksSection() {
                     type="button"
                     onClick={() => toggleQr(link.shortUrl, link.shortCode)}
                     aria-expanded={expandedCode === link.shortCode}
-                    className={`glass-input p-2 ${
+                    className={`glass-input p-3 ${
                       expandedCode === link.shortCode ? "bg-white/15" : ""
                     }`}
+                    aria-label={`QR code for ${link.shortUrl}`}
                     title="QR code"
                   >
                     <FaQrcode className="h-4 w-4 text-white/80" />
@@ -170,7 +172,7 @@ export default function RecentLinksSection() {
       )}
 
       {!user && localLoaded && localLinks.length > 0 && (
-        <p className="mt-4 text-xs text-white/40">
+        <p className="mt-4 text-xs text-white/60">
           Saved on this device only.{" "}
           <Link prefetch={false} href="/signup" className="text-blue-300 hover:text-blue-200">
             Create an account
