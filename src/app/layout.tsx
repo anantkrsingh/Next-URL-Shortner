@@ -97,6 +97,13 @@ export default function RootLayout({
           crossOrigin="anonymous"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7464509288176224"
         />
+        <Script
+          id="monetag"
+          src="https://quge5.com/88/tag.min.js"
+          data-zone="302196"
+          async
+          data-cfasync="false"
+        />
 
         <a
           href="#main-content"
