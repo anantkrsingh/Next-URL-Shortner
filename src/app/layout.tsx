@@ -78,7 +78,6 @@ export const metadata: Metadata = {
 
   other: {
     "google-adsense-account": "ca-pub-7464509288176224",
-    monetag: "87853d294cddb78b92b551b241b08985",
   },
 };
 
@@ -97,14 +96,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7464509288176224"
         />
-        <Script
-          id="monetag"
-          src="https://quge5.com/88/tag.min.js"
-          data-zone="302196"
-          async
-          data-cfasync="false"
-        />
-
+      
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-white/20 focus:px-4 focus:py-2 focus:text-white"
