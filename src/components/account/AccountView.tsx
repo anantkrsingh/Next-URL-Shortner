@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { createContext, useContext } from "react";
+import Link from "next/link";
+import { notFound, useSelectedLayoutSegment } from "next/navigation";
 import {
   FiBarChart2,
   FiCode,
@@ -61,40 +62,28 @@ const NAV_GROUPS: {
   },
 ];
 
-const SECTION_IDS = NAV_GROUPS.flatMap((group) => group.items.map((item) => item.id));
+// Server-fetched user from the account layout, shared with the section pages.
+const AccountUserContext = createContext<AccountUser | null>(null);
 
-export default function AccountView({ user: serverUser }: { user: AccountUser }) {
+export default function AccountView({
+  user: serverUser,
+  children,
+}: {
+  user: AccountUser;
+  children: React.ReactNode;
+}) {
   // Seeds the shared TanStack Query cache + Zustand store with what the
   // server already knew, then keeps them live for the rest of the app.
   useCurrentUser();
   const liveUser = useAuthStore((s) => s.user);
   const displayName = liveUser?.name ?? serverUser.name;
 
-  // The payment gateway callback (Dodo's redirect) sends the
-  // user back here with ?tab=subscription so they land where they left off.
-  const searchParams = useSearchParams();
-  const tabParam = searchParams.get("tab") as SectionId | null;
-  const initialSection: SectionId =
-    tabParam && SECTION_IDS.includes(tabParam) ? tabParam : "profile";
-
-  const [section, setSection] = useState<SectionId>(initialSection);
-
-  const initial = displayName.trim().charAt(0).toUpperCase() || "U";
+  const section = useSelectedLayoutSegment();
 
   return (
-    <div>
-      {/* Header */}
-      <div className="mb-8 flex items-center gap-4">
-        <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-400/80 to-purple-500/80 text-xl font-bold text-white">
-          {initial}
-        </span>
-        <div className="min-w-0">
-          <h1 className="truncate text-2xl font-bold text-white sm:text-3xl">
-            {displayName}
-          </h1>
-          <p className="truncate text-sm text-white/60">{serverUser.email}</p>
-        </div>
-      </div>
+    <AccountUserContext.Provider value={{ ...serverUser, name: displayName }}>
+      {/* Name/email card lives in the navbar; keep a heading for screen readers. */}
+      <h1 className="sr-only">Your account</h1>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[220px_1fr]">
         {/* Sidebar */}
@@ -103,7 +92,7 @@ export default function AccountView({ user: serverUser }: { user: AccountUser })
             <div className="flex gap-2 overflow-x-auto lg:block lg:space-y-4 lg:overflow-visible">
               {NAV_GROUPS.map((group) => (
                 <div key={group.label} className="shrink-0 lg:shrink">
-                  <p className="hidden px-3 pb-1 text-xs font-semibold tracking-wide text-white/40 uppercase lg:block">
+                  <p className="hidden px-3 pb-1 text-xs font-semibold tracking-wide text-white/60 uppercase lg:block">
                     {group.label}
                   </p>
                   <div className="flex gap-1 lg:flex-col">
@@ -111,10 +100,9 @@ export default function AccountView({ user: serverUser }: { user: AccountUser })
                       const Icon = item.icon;
                       const active = section === item.id;
                       return (
-                        <button
+                        <Link
                           key={item.id}
-                          type="button"
-                          onClick={() => setSection(item.id)}
+                          href={`/account/${item.id}`}
                           className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-left text-sm font-semibold whitespace-nowrap transition-colors ${
                             active
                               ? "bg-white/15 text-white"
@@ -123,7 +111,7 @@ export default function AccountView({ user: serverUser }: { user: AccountUser })
                         >
                           <Icon className="h-4 w-4 shrink-0" />
                           {item.label}
-                        </button>
+                        </Link>
                       );
                     })}
                   </div>
@@ -135,19 +123,31 @@ export default function AccountView({ user: serverUser }: { user: AccountUser })
 
         {/* Content */}
         <div className="min-w-0">
-          {section === "profile" && (
-            <ProfileSection user={{ ...serverUser, name: displayName }} />
-          )}
-          {section === "security" && <SecuritySection user={serverUser} />}
-          {section === "usage" && <UsageSection />}
-          {section === "api" && <ApiKeySection />}
-          {section === "domains" && (
-            <DomainsSection onUpgrade={() => setSection("subscription")} />
-          )}
-          {section === "subscription" && <SubscriptionSection />}
-          {section === "invoices" && <InvoicesSection />}
+          {children}
         </div>
       </div>
-    </div>
+    </AccountUserContext.Provider>
   );
+}
+
+export function AccountSection({ section }: { section: string }) {
+  const user = useContext(AccountUserContext)!;
+  switch (section) {
+    case "profile":
+      return <ProfileSection user={user} />;
+    case "security":
+      return <SecuritySection user={user} />;
+    case "usage":
+      return <UsageSection />;
+    case "api":
+      return <ApiKeySection />;
+    case "domains":
+      return <DomainsSection />;
+    case "subscription":
+      return <SubscriptionSection />;
+    case "invoices":
+      return <InvoicesSection />;
+    default:
+      notFound();
+  }
 }

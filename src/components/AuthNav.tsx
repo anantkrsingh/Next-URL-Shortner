@@ -63,7 +63,7 @@ export default function AuthNav({
             onClick={onNavigate}
             className="text-white text-2xl font-semibold hover:text-blue-400 transition-colors"
           >
-            Your Profile
+            Account
           </Link>
           <button
             type="button"
@@ -104,7 +104,7 @@ export default function AuthNav({
             isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
           }`}
         >
-          <div className="glass-panel relative z-10 w-56 overflow-hidden rounded-xl">
+          <div className="glass-float relative z-10 w-56 overflow-hidden rounded-xl">
             {/* Arrow pointing upwards */}
             <div className="absolute -top-2 right-5 h-4 w-4 rotate-45 border-t border-l border-white/20 bg-black/90" />
 
@@ -119,7 +119,7 @@ export default function AuthNav({
               className="relative z-10 flex items-center gap-2 border-b border-white/10 px-4 py-3 text-sm text-white transition-colors hover:bg-white/10"
             >
               <FiUser className="h-4 w-4" />
-              Your Profile
+              Account
             </Link>
 
             <button
@@ -145,7 +145,7 @@ export default function AuthNav({
           onClick={onNavigate}
           className="text-white text-4xl font-semibold hover:text-blue-400"
         >
-          Login
+          Log in
         </Link>
         <Link prefetch={false} href="/signup" onClick={onNavigate} className="glass-btn px-6 py-3 text-2xl font-semibold">
           Sign up
@@ -160,7 +160,7 @@ export default function AuthNav({
         href="/login"
         className="relative overflow-hidden px-3 py-2 font-semibold text-white group"
       >
-        <span className="relative z-10">Login</span>
+        <span className="relative z-10">Log in</span>
         <span className="absolute inset-0 origin-left scale-x-0 rounded-none bg-white/20 transition-transform duration-300 group-hover:scale-x-100" />
       </Link>
       <Link prefetch={false} href="/signup" className="glass-btn px-4 py-2 font-semibold">

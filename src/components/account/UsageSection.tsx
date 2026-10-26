@@ -27,7 +27,7 @@ export default function UsageSection() {
         <p className="mt-1 text-sm text-white/60">Your most recently created short links.</p>
 
         {usage && usage.recentLinks.length === 0 && (
-          <p className="mt-6 text-sm text-white/50">
+          <p className="mt-6 text-sm text-white/60">
             You haven&apos;t created any short links yet.
           </p>
         )}
@@ -36,7 +36,7 @@ export default function UsageSection() {
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[480px] text-left text-sm">
               <thead>
-                <tr className="border-b border-white/10 text-xs font-semibold tracking-wide text-white/40 uppercase">
+                <tr className="border-b border-white/10 text-xs font-semibold tracking-wide text-white/60 uppercase">
                   <th className="py-2 pr-4">Short link</th>
                   <th className="py-2 pr-4">Destination</th>
                   <th className="py-2 pr-4">Clicks</th>
@@ -55,7 +55,7 @@ export default function UsageSection() {
                       {link.originalUrl}
                     </td>
                     <td className="py-3 pr-4 text-white/70">{link.clicks}</td>
-                    <td className="py-3 text-white/50">
+                    <td className="py-3 text-white/60">
                       {new Date(link.createdAt).toLocaleDateString()}
                     </td>
                   </tr>
@@ -72,7 +72,7 @@ export default function UsageSection() {
 function StatCard({ label, value }: { label: string; value: number | undefined }) {
   return (
     <div className="glass-panel rounded-2xl p-5">
-      <p className="text-xs font-semibold tracking-wide text-white/40 uppercase">{label}</p>
+      <p className="text-xs font-semibold tracking-wide text-white/60 uppercase">{label}</p>
       <p className="mt-2 text-3xl font-bold text-white">{value ?? "—"}</p>
     </div>
   );

@@ -29,7 +29,7 @@ export default function InvoicesSection() {
       <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[480px] text-left text-sm">
           <thead>
-            <tr className="border-b border-white/10 text-xs font-semibold tracking-wide text-white/40 uppercase">
+            <tr className="border-b border-white/10 text-xs font-semibold tracking-wide text-white/60 uppercase">
               <th className="py-2 pr-4">Date</th>
               <th className="py-2 pr-4">Plan</th>
               <th className="py-2 pr-4">Amount</th>
@@ -45,7 +45,7 @@ export default function InvoicesSection() {
                   </td>
                   <td className="py-3 pr-4 text-white/70">
                     {PLAN_LABELS[invoice.plan] ?? invoice.plan}{" "}
-                    <span className="text-white/40">· {invoice.billingCycle}</span>
+                    <span className="text-white/60">· {invoice.billingCycle}</span>
                   </td>
                   <td className="py-3 pr-4 text-white/70">
                     ₹{(invoice.amount / 100).toLocaleString("en-IN")}
@@ -68,7 +68,7 @@ export default function InvoicesSection() {
         {!isLoading && invoices && invoices.length === 0 && (
           <div className="flex flex-col items-center gap-3 py-12 text-center">
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10">
-              <FiFileText className="h-5 w-5 text-white/50" />
+              <FiFileText className="h-5 w-5 text-white/60" />
             </span>
             <p className="text-sm font-semibold text-white/70">No invoices yet</p>
             <p className="max-w-sm text-sm text-white/45">

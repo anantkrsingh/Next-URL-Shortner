@@ -46,14 +46,14 @@ export default function SubscriptionSection() {
       <section className="glass-panel rounded-2xl p-6 sm:p-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold tracking-wide text-white/40 uppercase">
+            <p className="text-xs font-semibold tracking-wide text-white/60 uppercase">
               Current plan
             </p>
             <h2 className="mt-1 text-2xl font-bold text-white capitalize">
               {subscriptionLoading ? "…" : currentPlanId === "bulk" ? "Bulk & API" : currentPlanId}
             </h2>
             {subscription?.currentPeriodEnd && (
-              <p className="mt-1 text-xs text-white/50">
+              <p className="mt-1 text-xs text-white/60">
                 Renews {new Date(subscription.currentPeriodEnd).toLocaleDateString()}
               </p>
             )}
@@ -119,12 +119,12 @@ export default function SubscriptionSection() {
                   ) : inrPrice !== null ? (
                     <p className="text-3xl font-bold text-white">
                       ₹{inrPrice.toLocaleString("en-IN")}
-                      <span className="text-base font-normal text-white/50">/mo</span>
+                      <span className="text-base font-normal text-white/60">/mo</span>
                     </p>
                   ) : (
                     <p className="text-3xl font-bold text-white">Free</p>
                   )}
-                  <p className="mt-1 text-xs text-white/40">
+                  <p className="mt-1 text-xs text-white/60">
                     {plan.inr
                       ? yearly
                         ? `billed ₹${yearlyTotal(plan)!.toLocaleString("en-IN")} once a year`
@@ -143,7 +143,7 @@ export default function SubscriptionSection() {
                 </ul>
 
                 {isCurrent ? (
-                  <span className="mt-6 block cursor-default rounded-xl bg-white/10 px-4 py-2.5 text-center font-semibold text-white/50">
+                  <span className="mt-6 block cursor-default rounded-xl bg-white/10 px-4 py-2.5 text-center font-semibold text-white/60">
                     Current plan
                   </span>
                 ) : plan.payable ? (
@@ -167,7 +167,7 @@ export default function SubscriptionSection() {
           })}
         </div>
 
-        <p className="mt-6 text-xs text-white/40">
+        <p className="mt-6 text-xs text-white/60">
           Feature lists are modeled on TinyURL&apos;s publicly listed plans,
           priced in INR. Checkout runs through Dodo Payments.
         </p>

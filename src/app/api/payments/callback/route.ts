@@ -18,12 +18,12 @@ export async function GET(request: NextRequest) {
   const dodoPaymentId = url.searchParams.get("payment_id");
 
   if (!orderId || !dodoPaymentId) {
-    return NextResponse.redirect(`${appUrl}/account?tab=subscription&payment=error`);
+    return NextResponse.redirect(`${appUrl}/account/subscription?payment=error`);
   }
 
   const order = await prisma.order.findUnique({ where: { merchantOrderId: orderId } });
   if (!order) {
-    return NextResponse.redirect(`${appUrl}/account?tab=subscription&payment=error`);
+    return NextResponse.redirect(`${appUrl}/account/subscription?payment=error`);
   }
 
   try {
@@ -32,9 +32,9 @@ export async function GET(request: NextRequest) {
     const outcome =
       updated?.status === "completed" ? "success" : updated?.status === "failed" ? "failed" : "pending";
 
-    return NextResponse.redirect(`${appUrl}/account?tab=subscription&payment=${outcome}`);
+    return NextResponse.redirect(`${appUrl}/account/subscription?payment=${outcome}`);
   } catch (error) {
     console.error("Payment callback error:", error);
-    return NextResponse.redirect(`${appUrl}/account?tab=subscription&payment=error`);
+    return NextResponse.redirect(`${appUrl}/account/subscription?payment=error`);
   }
 }

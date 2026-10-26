@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { FiGlobe, FiLock } from "react-icons/fi";
 
-export default function DomainsSection({ onUpgrade }: { onUpgrade: () => void }) {
+export default function DomainsSection() {
   const [domain, setDomain] = useState("");
 
   return (
@@ -41,13 +42,12 @@ export default function DomainsSection({ onUpgrade }: { onUpgrade: () => void })
           </button>
         </div>
 
-        <button
-          type="button"
-          onClick={onUpgrade}
-          className="mt-4 text-sm font-semibold text-blue-300 hover:text-blue-200"
+        <Link
+          href="/account/subscription"
+          className="mt-4 inline-block text-sm font-semibold text-blue-300 hover:text-blue-200"
         >
           Upgrade to Pro to unlock branded domains →
-        </button>
+        </Link>
       </section>
 
       <section className="glass-panel rounded-2xl p-6 sm:p-8">
@@ -59,7 +59,7 @@ export default function DomainsSection({ onUpgrade }: { onUpgrade: () => void })
           <FiGlobe className="h-5 w-5 shrink-0 text-blue-300" />
           <div className="min-w-0">
             <p className="truncate font-semibold text-white">go.yourbrand.com/launch</p>
-            <p className="truncate text-xs text-white/50">
+            <p className="truncate text-xs text-white/60">
               → https://yourbrand.com/2026/product-launch
             </p>
           </div>

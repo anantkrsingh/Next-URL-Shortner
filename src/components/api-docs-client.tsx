@@ -312,7 +312,7 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
               <h2 className="text-xl font-bold text-white">Test API Endpoint</h2>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-white/50 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
+                className="text-white/60 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -322,7 +322,7 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
 
             <div className="flex-1 overflow-y-auto p-6 space-y-8">
               <div>
-                <label className="block text-xs font-bold text-white/50 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-bold text-white/60 uppercase tracking-wider mb-2">
                   Target Endpoint
                 </label>
                 <div className="flex items-center gap-2 bg-black/40 p-3 rounded-lg border border-white/10 font-mono text-sm text-white">
@@ -336,7 +336,7 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
 
               {selectedEndpoint?.method === "POST" && (
                 <div>
-                  <label className="block text-xs font-bold text-white/50 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-bold text-white/60 uppercase tracking-wider mb-2">
                     Request Body
                   </label>
                   <textarea
@@ -367,7 +367,7 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
 
               {response && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
-                  <label className="text-xs font-bold text-white/50 uppercase tracking-wider mb-2 flex justify-between items-center">
+                  <label className="text-xs font-bold text-white/60 uppercase tracking-wider mb-2 flex justify-between items-center">
                     <span>Response</span>
                     <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${response.status >= 200 && response.status < 300
                       ? 'bg-green-500/10 text-green-400'
@@ -380,7 +380,7 @@ export default function ApiDocsClient({ endpoints }: ApiDocsClientProps) {
                     <div className="flex items-center justify-end px-3 py-1.5 bg-white/[0.03] border-b border-white/5">
                       <button
                         onClick={() => copyToClipboard(JSON.stringify(response, null, 2))}
-                        className="text-xs text-white/40 hover:text-white transition-colors"
+                        className="text-xs text-white/60 hover:text-white transition-colors"
                       >
                         Copy JSON
                       </button>

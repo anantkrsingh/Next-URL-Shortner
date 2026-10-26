@@ -70,7 +70,7 @@ export default function ProfileSection({ user }: { user: AccountUser }) {
               disabled
               className="w-full glass-input px-4 py-2.5 opacity-60"
             />
-            <p className="mt-1 text-xs text-white/40">
+            <p className="mt-1 text-xs text-white/60">
               Contact support to change the email on your account.
             </p>
           </div>
@@ -102,7 +102,7 @@ export default function ProfileSection({ user }: { user: AccountUser }) {
         <h2 className="text-xl font-bold text-white">Account details</h2>
         <dl className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <dt className="text-xs font-semibold tracking-wide text-white/40 uppercase">
+            <dt className="text-xs font-semibold tracking-wide text-white/60 uppercase">
               Sign-in method
             </dt>
             <dd className="mt-1 text-sm text-white/80 capitalize">
@@ -110,7 +110,7 @@ export default function ProfileSection({ user }: { user: AccountUser }) {
             </dd>
           </div>
           <div>
-            <dt className="text-xs font-semibold tracking-wide text-white/40 uppercase">
+            <dt className="text-xs font-semibold tracking-wide text-white/60 uppercase">
               Member since
             </dt>
             <dd className="mt-1 text-sm text-white/80">{memberSince}</dd>
